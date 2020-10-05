@@ -19,7 +19,7 @@ app.register_blueprint(session_routes, url_prefix='/api/session')
 # app.register_blueprint(sample_routes, url_prefix='/api/sample_prefix')
 db.init_app(app)
 migrate = Migrate(app, db)
-jwt = JWTManager(app)
+# jwt = JWTManager(app)
 
 
 ## Application Security
