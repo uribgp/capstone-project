@@ -1,26 +1,53 @@
-# Flask React Project
 
-This is the backend for the Flask React project.
+## Welcome to [AwesomeSite](https://awesome-site.herokuapp.com/), a video hosting inspired web app, focused on providing lifting feedback around the world!
 
-## Getting started
+### Get your wallet ready, and back your favorite projects!
+#### If nothing catches your eye, create your own project!
 
-1. Clone this repository
-2. Create a **.env** file based on the example with proper settings for your development environment
-3. Follow instructions in the [`starter_app/README.md`](./starter_app/README.md) to setup your development Back-End.
-4. Follow instructions in the [`client/README.md`](./client/README.md) to set up your development Front-End.
+### This site was made using React, React-Redux, Flask .
 
-## Deploy to Heroku
+### Users can:
+* upload a video
+* comment on a video
+* search for videos
 
-1. Create a new project
-2. Under Resources click "Find more add-ons" and add the add on called "Heroku Postgres"
-3. Install the [Heroku CLI](https://devcenter.heroku.com/articles/heroku-command-line)
-4. Run `$ heroku login`
-5. Login to the heroku container registry `$ heroku container:login`
-6. CD into `starter_app` and push your backend docker container to heroku (this will build the Flask dockerfile, and push) `$ heroku container:push web -a {NAME_OF_HEROKU_APP}`
-7. CD into `client` and push your backend docker container to heroku (this will build the Flask dockerfile, and push) `$ heroku container:push web -a {NAME_OF_HEROKU_APP}`
-8. Release your docker container to heroku `$ heroku container:release web -a {NAME_OF_HEROKU_APP}`
-9. set up your database:
-```bash
-    $ heroku run -a {NAME_OF_HEROKU_APP} python -m database
-```
-10. profit
+### Videos
+* Videos will belong to a certain category
+* Each video has a:
+    * Owner
+    * Title
+    * Description
+    * Category
+* Videos can be commented on
+* Videos can be favorited or made private
+    
+### Categories
+* Each category has a:
+    * Title
+* All videos belonging to a category
+
+### Comment
+* Each comment has :
+    * comment text
+    * Commenter Id
+    * Video Id
+
+    
+
+---
+
+### Code Snippets:
+* [insert code snippets]
+
+---
+
+### Features to be added:
+* Everything
+
+### Bonus Features:
+* Users can like comments
+* Users can like videos
+* Users can save videos
+
+
+### Credits:
