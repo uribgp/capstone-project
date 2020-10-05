@@ -2,7 +2,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 from app import app, db
-from app.models import User, # SampleModel
+from app.models import User #, SampleModel
 
 with app.app_context():
   db.drop_all()

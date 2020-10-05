@@ -2,8 +2,25 @@
 
 1. `CD` into this directory
 2. Install dependencies (`pipenv install --python 3.8 $(cat requirements.txt)`)
+  pipenv install flask
+  pipenv install flask-sqlalchemy
+  pipenv install alembic
+  pipenv install flask-migrate
+  pipenv install python-dotenv
+  pipenv install psycopg2-binary
+  pipenv install sqlalchemy
+  pipenv install flask-login
+  pipenv install flask-migrate
+  
 3. Create your DB user and DB
+psql -c "CREATE USER capstone_user WITH PASSWORD 'password' CREATEDB"
+psql -c "CREATE DATABASE capstone_database WITH OWNER capstone_user"
+
 4. Run migrations, if you have any.
+  pipenv run flask db init
+  pipenv run flask db migrate
+  pipenv run flask db upgrade
+
 5. To seed the database, run:
   * `pipenv run python database.py`
 6. To run the backend:
