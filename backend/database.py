@@ -2,7 +2,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 from app import app, db
-from app.models import User #, SampleModel
+from app.models import User, Video
 
 with app.app_context():
   db.drop_all()
@@ -27,4 +27,11 @@ with app.app_context():
   db.session.add(alissa)
   db.session.add(demo)
 
+
+  # VIDEOS
+
+  video1 = Video(title = 'hello', description = "it's me", link = "can't remember this line", thumbnail = "The way we used to be.")
+
+  db.session.add(video1)
+  
   db.session.commit()
