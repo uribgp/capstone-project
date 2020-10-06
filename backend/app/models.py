@@ -7,6 +7,7 @@ import datetime
 
 db = SQLAlchemy()
 
+
 class User(db.Model, UserMixin):
   __tablename__ = 'users'
 
@@ -36,6 +37,33 @@ class User(db.Model, UserMixin):
       "created_at": self.created_at.strftime("%B %Y")
     }
 
+
+
+class Category(db.Model):
+  __tablename__ = 'categories'
+
+  id = Column(Integer, primary_key=True)
+  title = Column(String(50), nullable=False)
+  default_pic = Column(String(1000))
+
+  def to_dict(self):
+    return {
+      "id": self.id,
+      "title": self.title,
+      "default_pic": self.default_pic
+    }
+
+
+
+class Follower(db.Model):
+  __tablename__ = 'followers'
+
+  id = Column(Integer, primary_key=True)
+  follower_id = Column(Integer, ForeignKey('users.id'))
+  followed_id = Column(Integer, ForeignKey('users.id'))
+
+
+
 class Video(db.Model):
   __tablename__ = 'videos'
 
@@ -44,8 +72,12 @@ class Video(db.Model):
   description = Column(String(300), nullable=False)
   link = Column(String(300), nullable=False)
   thumbnail = Column(String(300), nullable=False)
+  owner_id = db.Column(Integer, ForeignKey('users.id'), nullable=False)
+  category_id = db.Column(Integer, ForeignKey('categories.id'))
   created_at = Column(DateTime, nullable=False, default=datetime.datetime.utcnow)
   updated_at = Column(DateTime, nullable=False, default=datetime.datetime.utcnow)
+
+  owner = db.relationship("User", foreign_keys=[owner_id])
 
   def to_dict(self):
     return {
@@ -56,6 +88,7 @@ class Video(db.Model):
       "thumbnail": self.thumbnail,
       "created_at": self.created_at.strftime("%B %Y")
     }
+
 
 class Video_user(db.Model):
   __tablename__ = "video_user"
@@ -85,6 +118,10 @@ class Comment(db.Model):
       "timestamp": self.timestamp,
       "created_at": self.created_at.strftime("%B %Y")
     }
+
+
+
+
 
 
 class Comment_user(db.Model):

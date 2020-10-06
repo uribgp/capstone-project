@@ -2,7 +2,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 from app import app, db
-from app.models import User, Video
+from app.models import User, Video, Category
 
 with app.app_context():
   db.drop_all()
@@ -28,10 +28,22 @@ with app.app_context():
   db.session.add(demo)
 
 
+  # CATEGORIES
+  squat = Category(title = 'Squat')
+  bench = Category(title = 'Bench')
+  deadlift = Category(title = 'Deadlift')
+  ohp = Category(title = 'Overhead Press')
+
+  db.session.add(squat)
+  db.session.add(bench)
+  db.session.add(deadlift)
+  db.session.add(ohp)
+
   # VIDEOS
 
-  video1 = Video(title = 'hello', description = "it's me", link = "can't remember this line", thumbnail = "The way we used to be.")
-
+  video1 = Video(title = 'hello', description = "it's me", link = "can't remember this line", thumbnail = "The way we used to be.", owner_id = 1, category_id = 2)
+  video2 = Video(title = 'video2', description = "asdfasdf", link = 'asdfasdf', thumbnail = 'asdfasdf', owner_id = 555, category_id = 1)
   db.session.add(video1)
-  
+  db.session.add(video2)
+
   db.session.commit()
