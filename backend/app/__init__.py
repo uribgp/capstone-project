@@ -6,6 +6,7 @@ from .models import db, User
 from .api.user_routes import user_routes
 from .api.session_routes import session_routes
 from .api.video_routes import video_routes
+from .api.category_routes import category_routes
 from .config import Config
 from flask_migrate import Migrate
 from flask_jwt_extended import JWTManager
@@ -17,6 +18,7 @@ app.config.from_object(Config)
 app.register_blueprint(user_routes, url_prefix='/api/users')
 app.register_blueprint(session_routes, url_prefix='/api/session')
 app.register_blueprint(video_routes, url_prefix='/api/videos')
+app.register_blueprint(category_routes, url_prefix='/api/categories')
 db.init_app(app)
 migrate = Migrate(app, db)
 # jwt = JWTManager(app)
