@@ -1,4 +1,4 @@
-import axios from "axios";
+const axios = require('axios')
 
 const SET_USER = 'auth/SET_USER';
 const LOGOUT_USER = 'auth/LOGOUT_USER';
@@ -28,8 +28,7 @@ export const logoutUser = () => {
 export const login = (email, password) => {
   return async dispatch => {
     const res = await axios.post('/api/session', { email, password })
-    res.data = await res.json();
-    if (res.ok) { 
+    if (res.statusText) { 
       dispatch(setUser(res.data.user))
     }
     return res;
@@ -40,8 +39,7 @@ export const login = (email, password) => {
 export const signup = (username, email, password) => {
   return async dispatch => {
     const res = await axios.post('/api/users/signup', { username, email, password })
-    res.data = await res.json();
-    if (res.ok) {
+    if (res.statusText) {
       dispatch(setUser(res.data.user));
     }
     return res;

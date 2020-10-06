@@ -22,13 +22,8 @@ def load_videos():
   else:
     if 'user' in session:
       user = session['user']
-      print("INSIDE")
       videos = Video.query.filter(Video.owner_id != user["id"]).all()
-      print(videos)
-      print("~~~~~")
       data = [video.to_dict() for video in videos]
-      print(data)
-      print("~~~")
       return {"videos": data}, 200
     else:
       videos = Video.query.all()
