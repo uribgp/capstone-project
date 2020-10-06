@@ -29,7 +29,6 @@ import { useHistory } from 'react-router-dom';
   const videos = useSelector(state => state.videos.videos)
   const categories = useSelector(state => state.categories.categories)
   const user = useSelector(state => state.auth)
-  console.log(categories)
   if (!videos || !categories) return null
 
   return (

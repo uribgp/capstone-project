@@ -19,7 +19,6 @@ export const loadVideosByCategory = (videos) => {
 
 export const getCategories = () => {
     return async dispatch => {
-        console.log("INSIDE")
         const res = await axios.get('/api/categories/')
     if(res.statusText){
       dispatch(loadCategories(res.data.categories))

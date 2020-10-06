@@ -1,11 +1,14 @@
 import React, { useEffect } from 'react';
-import { getVideos, postVideo, getCategories, getProjectsByCategory } from '../store/video';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 
 export default function HomePage() {  
+    const dispatch = useDispatch();
+    const history = useHistory();
     
-    
+    const videos = useSelector(state => state.categories.videos)
+    if (!videos) return null
+    console.log(videos)
     return (
     <>
     <h1>Category Page</h1>
