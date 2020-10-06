@@ -1,5 +1,8 @@
+import axios from "axios";
+
 const SET_USER = 'auth/SET_USER';
 const LOGOUT_USER = 'auth/LOGOUT_USER';
+
 
 export const setUser = (user) => {
   if(!user){
@@ -14,21 +17,17 @@ export const setUser = (user) => {
   };
 };
 
+
 export const logoutUser = () => {
   return {
     type: LOGOUT_USER
   }
 }
 
+
 export const login = (email, password) => {
   return async dispatch => {
-    const res = await fetch('/api/session', {
-      method: 'post',
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ email, password })
-    })
+    const res = await axios.post('/api/session', { email, password })
     res.data = await res.json();
     if (res.ok) { 
       dispatch(setUser(res.data.user))
@@ -37,15 +36,10 @@ export const login = (email, password) => {
   }
 }
 
+
 export const signup = (username, email, password) => {
   return async dispatch => {
-    const res = await fetch('/api/users/signup', {
-      method: 'post',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ username, email, password })
-    })
+    const res = await axios.post('/api/users/signup', { username, email, password })
     res.data = await res.json();
     if (res.ok) {
       dispatch(setUser(res.data.user));
@@ -55,19 +49,16 @@ export const signup = (username, email, password) => {
 }
 
 
-
 export const logout = () => {
   return async dispatch => {
-    const res = await fetch('/api/session', {
-      method: 'delete',
-      headers: { },
-    })
+    const res = await axios.delete('/api/session')
     if (res.ok) {
       dispatch(logoutUser());
     }
     return res;
   }
 }
+
 
 export default function authReducer(state = {}, action) {
   // Object.freeze(state)

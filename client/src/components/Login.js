@@ -31,7 +31,7 @@ function Login() {
 
   const demo = e => {
     e.preventDefault();
-    dispatch(login('demo@moneypit.com', 'password'))
+    dispatch(login('demo@demo.com', 'password'))
   };
   if (currentUserId) return <Redirect to='/' />
   return (
