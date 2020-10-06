@@ -27,6 +27,8 @@ rope = "*"
 alembic = "*"
 flask-migrate = "*"
 flask-login = "*"
+flask-wtf = "==0.14.3"
+wtforms = "==2.3.3"
 
 [requires]
 python_version = "3.8"
