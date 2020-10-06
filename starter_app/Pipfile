@@ -29,6 +29,7 @@ rope = "*"
 alembic = "*"
 flask-migrate = "*"
 flask-login = "*"
+flask-appbuilder = "*"
 
 [requires]
 python_version = "3.8"

@@ -1,6 +1,8 @@
 from flask_sqlalchemy import SQLAlchemy
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import UserMixin
+from sqlalchemy import Column, Integer, String, ForeignKey, DateTime
+from sqlalchemy.orm import relationship
 import datetime
 
 db = SQLAlchemy()
@@ -8,12 +10,12 @@ db = SQLAlchemy()
 class User(db.Model, UserMixin):
   __tablename__ = 'users'
 
-  id = db.Column(db.Integer, primary_key=True)
-  username = db.Column(db.String(30), nullable=False)
-  email = db.Column(db.String(30), nullable=False, unique=True)
-  hashed_password = db.Column(db.String(100), nullable=False)
-  created_at = db.Column(db.DateTime, nullable=False, default=datetime.datetime.utcnow)
-  updated_at = db.Column(db.DateTime, nullable=False, default=datetime.datetime.utcnow)
+  id = Column(Integer, primary_key=True)
+  username = Column(String(30), nullable=False)
+  email = Column(String(30), nullable=False, unique=True)
+  hashed_password = Column(String(100), nullable=False)
+  created_at = Column(DateTime, nullable=False, default=datetime.datetime.utcnow)
+  updated_at = Column(DateTime, nullable=False, default=datetime.datetime.utcnow)
 
   @property
   def password(self):
@@ -31,5 +33,78 @@ class User(db.Model, UserMixin):
       "id": self.id,
       "username": self.username,
       "email": self.email,
+      "created_at": self.created_at.strftime("%B %Y")
+    }
+
+class Video(db.Model):
+  __tablename__ = 'videos'
+
+  id = Column(Integer, primary_key=True)
+  title = Column(String(30), nullable=False)
+  description = Column(String(300), nullable=False)
+  link = Column(String(300), nullable=False)
+  thumbnail = Column(String(300), nullable=False)
+  created_at = Column(DateTime, nullable=False, default=datetime.datetime.utcnow)
+  updated_at = Column(DateTime, nullable=False, default=datetime.datetime.utcnow)
+
+  def to_dict(self):
+    return {
+      "id": self.id,
+      "title": self.title,
+      "description": self.description,
+      "link": self.link,
+      "thumbnail": self.thumbnail,
+      "created_at": self.created_at.strftime("%B %Y")
+    }
+
+class Video_user(db.Model):
+  __tablename__ = "video_user"
+
+  id = Column(Integer, primary_key=True)
+  user_id = Column(Integer, ForeignKey("users.id"), nullable=False)
+  video_id = Column(Integer, ForeignKey("videos.id"), nullable=False)
+
+  user = relationship("User", foreign_keys =[user_id])
+  video = relationship("Video", foreign_keys=[video_id])
+
+class Comment(db.Model):
+  __tablename__ = 'comments'
+
+  id = Column(Integer, primary_key=True)
+  title = Column(String(30), nullable=False)
+  text = Column(String(300), nullable=False)
+  timestamp = Column(String(300), nullable=False)
+  created_at = Column(DateTime, nullable=False, default=datetime.datetime.utcnow)
+  updated_at = Column(DateTime, nullable=False, default=datetime.datetime.utcnow)
+
+  def to_dict(self):
+    return {
+      "id": self.id,
+      "title": self.title,
+      "text": self.text,
+      "timestamp": self.timestamp,
+      "created_at": self.created_at.strftime("%B %Y")
+    }
+
+
+class Comment_user(db.Model):
+  __tablename__ = 'comment_users'
+
+  id = Column(Integer, primary_key=True)
+  commenter_id = Column(Integer, ForeignKey("users.id"), nullable=False)
+  comment_id = Column(Integer, ForeignKey("comments.id"), nullable=False)
+  video_id = Column(Integer, ForeignKey("videos.id"), nullable=False)
+  created_at = Column(DateTime, nullable=False, default=datetime.datetime.utcnow)
+  updated_at = Column(DateTime, nullable=False, default=datetime.datetime.utcnow)
+  
+  commenter = relationship("User", foreign_keys=[commenter_id])
+  comment = relationship("Comment", foreign_keys =[comment_id])
+  video = relationship("Video", foreign_keys=[video_id])
+  
+  def to_dict(self):
+    return {
+      "id": self.id,
+      "commenter_id": self.commenter_id,
+      "video_id": self.video_id,
       "created_at": self.created_at.strftime("%B %Y")
     }
