@@ -29,10 +29,22 @@ export const getVideos = () => {
 }
 
 
-export const postVideo = (title, description, link, thumbnail, id, category_id) => {
+export const postVideo = (title, description, link, thumbnail, id, category_id, file) => {
+  console.log(file)
+  let formData = new FormData()
+  formData.append("title", title)
+  formData.append("description", description)
+  formData.append("link", link)
+  formData.append("thumbnail", thumbnail)
+  formData.append("id", id)
+  formData.append("category_id", category_id)
+  formData.append("file", file)
+  let config = { headers: {
+    'Content-Type': 'multipart/form-data'
+  } }
+  console.log(formData)
     return async dispatch => {
-      const res = await axios.post('/api/videos/', { title, description, link, thumbnail, id, category_id })
-      
+      const res = await axios.post('/api/videos/', formData, config)
       if (res.statusText) {
         dispatch(setVideo(res.data.video));
       }

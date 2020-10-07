@@ -31,7 +31,7 @@ export const login = (email, password) => {
     if (res.statusText && res.data.user) { 
       dispatch(setUser(res.data.user))
     }
-    else {
+    else if (res.statusText) {
       dispatch(setUser(res.data.msg))
     }
     return res
