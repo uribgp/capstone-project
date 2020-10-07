@@ -25,6 +25,7 @@ import { useHistory } from 'react-router-dom';
   }
 
   const handlePostVideo = () => {
+    console.log(file)
     // let formData = new FormData()
     // formData.append("user_id", currentUserId)
     // formData.append()
@@ -35,14 +36,11 @@ import { useHistory } from 'react-router-dom';
   const categories = useSelector(state => state.categories.categories)
   const user = useSelector(state => state.auth)
 
-  const updateFile = (e) => {
-    const { target: 
-      {
-        validity,
-        files: [file]
-      }
-    } = e;
-    return validity.valid && setFile({ file: file });
+  const handleFileChange = (e) => {
+    setFile({
+      preview: URL.createObjectURL(e.target.files[0]),
+      raw: e.target.files[0]
+    });
   }
 
   if (!videos || !categories) return null
@@ -56,7 +54,7 @@ import { useHistory } from 'react-router-dom';
     <input 
     type="file"
     // accept=".png,.jpg,.jpeg,.gif" Will need to decide what file types can be uploaded
-    onChange={updateFile} />
+    onChange={handleFileChange} />
     </label>
     <button onClick={handlePostVideo}>Create Video</button>
     </>

@@ -30,7 +30,6 @@ export const getVideos = () => {
 
 
 export const postVideo = (title, description, link, thumbnail, id, category_id, file) => {
-  console.log(file)
   let formData = new FormData()
   formData.append("title", title)
   formData.append("description", description)
@@ -38,7 +37,7 @@ export const postVideo = (title, description, link, thumbnail, id, category_id, 
   formData.append("thumbnail", thumbnail)
   formData.append("id", id)
   formData.append("category_id", category_id)
-  formData.append("file", file)
+  formData.append("file", file.raw)
   let config = { headers: {
     'Content-Type': 'multipart/form-data'
   } }
