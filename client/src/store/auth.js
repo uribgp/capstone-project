@@ -28,10 +28,13 @@ export const logoutUser = () => {
 export const login = (email, password) => {
   return async dispatch => {
     const res = await axios.post('/api/session', { email, password })
-    if (res.statusText) { 
+    if (res.statusText && res.data.user) { 
       dispatch(setUser(res.data.user))
     }
-    return res;
+    else {
+      dispatch(setUser(res.data.msg))
+    }
+    return res
   }
 }
 

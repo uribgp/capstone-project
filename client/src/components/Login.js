@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { login } from '../store/auth';
 import { Redirect, Link } from 'react-router-dom';
@@ -10,10 +10,11 @@ function Login() {
   const [noEmail, setNoEmail] = useState('');
   const [noPassword, setNoPassword] = useState('');
   const currentUserId = useSelector(state => state.auth.id);
-
+  const error = useSelector(state => state.auth)
   const dispatch = useDispatch();
   let emailDiv = "form-input";
   let passwordDiv = "form-input";
+
   const handleSubmit = e => {
     e.preventDefault();
     setNoEmail('');
@@ -26,14 +27,22 @@ function Login() {
     } else if (email && !password) {
       passwordDiv = "bad-input";
       setNoPassword("What's the password?");
+    } else if (!email && !password) {
+      emailDiv = "bad-input";
+      setNoEmail("Oi! We're gonna need that email of yours!")
+      passwordDiv = "bad-input";
+      setNoPassword("What's the password?");
     }
   }
-
   const demo = e => {
     e.preventDefault();
     dispatch(login('demo@demo.com', 'password'))
   };
   if (currentUserId) return <Redirect to='/' />
+  if (error.length) {
+    emailDiv = "bad-input";
+    passwordDiv = "bad-input"
+  }
   return (
     <>
       <div className='loginWrapper'>
@@ -43,7 +52,7 @@ function Login() {
             </div>
             <form className='loginContainer__form' onSubmit={handleSubmit}>
               <div>
-                <span style={{ color: 'red' }}>{noEmail}</span>
+                {error.length ? <span style={{ color: 'red' }}>{error}</span> : <span style={{ color: 'red' }}>{noEmail}</span> }
                 <input type='email' className={emailDiv} name='email' value={email} placeholder="Email" onChange={e => setEmail(e.target.value)} />
               </div>
               <div>

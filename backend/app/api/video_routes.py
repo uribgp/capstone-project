@@ -30,19 +30,3 @@ def load_videos():
       videos = Video.query.all()
       data = [video.to_dict() for video in videos]
       return {"videos": data}, 200
-
-
-@video_routes.route('/categories')
-def get_categories():
-  categories = Category.query.all()
-  data = [category.to_dict() for category in categories]
-  return {"categories": data}, 200
-
-@video_routes.route('/search_by_category')
-def get_by_category():
-    category_search = request.args.get('category', None)
-    category = Category.query.filter(
-        Category.title.ilike(category_search.strip())).one()
-    videos = Video.query.filter(Video.category_id == category.id).all()
-    data = [video.to_dict() for video in videos]
-    return {"videos": data}
