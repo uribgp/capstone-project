@@ -1,7 +1,8 @@
 const axios = require('axios');
 
 export const SET_VIDEOS = 'videos/all';
-export const SET_VIDEO = '/video/single';
+export const SET_VIDEO = '/videos/single';
+export const SET_VIDEOS_BY_OWNER = 'videos/owner'
 
 export const loadVideos = (videos) => { 
     return {
@@ -15,6 +16,13 @@ export const setVideo = (video) => {
         type: SET_VIDEO,
         video
     }
+}
+
+export const setVideosByOwner = (videos) => {
+  return {
+    type: SET_VIDEOS_BY_OWNER,
+    videos
+  }
 }
 
 
@@ -53,3 +61,13 @@ export const postVideo = (title, description, link, thumbnail, id, category_id, 
       return res;
     }
   }
+
+export const getVideosByOwner = () => {
+  return async dispatch => {
+    const res = await axios.get('/api/videos/by_owner')
+    if(res.statusText){
+      dispatch(setVideosByOwner(res.data.videos))
+    }
+    return res;
+  }
+}

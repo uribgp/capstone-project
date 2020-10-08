@@ -50,3 +50,10 @@ def load_files():
       videos = Video.query.all()
       data = [video.to_dict() for video in videos]
       return {"videos": data}, 200
+
+@video_routes.route('/by_owner')
+def vids_by_owner():
+    user = session['user']
+    videos = Video.query.filter(Video.owner_id == user["id"]).all()
+    data = [video.to_dict() for video in videos]
+    return {"videos": data}, 200

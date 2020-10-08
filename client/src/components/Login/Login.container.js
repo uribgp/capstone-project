@@ -33,7 +33,9 @@ function LoginContainer({login, authenticated}) {
     login(email.toLocaleLowerCase(), password)
   };
 
-  const handleOnDemoClick = () => {};
+  const handleOnDemoClick = () => {
+    login("demo@demo.com", "password")
+  };
 
   return (
     <Login

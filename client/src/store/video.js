@@ -1,7 +1,7 @@
 const axios = require('axios');
 
 const SET_VIDEOS = 'videos/all';
-const SET_VIDEO = '/video/single';
+const SET_VIDEO = 'video/single';
 
 export const loadVideos = (videos) => { 
     return {

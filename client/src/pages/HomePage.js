@@ -10,7 +10,7 @@ import { useHistory } from 'react-router-dom';
   const dispatch = useDispatch();
   const history = useHistory();
   const [file, setFile] = useState(null);
-  const currentUserId = useSelector(state => state.auth);
+  const currentUserId = useSelector(state => state.user);
 console.log(currentUserId)
   useEffect(() => {
     dispatch(getVideos())
