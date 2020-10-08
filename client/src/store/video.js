@@ -41,7 +41,6 @@ export const postVideo = (title, description, link, thumbnail, id, category_id, 
   let config = { headers: {
     'Content-Type': 'multipart/form-data'
   } }
-  console.log(formData)
     return async dispatch => {
       const res = await axios.post('/api/videos/', formData, config)
       if (res.statusText) {

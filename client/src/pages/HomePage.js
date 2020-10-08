@@ -25,10 +25,6 @@ import { useHistory } from 'react-router-dom';
   }
 
   const handlePostVideo = () => {
-    console.log(file)
-    // let formData = new FormData()
-    // formData.append("user_id", currentUserId)
-    // formData.append()
     dispatch(postVideo('abc', 'def', 'ghi', 'jkl', user.id, 1, file))
   }
 

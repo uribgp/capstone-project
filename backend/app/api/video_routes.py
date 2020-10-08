@@ -25,15 +25,20 @@ def load_videos():
     user = User.query.filter(User.id == owner_id).first()
     file = request.files["file"]
     file.filename = secure_filename(file.filename)
-    folder = f'{id}/videos/'
+    folder = f'{owner_id}/videos/'
     location = folder + file.filename
     print("~~~")
-    s3.upload_fileobj(file, BUCKET_NAME, folder, ExtraArgs={'ACL': 'public-read', "ContentType": file.content_type})
-
+    print(folder)
+    # s3.upload_fileobj(Bucket=BUCKET_NAME, 
+    #         #    Set filename and key
+    #            Filename=file, 
+    #            Key=location)
+    s3.upload_fileobj(file, BUCKET_NAME, location, ExtraArgs={'ACL': 'private'})
+# , ExtraArgs={'ACL': 'public-read', "ContentType": file.content_type}
     video = Video(
       title=request.form.get('title', None),
       description=request.form.get('description', None),
-      link=request.form.get('link', None),
+      link=f'{BUCKET_URL}/{folder}{file.filename}',
       thumbnail=request.form.get('thumbnail', None),
       owner_id=owner_id,
       category_id=request.form.get('category_id', None)
