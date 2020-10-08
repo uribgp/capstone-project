@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import {Redirect, Route} from 'react-router-dom'
-import LoginContainer from './components/Login/Login.container';
+// import LoginContainer from './components/Login/Login.container';
 
 function PrivateRoutes({authenticated}) {
   

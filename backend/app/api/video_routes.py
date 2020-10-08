@@ -13,16 +13,16 @@ BUCKET_URL = os.environ.get('BUCKET_URL')
 BUCKET_NAME = os.environ.get('BUCKET_NAME')
 ACCESS_ID = os.environ.get('AWS_ACCESS_KEY_ID')
 ACCESS_KEY = os.environ.get('AWS_SECRET_ACCESS_KEY')
+REGION_NAME = os.environ.get('AWS_REGION_NAME')
 
-s3 = boto3.client('s3', region_name='us-west-2', aws_access_key_id=ACCESS_ID, 
+s3 = boto3.client('s3', region_name=REGION_NAME, aws_access_key_id=ACCESS_ID, 
                     aws_secret_access_key=ACCESS_KEY)
 
 
 @video_routes.route('/', methods=['GET', 'POST'])
-def load_videos():
+def load_files():
   if request.method == 'POST':
-    owner_id = request.form.get('id', None)
-    user = User.query.filter(User.id == owner_id).first()
+    user_id = request.form.get('id', None)
     file = request.files["file"]
     file.filename = secure_filename(file.filename)
     folder = f'{owner_id}/videos/'

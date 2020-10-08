@@ -1,33 +1,41 @@
 import React, {useEffect, useState} from 'react';
-import { useDispatch } from 'react-redux'
-import { BrowserRouter } from 'react-router-dom';
-import Pages from './pages/Pages'
-import { setUser } from './store/auth'
+import { connect, useDispatch } from 'react-redux'
+import { BrowserRouter, Switch } from 'react-router-dom';
+import LoadingSpinner from './components/Shared/LoadingSpinner/LoadingSpinner';
+// import Pages from './pages/Pages'
+// import { setUser } from './store/auth'
+import PrivateRoutes from './PrivateRoutes';
+import PublicRoutes from './PublicRoutes';
+import { authenticate, login } from './store/user/user-actions';
 
-function App() {
-  const [loading, setLoading] = useState(true);
-  const dispatch = useDispatch();
 
+
+function App({ authenticateUser, userLoading, userAuthenticated }) {
   useEffect(() => {
-    const loadUser = async () => {
-      // enter your back end route to get the current user
-      const res = await fetch("/api/session/current");
-      if (res.ok) {
-        res.data = await res.json(); // current user info - obj with key of user
-        dispatch(setUser(res.data.user));
-      }
-      setLoading(false);
-    }
-    loadUser();
-  }, [dispatch]);
+    authenticateUser();
+  }, []);
 
-  if(loading) return null;
-    
+  if (userLoading) {
+    return <LoadingSpinner />;
+  }
+
   return (
     <BrowserRouter>
-      <Pages />
+      <Switch>
+        <PublicRoutes />
+        <PrivateRoutes />
+      </Switch>
     </BrowserRouter>
   );
 }
 
-export default App;
+const mapStateToProps = (state) => ({
+  userLoading: state.user.loading,
+  userAuthenticated: state.user.authenticated,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  authenticateUser: () => dispatch(authenticate()),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);

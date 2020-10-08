@@ -10,7 +10,7 @@ import { useHistory } from 'react-router-dom';
   const dispatch = useDispatch();
   const history = useHistory();
   const [file, setFile] = useState(null);
-  const currentUserId = useSelector(state => state.auth.id);
+  const currentUserId = useSelector(state => state.auth);
 
   useEffect(() => {
     dispatch(getVideos())
@@ -25,7 +25,7 @@ import { useHistory } from 'react-router-dom';
   }
 
   const handlePostVideo = () => {
-    dispatch(postVideo('abc', 'def', 'ghi', 'jkl', user.id, 1, file))
+    dispatch(postVideo('abc', 'def', 'ghi', 'jkl', 555, 1, file))
   }
 
   const videos = useSelector(state => state.videos.videos)

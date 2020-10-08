@@ -2,29 +2,32 @@ import boto3
 import os
 
 #s3 is used for uploading files
-BUCKET_URL = os.environ.get('BUCKET_URL')
 BUCKET_NAME = os.environ.get('BUCKET_NAME')
 ACCESS_ID = os.environ.get('AWS_ACCESS_KEY_ID')
 ACCESS_KEY = os.environ.get('AWS_SECRET_ACCESS_KEY')
+REGION_NAME = os.environ.get('AWS_REGION_NAME')
 
-s3 = boto3.client('s3', region_name='us-west-2', aws_access_key_id=ACCESS_ID, 
+
+# Building your client
+s3 = boto3.client('s3', region_name=REGION_NAME, aws_access_key_id=ACCESS_ID, 
                     aws_secret_access_key=ACCESS_KEY)
 
-# grabs all buckets
+
+# grabbing all of your buckets
 response = s3.list_buckets()
 
-# Iterate over Buckets from response
+# Iterate over Buckets for response
 for bucket in response['Buckets']:
   
   	# Print the Name for each bucket
     print(bucket['Name'])
 
 
-# Upload database.py with key 2019/final_report_01_01.csv
-s3.upload_file(Bucket='capstone-project-steven', 
-            #    Set filename and key
+# Upload database.py with key test/testfile.csv
+s3.upload_file(Bucket=BUCKET_NAME, 
+#    Set filename and key.  database.py is any file on the same level as this file.  Purely for testing
                Filename='database.py', 
-               Key='2019/final_report_01_01123123.csv')
+               Key='test/testfile.csv')
 
 # Get object metadata and print it
 # response = s3.head_object(Bucket='capstone-project-steven', 
