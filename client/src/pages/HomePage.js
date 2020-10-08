@@ -11,7 +11,7 @@ import { useHistory } from 'react-router-dom';
   const history = useHistory();
   const [file, setFile] = useState(null);
   const currentUserId = useSelector(state => state.auth);
-
+console.log(currentUserId)
   useEffect(() => {
     dispatch(getVideos())
     dispatch(getCategories())
@@ -25,7 +25,6 @@ import { useHistory } from 'react-router-dom';
   }
 
   const handlePostVideo = () => {
-    // make the object here to send down.
     dispatch(postVideo('abc', 'def', 'ghi', 'jkl', 555, 1, file))
   }
 

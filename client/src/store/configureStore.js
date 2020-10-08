@@ -3,7 +3,7 @@ import thunk from 'redux-thunk';
 import user from './user/user-reducer';
 import videos from './video'
 import categories from './category'
-
+import logger from 'redux-logger'
 const rootReducer = combineReducers({
   user, videos, categories
 });
@@ -12,7 +12,8 @@ let storeEnhancer;
 
 if (process.env.NODE_ENV !== 'production') {
   const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
-  storeEnhancer = composeEnhancers(applyMiddleware(thunk));
+  const middlewares = [thunk, logger]
+  storeEnhancer = composeEnhancers(applyMiddleware(...middlewares));
 } else {
   storeEnhancer = applyMiddleware(thunk);
 }

@@ -1,7 +1,8 @@
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
-import LoginContainer from './Login/Login.container';
+
 import Signup from '../components/Signup'
+import LoginContainer from './Login/Login.container';
 
 
 

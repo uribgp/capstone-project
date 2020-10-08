@@ -8,6 +8,7 @@ export default function HomePage() {
     
     const videos = useSelector(state => state.categories.videos)
     if (!videos) return null
+    console.log(videos)
     return (
     <>
     <h1>Category Page</h1>
