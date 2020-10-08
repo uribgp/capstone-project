@@ -53,7 +53,16 @@ def load_files():
 
 @video_routes.route('/by_owner')
 def vids_by_owner():
-    user = session['user']
-    videos = Video.query.filter(Video.owner_id == user["id"]).all()
-    data = [video.to_dict() for video in videos]
-    return {"videos": data}, 200
+  user = session['user']
+  videos = Video.query.filter(Video.owner_id == user["id"]).all()
+  data = [video.to_dict() for video in videos]
+  return {"videos": data}, 200
+
+@video_routes.route('/single')
+def load_video():
+  vidId = request.args.get('id', None)
+  video = Video.query.get(vidId)
+  # comments = Comment.query.filter(Comment.video_id == vidId).all()
+  # comments = [comment.to_dict for comment in comments]
+  video = video.to_dict()
+  return {"video": video}, 200

@@ -1,4 +1,4 @@
-import { SET_CATEGORIES, SET_VIDEOS_BY_CATEGORY } from './category-action';
+import { SET_CATEGORIES, SET_VIDEOS_BY_CATEGORY } from './category-actions';
 
 export default function categoriesReducer(state={}, action) {
     switch (action.type) {

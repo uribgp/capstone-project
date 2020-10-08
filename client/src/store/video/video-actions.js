@@ -65,8 +65,18 @@ export const postVideo = (title, description, link, thumbnail, id, category_id, 
 export const getVideosByOwner = () => {
   return async dispatch => {
     const res = await axios.get('/api/videos/by_owner')
-    if(res.statusText){
+    if (res.statusText){
       dispatch(setVideosByOwner(res.data.videos))
+    }
+    return res;
+  }
+}
+
+export const getVideo = (id) => {
+  return async dispatch => {
+    const res = await axios.get(`/api/videos/single?id=${id}`)
+    if (res.statusText){
+      dispatch(setVideo(res.data.video))
     }
     return res;
   }

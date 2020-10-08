@@ -107,8 +107,14 @@ class Comment(db.Model):
   title = Column(String(30), nullable=False)
   text = Column(String(300), nullable=False)
   timestamp = Column(String(300), nullable=False)
+  user_name = Column(String(200), nullable=False)
+  video_id = Column(Integer, ForeignKey("videos.id"), nullable=False)
+  user_id = Column(Integer, ForeignKey("users.id"), nullable=False)
   created_at = Column(DateTime, nullable=False, default=datetime.datetime.utcnow)
   updated_at = Column(DateTime, nullable=False, default=datetime.datetime.utcnow)
+
+  user = relationship("User", foreign_keys =[user_id])
+  video = relationship("Video", foreign_keys=[video_id])
 
   def to_dict(self):
     return {
