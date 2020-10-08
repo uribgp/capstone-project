@@ -25,6 +25,7 @@ import { useHistory } from 'react-router-dom';
   }
 
   const handlePostVideo = () => {
+    // make the object here to send down.
     dispatch(postVideo('abc', 'def', 'ghi', 'jkl', 555, 1, file))
   }
 

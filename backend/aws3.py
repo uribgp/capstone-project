@@ -1,7 +1,7 @@
 import boto3
 import os
 
-#s3 is used for uploading files
+
 BUCKET_NAME = os.environ.get('BUCKET_NAME')
 ACCESS_ID = os.environ.get('AWS_ACCESS_KEY_ID')
 ACCESS_KEY = os.environ.get('AWS_SECRET_ACCESS_KEY')

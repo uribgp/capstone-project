@@ -31,6 +31,10 @@ export const getVideos = () => {
 
 export const postVideo = (title, description, link, thumbnail, id, category_id, file) => {
   let formData = new FormData()
+  // how fast is it uploading larger files?
+  // limit file size?
+  // s3 bucket, is there a limitation?  Do I need to check settings.  
+  // if a file is too big or s3 is getting full, protect myself.
   formData.append("title", title)
   formData.append("description", description)
   formData.append("link", link)

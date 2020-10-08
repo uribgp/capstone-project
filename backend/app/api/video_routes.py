@@ -22,19 +22,12 @@ s3 = boto3.client('s3', region_name=REGION_NAME, aws_access_key_id=ACCESS_ID,
 @video_routes.route('/', methods=['GET', 'POST'])
 def load_files():
   if request.method == 'POST':
-    user_id = request.form.get('id', None)
+    owner_id = request.form.get('id', None)
     file = request.files["file"]
     file.filename = secure_filename(file.filename)
     folder = f'{owner_id}/videos/'
     file_path = folder + file.filename
-    print("~~~")
-    print(folder)
-    # s3.upload_fileobj(Bucket=BUCKET_NAME, 
-    #         #    Set filename and key
-    #            Filename=file, 
-    #            Key=location)
-    s3.upload_fileobj(file, BUCKET_NAME, file_path, ExtraArgs={'ACL': 'private', "ContentType": file.content_type})
-# , ExtraArgs={'ACL': 'public-read', "ContentType": file.content_type}
+    s3.upload_fileobj(file, BUCKET_NAME, file_path, ExtraArgs={'ACL': 'public-read', "ContentType": file.content_type})
     external_link = f'{BUCKET_URL}/{folder}{file.filename}'
     video = Video(
       title=request.form.get('title', None),
