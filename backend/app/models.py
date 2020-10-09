@@ -72,6 +72,7 @@ class Video(db.Model):
   description = Column(String(300), nullable=False)
   link = Column(String(300), nullable=False)
   thumbnail = Column(String(300), nullable=False)
+  staff_pick = db.Column(db.Boolean, default=False)
   owner_id = db.Column(Integer, ForeignKey('users.id'), nullable=False)
   category_id = db.Column(Integer, ForeignKey('categories.id'))
   created_at = Column(DateTime, nullable=False, default=datetime.datetime.utcnow)

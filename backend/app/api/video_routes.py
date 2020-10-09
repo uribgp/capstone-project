@@ -69,3 +69,9 @@ def load_video():
   # comments = [comment.to_dict for comment in comments]
   video = video.to_dict()
   return {"video": video}, 200
+
+@video_routes.route('/search_by_featured')
+def get_featured_videos():
+    videos = Video.query.filter(Video.staff_pick == True).all()
+    data = [video.to_dict() for video in videos]
+    return {"videos": data}

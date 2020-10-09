@@ -9,7 +9,7 @@ export default function Video() {
     const dispatch = useDispatch();
     const history = useHistory();
     let { id } = useParams();
-    console.log(id)
+
 
     useEffect(() => {
         dispatch(getVideoById(id))
@@ -17,7 +17,7 @@ export default function Video() {
     
 
     const videos = useSelector(state => state.videos)
-    console.log(videos)
+
     if (!videos) return null
     return (
     <>

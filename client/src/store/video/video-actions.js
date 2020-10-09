@@ -2,7 +2,8 @@ const axios = require('axios');
 
 export const SET_VIDEOS = 'videos/all';
 export const SET_VIDEO = '/videos/single';
-export const SET_VIDEOS_BY_OWNER = 'videos/owner'
+export const SET_VIDEOS_BY_OWNER = 'videos/owner';
+export const SET_FEATURED_VIDEOS = 'videos/get_featured';
 
 export const loadVideos = (videos) => { 
     return {
@@ -33,6 +34,13 @@ export const getVideos = () => {
       dispatch(loadVideos(res.data.videos));
     }
     return res;
+  }
+}
+
+export const loadFeaturedVideos = (videos) => {
+  return {
+    type: SET_FEATURED_VIDEOS,
+    videos: videos
   }
 }
 
@@ -77,6 +85,16 @@ export const getVideoById = (id) => {
     const res = await axios.get(`/api/videos/single?id=${id}`)
     if (res.statusText){
       dispatch(setVideo(res.data.video))
+    }
+    return res;
+  }
+}
+
+export const getFeaturedVideos = () => {
+  return async dispatch => {
+    const res = await axios.get('/api/videos/search_by_featured')
+    if (res.statusText) {
+      dispatch(loadFeaturedVideos(res.data.videos))
     }
     return res;
   }

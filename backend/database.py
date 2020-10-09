@@ -41,9 +41,16 @@ with app.app_context():
 
   # VIDEOS
 
-  video1 = Video(title = 'hello', description = "it's me", link = "can't remember this line", thumbnail = "The way we used to be.", owner_id = 1, category_id = 2)
-  video2 = Video(title = 'video2', description = "asdfasdf", link = 'asdfasdf', thumbnail = 'asdfasdf', owner_id = 555, category_id = 1)
+  video1 = Video(title = 'hello', description = "it's me", link = "https://capstone-project-steven.s3-us-west-1.amazonaws.com/555/videos/VID_20201008_212621996.mp4", thumbnail = "https://images.unsplash.com/flagged/photo-1580051743902-bfebe05d70e0?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2640&q=80", owner_id = 1, category_id = 2, staff_pick = True)
+  video2 = Video(title = 'hello', description = "it's me", link = "https://capstone-project-steven.s3-us-west-1.amazonaws.com/555/videos/VID_20201008_212621996.mp4", thumbnail = "https://images.unsplash.com/flagged/photo-1580051743902-bfebe05d70e0?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2640&q=80", owner_id = 1, category_id = 1, staff_pick = True)
+  video3 = Video(title = 'hello', description = "it's me", link = "https://capstone-project-steven.s3-us-west-1.amazonaws.com/555/videos/VID_20201008_212621996.mp4", thumbnail = "https://images.unsplash.com/flagged/photo-1580051743902-bfebe05d70e0?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2640&q=80", owner_id = 1, category_id = 3, staff_pick = True)
+  video4 = Video(title = 'hello', description = "it's me", link = "https://capstone-project-steven.s3-us-west-1.amazonaws.com/555/videos/VID_20201008_212621996.mp4", thumbnail = "https://images.unsplash.com/flagged/photo-1580051743902-bfebe05d70e0?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2640&q=80", owner_id = 1, category_id = 4, staff_pick = True)
+
+  video5 = Video(title = 'video2', description = "asdfasdf", link = 'https://capstone-project-steven.s3-us-west-1.amazonaws.com/555/videos/VID_20201008_212621996.mp4', thumbnail = 'https://images.unsplash.com/flagged/photo-1580051743902-bfebe05d70e0?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2640&q=80', owner_id = 555, category_id = 1)
   db.session.add(video1)
   db.session.add(video2)
+  db.session.add(video3)
+  db.session.add(video4)
+  db.session.add(video5)
 
   db.session.commit()

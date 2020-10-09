@@ -9,9 +9,9 @@ import { setUser } from './store/auth';
 import { authenticate, login } from './store/user/user-actions';
 
 function App({ authenticateUser, userLoading, userAuthenticated }) {
-  useEffect(() => {
-    authenticateUser();
-  }, []);
+  // useEffect(() => {
+  //   authenticateUser();
+  // }, []);
 
   if (userLoading) {
     return <LoadingSpinner />;
