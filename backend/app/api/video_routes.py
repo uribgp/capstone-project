@@ -39,6 +39,7 @@ def load_files():
     )
     db.session.add(video)
     db.session.commit()
+    print(external_link)
     return {"video": video.to_dict()}, 200
   else:
     if 'user' in session:
