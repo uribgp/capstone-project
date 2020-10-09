@@ -72,7 +72,7 @@ export const getVideosByOwner = () => {
   }
 }
 
-export const getVideo = (id) => {
+export const getVideoById = (id) => {
   return async dispatch => {
     const res = await axios.get(`/api/videos/single?id=${id}`)
     if (res.statusText){

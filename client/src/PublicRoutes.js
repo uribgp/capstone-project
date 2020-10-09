@@ -13,7 +13,7 @@ export default function PublicRoutes() {
     <>
     <Route exact path="/" component={HomePage} />
     <Route exact path="/login" component={LoginContainer} />
-    <Route exact path ="/user/:id" component={UserPage} />
+    <Route exact path ="/user/?id:id" component={UserPage} />
     <Route exact path ="/video/:id" component={Video} />
     </>
   )

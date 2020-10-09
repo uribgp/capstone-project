@@ -7,7 +7,7 @@ export default function videosReducer(state={}, action) {
         case SET_VIDEO:
             return {...state, video: action.video};
         case SET_VIDEOS_BY_OWNER:
-            return {...state, ownedVidoes: action.videos};
+            return {...state, ownedVideos: action.videos};
         default:
             return state;
     }
