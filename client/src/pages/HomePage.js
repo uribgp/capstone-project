@@ -50,7 +50,7 @@ import Featured from '../components/HomePage/Featured';
     history.push(`/video/${id}`)
   }
 
-  if (!featuredVideos || !category_list) return null
+  if (!featuredVideos || !category_list || !catList || !catList2) return null
 
   return (
     <>

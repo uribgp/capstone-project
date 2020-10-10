@@ -1,4 +1,4 @@
-import { SET_VIDEO, SET_VIDEOS, SET_FEATURED_VIDEOS, SET_VIDEOS_BY_OWNER } from './video-actions';
+import { SET_VIDEO, SET_VIDEOS, SET_FEATURED_VIDEOS, SET_VIDEOS_BY_OWNER, SET_VIDEOS_BY_CATEGORY } from './video-actions';
 
 export default function videosReducer(state={}, action) {
     switch (action.type) {
@@ -9,7 +9,9 @@ export default function videosReducer(state={}, action) {
         case SET_VIDEOS_BY_OWNER:
             return {...state, ownedVidoes: action.videos};
         case SET_FEATURED_VIDEOS:
-            return { ...state, featuredVideos: action.videos }
+            return { ...state, featuredVideos: action.videos};
+        case SET_VIDEOS_BY_CATEGORY:
+            return { ...state, categoryVideos: action.videos};
         default:
             return state;
     }
