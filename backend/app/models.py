@@ -1,7 +1,7 @@
 from flask_sqlalchemy import SQLAlchemy
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import UserMixin
-from sqlalchemy import Column, Integer, String, ForeignKey, DateTime
+from sqlalchemy import Column, Integer, String, Boolean, ForeignKey, DateTime
 from sqlalchemy.orm import relationship
 import datetime
 
@@ -72,13 +72,17 @@ class Video(db.Model):
   description = Column(String(300), nullable=False)
   link = Column(String(300), nullable=False)
   thumbnail = Column(String(300), nullable=False)
-  staff_pick = db.Column(db.Boolean, default=False)
-  owner_id = db.Column(Integer, ForeignKey('users.id'), nullable=False)
-  category_id = db.Column(Integer, ForeignKey('categories.id'))
+  staff_pick = Column(Boolean, default=False)
+  total_comments = Column(Integer,default=0)
+  owner_id = Column(Integer, ForeignKey('users.id'), nullable=False)
+  category_id = Column(Integer, ForeignKey('categories.id'))
   created_at = Column(DateTime, nullable=False, default=datetime.datetime.utcnow)
   updated_at = Column(DateTime, nullable=False, default=datetime.datetime.utcnow)
 
   owner = db.relationship("User", foreign_keys=[owner_id])
+
+  def increment(self):
+    self.total_comments += 1
 
   def to_dict(self):
     return {
