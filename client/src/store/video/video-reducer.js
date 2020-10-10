@@ -1,4 +1,4 @@
-import { SET_VIDEO, SET_VIDEOS, SET_VIDEOS_BY_OWNER } from './video-actions';
+import { SET_VIDEO, SET_VIDEOS, SET_VIDEOS_BY_OWNER, SET_VIDEOS_BY_FEATURED } from './video-actions';
 
 export default function videosReducer(state={}, action) {
     switch (action.type) {

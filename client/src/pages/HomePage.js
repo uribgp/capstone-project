@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { getVideos, postVideo, getFeaturedVideos } from '../store/video/video-actions';
-import { getCategories, getVideosByCategory } from '../store/category';
+import { getCategories, getVideosByCategory } from '../store/category/category-actions';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import '../css/homepage.css';
+import Featured from '../components/HomePage/Featured';
 // import Login from '../components/Login'
 
 
@@ -30,7 +31,7 @@ import '../css/homepage.css';
     dispatch(postVideo('abc', 'def', 'ghi', 'jkl', 555, 1, file))
   }
 
-  const videos = useSelector(state => state.videos.videos)
+  const featuredVideos = useSelector(state => state.videos.featuredVideos)
   const category_list = useSelector(state => state.categories.categories)
   const user = useSelector(state => state.auth)
   const catList = useSelector(state => state.videos.videos)
@@ -49,8 +50,8 @@ import '../css/homepage.css';
     history.push(`/video/${id}`)
   }
 
-  if (!videos || !category_list) return null
-  console.log(videos)
+  if (!featuredVideos || !category_list) return null
+
   return (
     <>
       <div className='homeBody'>
@@ -76,48 +77,10 @@ import '../css/homepage.css';
               }
             </div>
           </div>
-          <div className='homeHeader'>
-            <div className='homeHeader__leftside'>
-              <p id='featuredLabel'>FEATURED PROJECT</p>
-              <img className='homeHeader__imgLg' id={videos[0].id} onClick={searchID} src={videos[0].thumbnail} alt='Featured Video'></img>
-              <div id='homePageProgess'>
-                <div id='progress-container'>
-                </div>
-              </div>
-              <p id='featuredTitle'>
-              {videos[0].title}
-              </p>
-              <p id='featuredDes'>
-                {videos[0].description}
-              </p>
-              <p id='featuredBy'>By {videos[0].user_id}</p>
-            </div>
-            <div className='homeHeader__rightside'>
-              <p id='featuredLabel'>RECOMMENDED FOR YOU</p>
-              <div id='topSmallBox' className='homeHeader__smallBoxes'>
-                <img className='homeHeader__imgSmall' id={videos[1].id} onClick={searchID} src={videos[1].thumbnail} alt='Recommended Video 1'></img>
-                <div>
-                  <p className='homeHeader__tittle'>{videos[1].title}</p>
-                  <p className='homeHeader__madeBy'>By {videos[1].user_id}</p>
-                </div>
-              </div>
-              <div className='homeHeader__smallBoxes'>
-                <img className='homeHeader__imgSmall' id={videos[2].id} onClick={searchID} src={videos[2].thumbnail} alt='Recommended Video 2'></img>
-                <div>
-                  <p className='homeHeader__tittle'>{videos[2].title}</p>
-                  <p className='homeHeader__madeBy'>By {videos[2].user_id}</p>
-                </div>
-              </div>
-              <div className='homeHeader__smallBoxes'>
-                <img className='homeHeader__imgSmall' id={videos[3].id} onClick={searchID} src={videos[3].thumbnail} alt='Recommended Video 3'></img>
-                <div>
-                  <p className='homeHeader__tittle'>{videos[3].title}</p>
-                  <p className='homeHeader__madeBy'>By {videos[3].user_id}</p>
-                </div>
-              </div>           
-            </div>
-          </div>
-          <div id='listLabel'>Apps</div>
+
+              <Featured videos={featuredVideos} />
+
+          <div id='listLabel'>Squats</div>
             <div className='body'>
             {catList.map((projectBody,index)=>{
               let percentage2 = Math.floor(projectBody.total_funding / projectBody.funding_goal * 100)
@@ -145,7 +108,7 @@ import '../css/homepage.css';
                 })
               }
             </div>
-            <div id='listLabel'>Hardware</div>
+            <div id='listLabel'>Bench</div>
             <div className='body'>
               {catList2.map((projectBody2,index)=>{
                 let percentage2 = Math.floor(projectBody2.total_funding / projectBody2.funding_goal * 100)
