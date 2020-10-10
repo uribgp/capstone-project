@@ -22,10 +22,10 @@ export default function Video() {
 
 
     
-    const videos = useSelector(state => state.videos)
+    const video = useSelector(state => state.videos.video)
     const comments = useSelector(state => state.comments.comments)
-    if (!videos || !comments) return null
-      console.log(comments)
+    if (!video || !comments) return null
+
     return (
     <>
       <h1>Video Page</h1>
@@ -34,7 +34,7 @@ export default function Video() {
         {comments.length > 0 ? comments.map((comment) => <Comment comment={comment} />) : null}
       </div>
       <div className='vid-div'>
-      <VideoPlayer />
+      <VideoPlayer video={video}/>
       </div>
     </>
 
