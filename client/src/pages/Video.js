@@ -23,18 +23,18 @@ export default function Video() {
 
     
     const videos = useSelector(state => state.videos)
-    const comments = useSelector(state => state)
-    console.log(comments)
+    const comments = useSelector(state => state.comments.comments)
     if (!videos || !comments) return null
+      console.log(comments)
     return (
     <>
       <h1>Video Page</h1>
-      <div className='vid-div'>
-        <VideoPlayer />
-      </div>
       <div className='comments-div'>
       <NewComment />
-        {comments.map((comment) => <Comment comment={comment} />)}
+        {comments.length > 0 ? comments.map((comment) => <Comment comment={comment} />) : null}
+      </div>
+      <div className='vid-div'>
+      <VideoPlayer />
       </div>
     </>
 
