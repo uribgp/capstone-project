@@ -5,7 +5,7 @@ export default function commentsReducer(state={}, action) {
         case SET_COMMENT:
             return {...state, comment: action.comment};
         case SET_COMMENTS:
-            return {...state, commens: action.comments};
+            return {...state, comments: action.comments};
         default:
             return state;
     }

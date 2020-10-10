@@ -6,6 +6,7 @@ import { getVideoById } from '../store/video/video-actions';
 import { getComments } from '../store/comment/comment-actions';
 import VideoPlayer from '../components/VideoPlayer';
 import NewComment from '../components/Comment/NewComment';
+import Comment from '../components/Comment/Comment';
 import '../css/video.css';
 
 export default function Video() {  
@@ -22,15 +23,18 @@ export default function Video() {
 
     
     const videos = useSelector(state => state.videos)
-    const comments = useSelector(state => state.comments)
+    const comments = useSelector(state => state)
+    console.log(comments)
     if (!videos || !comments) return null
-      console.log(comments)
     return (
     <>
       <h1>Video Page</h1>
-      <NewComment />
       <div className='vid-div'>
         <VideoPlayer />
+      </div>
+      <div className='comments-div'>
+      <NewComment />
+        {comments.map((comment) => <Comment comment={comment} />)}
       </div>
     </>
 
