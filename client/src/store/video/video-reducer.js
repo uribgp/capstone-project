@@ -10,8 +10,6 @@ export default function videosReducer(state={}, action) {
             return {...state, ownedVidoes: action.videos};
         case SET_FEATURED_VIDEOS:
             return { ...state, featuredVideos: action.videos};
-        case SET_VIDEOS_BY_CATEGORY:
-            return { ...state, categoryVideos: action.videos};
         default:
             return state;
     }

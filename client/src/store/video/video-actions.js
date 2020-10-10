@@ -4,7 +4,6 @@ export const SET_VIDEOS = 'videos/all';
 export const SET_VIDEO = '/videos/single';
 export const SET_VIDEOS_BY_OWNER = 'videos/owner';
 export const SET_FEATURED_VIDEOS = 'videos/get_featured';
-export const SET_VIDEOS_BY_CATEGORY = 'videos/get_by_category';
 
 export const loadVideos = (videos) => { 
     return {
@@ -21,13 +20,6 @@ export const setVideo = (video) => {
 }
 
 export const setVideosByOwner = (videos) => {
-  return {
-    type: SET_VIDEOS_BY_CATEGORY,
-    videos
-  }
-}
-
-export const setVideosByCategory = (videos) => {
   return {
     type: SET_VIDEOS_BY_OWNER,
     videos
@@ -98,15 +90,6 @@ export const getVideoById = (id) => {
   }
 }
 
-export const getVideoByCategory = (category) => {
-  return async dispatch => {
-    const res = await axios.get(`/api/videos/single?category=${category}`)
-    if (res.statusText){
-      dispatch(setVideo(res.data.video))
-    }
-    return res;
-  }
-}
 
 export const getFeaturedVideos = () => {
   return async dispatch => {
