@@ -4,6 +4,7 @@ import { useHistory } from 'react-router-dom';
 import { useParams} from "react-router";
 import { getVideoById } from '../store/video/video-actions';
 import VideoPlayer from '../components/VideoPlayer';
+import '../css/video.css'
 
 export default function Video() {  
     const dispatch = useDispatch();
@@ -14,15 +15,17 @@ export default function Video() {
     useEffect(() => {
         dispatch(getVideoById(id))
       }, [dispatch])
+
+
     
-
     const videos = useSelector(state => state.videos)
-
     if (!videos) return null
+
     return (
     <>
     <h1>Video Page</h1>
-    <VideoPlayer />
+      <div className='vid-div'>
+    <VideoPlayer /></div>
     </>
   )
 }

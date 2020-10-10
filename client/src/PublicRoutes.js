@@ -6,14 +6,13 @@ import HomePage from './pages/HomePage'
 import UserPage from './pages/UserPage'
 import Video from './pages/Video'
 
-
 export default function PublicRoutes() {
 
   return (
     <>
     <Route exact path="/" component={HomePage} />
     <Route exact path="/login" component={LoginContainer} />
-    <Route exact path ="/user/?id:id" component={UserPage} />
+    <Route exact path ="/user/:id" component={UserPage} />
     <Route exact path ="/video/:id" component={Video} />
     </>
   )
