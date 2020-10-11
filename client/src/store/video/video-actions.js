@@ -26,7 +26,6 @@ export const setVideosByOwner = (videos) => {
   }
 }
 
-
 export const getVideos = () => {
     return async dispatch => {
       const res = await axios.get('/api/videos/')

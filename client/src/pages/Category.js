@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { useParams} from "react-router";
-import { getVideosByCategory } from '../store/video/video-actions';
+import { getVideosByCategory } from '../store/category/category-actions';
 
 export default function Category() {  
     const dispatch = useDispatch();

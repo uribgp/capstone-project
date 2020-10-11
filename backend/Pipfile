@@ -30,6 +30,8 @@ flask-login = "*"
 flask-wtf = "==0.14.3"
 wtforms = "==2.3.3"
 flask-file-upload = "*"
+s3 = "*"
+botocore = "*"
 
 [requires]
 python_version = "3.8"

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { postComment } from '../../store/comment/comment-actions';
 
-export default function NewCommentForm() {
+export default function NewCommentForm(props) {
 // need to grab id and timestamp from previous page, pass down the toggle for showing new comment
     const [text, setText] = useState('');
     const dispatch = useDispatch();
@@ -13,7 +13,7 @@ export default function NewCommentForm() {
 
     const handleSubmit = async (event) => {
         event.preventDefault();
-        dispatch(postComment('new comment', text, 1, 'demo', 1, 555));
+        dispatch(postComment('new comment', text, Math.round(props.timestamp), 'demo', 1, 555));
         // close the comment form
         setText('');
         return;
