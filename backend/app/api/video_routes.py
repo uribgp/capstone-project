@@ -33,7 +33,6 @@ def load_files():
     file_path = BUCKET_NAME + '.s3-us-west-1.amazonaws.com/' + folder
     s3 = AwsS3UploadClass(ACCESS_ID, ACCESS_KEY, BUCKET_NAME)
     key = file.filename
-    # print(key)
     file.save(key)
     response = s3.create_presigned_post(key)
     if response is None:
