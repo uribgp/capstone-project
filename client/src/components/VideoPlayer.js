@@ -1,14 +1,11 @@
 
 import React, { useEffect, useRef, setState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { useHistory } from 'react-router-dom';
-import { useParams} from "react-router";
+import { useSelector } from 'react-redux';
 // import { Player } from 'video-react';
 import ReactPlayer from 'react-player';
 // import '../../node_modules/video-react/dist/video-react.css'
 
 export default function VideoPlayer(props){
-  const dispatch = useDispatch();
   let video = props.video
   const player = useRef(null)
   // let timestamp = useSelector(state => state.videos.timestamp);
@@ -17,7 +14,6 @@ export default function VideoPlayer(props){
     player.playing = false
   }
 
-  console.log(player)
   function grabTimestamp(){
     let currentTime = player && player.current && player.current.getCurrentTime()
     if (currentTime){
@@ -25,8 +21,16 @@ export default function VideoPlayer(props){
     }
   }
 
+
   function checkProgress(){
-    console.log(Math.round(player.current.getCurrentTime()))
+    let currentTime = Math.round(player.current.getCurrentTime())
+    if(props.comments && props.comments.length > 0){
+      for (let comment of props.comments){
+        if(currentTime == comment.timestamp){
+          props.setFocus(comment.id)
+        }
+      }
+    }
   }
   
   return (

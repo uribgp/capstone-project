@@ -14,7 +14,8 @@ export default function Video() {
     const history = useHistory();
     let { id } = useParams();
     const [timestamp, setTimestamp] = useState(0);
-
+    const [focus, setFocus] = useState(0);
+    
     useEffect(() => {
         dispatch(getVideoById(id))
         dispatch(getComments(id))
@@ -25,6 +26,7 @@ export default function Video() {
     
     const video = useSelector(state => state.videos.video)
     const comments = useSelector(state => state.comments.comments)
+
     if (!video || !comments) return null
 
     return (
@@ -35,7 +37,7 @@ export default function Video() {
         {comments.length > 0 ? comments.map((comment) => <Comment comment={comment} />) : null}
       </div>
       <div className='vid-div'>
-      <VideoPlayer video={video} setTimestamp={setTimestamp}/>
+      <VideoPlayer video={video} setTimestamp={setTimestamp} comments={comments}/>
       </div>
     </>
 
