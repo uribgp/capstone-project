@@ -34,10 +34,10 @@ export default function Video() {
       <h1>Video Page</h1>
       <div className='comments-div'>
       <NewComment timestamp={timestamp}/>
-        {comments.length > 0 ? comments.map((comment) => <Comment comment={comment} />) : null}
+        {comments.length > 0 ? comments.map((comment) => <Comment comment={comment} focus={focus} />) : null}
       </div>
       <div className='vid-div'>
-      <VideoPlayer video={video} setTimestamp={setTimestamp} comments={comments}/>
+      <VideoPlayer video={video} setTimestamp={setTimestamp} comments={comments} setFocus={setFocus}/>
       </div>
     </>
 
