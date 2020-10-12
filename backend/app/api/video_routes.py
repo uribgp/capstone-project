@@ -30,12 +30,11 @@ def load_files():
       return jsonify({"error" : "requires file"})
     file.filename = secure_filename(file.filename)
     folder = f'{owner_id}/videos/{file.filename}'
-    file_path = BUCKET_NAME + '.s3-us-west-1.amazonaws.com/' + folder
+    # file_path = BUCKET_NAME + '.s3-us-west-1.amazonaws.com/' + folder
     s3 = AwsS3UploadClass(ACCESS_ID, ACCESS_KEY, BUCKET_NAME)
     key = file.filename
-    # does this work for where to send it?
-    file.save(file_path)
-    response = s3.create_presigned_post(key)
+    file.save(key)
+    response = s3.create_presigned_post(folder)
     if response is None:
       return jsonify({"error" : "key cannot be None"})
     files = [('file', open(key, 'rb'))]
@@ -47,14 +46,15 @@ def load_files():
     video = Video(
       title=request.form.get('title', None),
       description=request.form.get('description', None),
-      link=file_path,
+      link=folder,
       thumbnail=request.form.get('thumbnail', None),
       owner_id=owner_id,
       category_id=request.form.get('category_id', None)
     )
     db.session.add(video)
     db.session.commit()
-    return {"video": video.to_dict()}, 200
+    return {"response": response}
+    # return {"video": video.to_dict()}, 200
   else:
     if 'user' in session:
       user = session['user']
@@ -82,8 +82,9 @@ def load_video():
   url = s3.create_presigned_url(video.link)
   if url is not None:
     response = requests.get(url)
+    video.link = url
   video = video.to_dict()
-  return {"video": video}, 200
+  return { "video": video }, 200
 
 @video_routes.route('/search_by_featured')
 def get_featured_videos():
