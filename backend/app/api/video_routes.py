@@ -33,7 +33,8 @@ def load_files():
     file_path = BUCKET_NAME + '.s3-us-west-1.amazonaws.com/' + folder
     s3 = AwsS3UploadClass(ACCESS_ID, ACCESS_KEY, BUCKET_NAME)
     key = file.filename
-    file.save(key)
+    # does this work for where to send it?
+    file.save(file_path)
     response = s3.create_presigned_post(key)
     if response is None:
       return jsonify({"error" : "key cannot be None"})

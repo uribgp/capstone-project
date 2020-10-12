@@ -1,0 +1,42 @@
+.button {
+  padding:14px 25px;
+  display: block;
+  border:none;
+  box-shadow: 0 0 6px rgba(0,0,0,0.1);
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 14px;
+  &-primary {
+    background:black;
+    color:#FAFAFA;
+  }
+ 
+  &-transparent {
+  background: None;
+  box-shadow: none;
+  }
+  &-icon {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    svg {
+      margin-left:10px;
+      font-size: 14px;
+    }
+  }
+}
+
+.button-long-border {
+  display: flex;
+  align-items: center;
+  .button-icon {
+  }
+  .button-border {
+    display: block;
+    height: 1px;
+    width: 100%;
+    background:#d8d8d8;
+    
+  }
+}

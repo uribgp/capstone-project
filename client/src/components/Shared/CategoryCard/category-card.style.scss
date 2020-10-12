@@ -1,0 +1,35 @@
+.category-card-wrap {
+  overflow: hidden;
+  height: 300px;
+  width: 250px;
+  max-height: 300px;
+  max-width: 250px;
+  box-shadow: 0 0 15px rgba(0,0,0,0.2);
+
+  .category-card {
+    height: 100%;
+    width: 100%;
+    background-position: center;
+    background-size: cover;
+    position: relative;
+    cursor: pointer;
+    &-text {
+      color:white;
+      font-size: 32px;
+      font-weight: 600;
+      position: absolute;
+      bottom:10%;
+      left:50%;
+      transform: translateX(-50%);
+    }
+  }
+  .category-card {
+    transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  }
+
+}
+
+.category-card-wrap:hover .category-card {
+  transform: scale(1.05);
+  transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}

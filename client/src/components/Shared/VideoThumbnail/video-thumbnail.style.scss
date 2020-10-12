@@ -1,0 +1,31 @@
+.video-thumbnail {
+  height: 200px;
+  width: 300px;
+  cursor: pointer;
+  box-shadow: 0 0 15px rgba(0,0,0,0.2);
+  &-image {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    
+  }
+  &-text {
+    margin-top:8px;
+    font-weight: 500;
+  }
+  &-popup-play {
+    color:White;
+    text-align: center; 
+
+    &-icon {
+      font-size: 40px;
+    }
+    &-title {
+      font-weight: 700;
+      font-size: 18px;
+    }
+
+  }
+}

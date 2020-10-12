@@ -1,0 +1,10 @@
+.step-progress {
+  font-weight: 600;
+  display: flex;
+  &-current {
+
+  }
+  &-number {
+    margin: 0 10px;
+  }
+}
