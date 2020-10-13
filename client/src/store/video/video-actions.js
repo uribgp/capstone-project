@@ -4,12 +4,19 @@ export const SET_VIDEOS = 'videos/all';
 export const SET_VIDEO = '/videos/single';
 export const SET_VIDEOS_BY_OWNER = 'videos/owner';
 export const SET_FEATURED_VIDEOS = 'videos/get_featured';
+export const VIDEOS_LOADING = 'videos/loading';
 
 export const loadVideos = (videos) => { 
     return {
         type: SET_VIDEOS,
         videos
     }
+}
+
+export const videosLoading = () => {
+  return {
+    type: VIDEOS_LOADING
+  }
 }
 
 export const setVideo = (video) => {
@@ -28,7 +35,9 @@ export const setVideosByOwner = (videos) => {
 
 export const getVideos = () => {
     return async dispatch => {
+      dispatch(videosLoading())
       const res = await axios.get('/api/videos/')
+      console.log(res)
       if(res.statusText){
       dispatch(loadVideos(res.data.videos));
     }
@@ -63,6 +72,12 @@ export const postVideo = (title, description, link, thumbnail, id, category_id, 
     return async dispatch => {
       const res = await axios.post('/api/videos/', formData, config)
       if (res.statusText) {
+        // let signature = res.data.response
+        // let formData2 = new FormData()
+        // console.log(signature)
+        // formData2.append("file", file.raw)
+        // const res2 = await axios.post(signature['url'], formData2, signature['fields'])
+        // console.log(res2)
         dispatch(setVideo(res.data.video));
       }
       return res;

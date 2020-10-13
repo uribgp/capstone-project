@@ -9,7 +9,7 @@ comment_routes = Blueprint('comment', __name__)
 def comment():
   vidId = request.args.get('id', None)
   if(request.method =='GET'):
-    comments = Comment.query.filter(Comment.video_id==vidId).all()
+    comments = Comment.query.filter(Comment.video_id==vidId).order_by("timestamp").all()
     data = [comment.to_dict() for comment in comments]
     return {"comments": data}, 200
 
@@ -18,7 +18,6 @@ def comment():
     title=request.json.get('title'),
     text=request.json.get('text'),
     timestamp=request.json.get('timestamp'),
-    user_name=request.json.get('user_name'),
     video_id=vidId,
     user_id=request.json.get('user_id')
   )

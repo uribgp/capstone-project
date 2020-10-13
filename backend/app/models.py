@@ -111,8 +111,7 @@ class Comment(db.Model):
   id = Column(Integer, primary_key=True)
   title = Column(String(30), nullable=False)
   text = Column(String(300), nullable=False)
-  timestamp = Column(String(300), nullable=False)
-  user_name = Column(String(200), nullable=False)
+  timestamp = Column(Integer, nullable=False)
   video_id = Column(Integer, ForeignKey("videos.id"), nullable=False)
   user_id = Column(Integer, ForeignKey("users.id"), nullable=False)
   created_at = Column(DateTime, nullable=False, default=datetime.datetime.utcnow)
@@ -127,7 +126,8 @@ class Comment(db.Model):
       "title": self.title,
       "text": self.text,
       "timestamp": self.timestamp,
-      "created_at": self.created_at.strftime("%B %Y")
+      "created_at": self.created_at.strftime("%B %Y"),
+      "user": self.user.username
     }
 
 

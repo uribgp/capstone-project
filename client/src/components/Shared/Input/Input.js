@@ -1,9 +1,12 @@
 import React from 'react'
-
-export default function Input({value, onChange, placeholder}) {
+import './input.style.scss'
+export default function Input({value, onChange, placeholder, icon, type ="text"}) {
   return (
-    <>
-    <input className="input" placeholder={placeholder} value={value} onChange={e => onChange(e)} type="text"/>
-    </>
+   <div className="input-wrap">
+     {icon && 
+     <div className="input-icon">{icon}</div> 
+     }
+     <input type={type}  className="input" onChange={onChange} placeholder={placeholder} value={value} />
+   </div> 
   )
 }

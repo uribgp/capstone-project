@@ -1,0 +1,20 @@
+.video-section {
+  margin:56px 0px;
+  &-title {
+    font-size: 32px;
+    font-weight: 700;
+    margin-bottom: 40px;
+  }
+  &-view-more {
+    margin-top: 24px;
+  }
+  &-videos {
+    display: flex;
+    justify-content: space-between;
+    .video-thumbnail {
+      width: 23%;
+      max-width: 350px;
+      
+    }
+  }
+}

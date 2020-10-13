@@ -8,6 +8,7 @@ import VideoPlayer from '../components/VideoPlayer';
 import NewComment from '../components/Comment/NewComment';
 import Comment from '../components/Comment/Comment';
 import '../css/video.css';
+import VideoPlayerContainer from '../components/Video/VideoPlayer.container';
 
 export default function Video() {  
     const dispatch = useDispatch();
@@ -19,7 +20,8 @@ export default function Video() {
     useEffect(() => {
         dispatch(getVideoById(id))
         dispatch(getComments(id))
-      }, [dispatch])
+        .then((res) => console.log(res))
+      }, [])
       // send array of timestamps to the videoplayer.  
       //if it hits that timestamp, send a message back up, 
       //saying it's time to show a comment.  Pause the video and have it show the comment.
@@ -27,9 +29,16 @@ export default function Video() {
     const video = useSelector(state => state.videos.video)
     const comments = useSelector(state => state.comments.comments)
 
-    if (!video || !comments) return null
+    console.log(focus)
+    if (!video || !comments) return <div>loading</div>
+
+   const handleOnProgress = (event) => {
+    console.log(event)
+   }
+
 
     return (
+
     <>
       <h1>Video Page</h1>
       <div className='comments-div'>
@@ -37,7 +46,8 @@ export default function Video() {
         {comments.length > 0 ? comments.map((comment) => <Comment comment={comment} focus={focus} />) : null}
       </div>
       <div className='vid-div'>
-      <VideoPlayer video={video} setTimestamp={setTimestamp} comments={comments} setFocus={setFocus}/>
+{/*         <VideoPlayerContainer comments={comments} video={video} /> */}
+      <VideoPlayer  video={video} setTimestamp={setTimestamp} comments={comments} setFocus={setFocus}/>
       </div>
     </>
 

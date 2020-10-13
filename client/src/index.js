@@ -1,10 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
+import './global.scss';
+import './variables.scss';
 import App from './App';
 import { Provider } from 'react-redux';
 import configureStore from './store/configureStore';
-
+import Layout from './components/Shared/Layout/Layout';
 
 const store = configureStore();
 if (process.env.NODE_ENV !== 'production') {
@@ -14,7 +15,9 @@ if (process.env.NODE_ENV !== 'production') {
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
-      <App />
+      <Layout>
+        <App />
+      </Layout>
     </Provider>
   </React.StrictMode>,
   document.getElementById('root')

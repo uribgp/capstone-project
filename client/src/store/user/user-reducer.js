@@ -28,7 +28,7 @@ export default (state = DEFAULT_STATE, action) => {
             loading: false,
               error: false,
               authenticated: true,
-              user: action.user.name,
+              user: action.user.username,
               id: action.user.id
           }
           default:

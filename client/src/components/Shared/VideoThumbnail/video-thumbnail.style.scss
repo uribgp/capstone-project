@@ -1,24 +1,33 @@
 .video-thumbnail {
-  height: 200px;
-  width: 300px;
+
   cursor: pointer;
-  box-shadow: 0 0 15px rgba(0,0,0,0.2);
-  &-image {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
+  position: relative;
+  > a {
     height: 100%;
-    
+    width: 100%;
+    text-decoration: none;
+  }
+  
+  &-img {
+    box-shadow: 0 0 15px rgba(0,0,0,0.2);
+    object-fit: cover;
+    width: 100%;
+
   }
   &-text {
     margin-top:8px;
-    font-weight: 500;
+    color:black;
+    text-decoration: none;
+    font-weight: 600;
   }
   &-popup-play {
     color:White;
-    text-align: center; 
-
+ 
+    position: absolute;
+    top:50%;
+    left:50%;
+    transform: translate(-50%, -50%);
+    z-index: 100;
     &-icon {
       font-size: 40px;
     }

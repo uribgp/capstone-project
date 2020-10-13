@@ -1,15 +1,12 @@
 import React from 'react';
 import './video-thumbnail.style.scss'
 import {AiFillPlayCircle} from 'react-icons/ai'
-export default function VideoThumbnail({hovered, background, text, onMouseEnter, onMouseLeave}) {
+import { Link } from 'react-router-dom';
+export default function VideoThumbnail({hovered, background, text, onMouseEnter, onMouseLeave, link}) {
   return (
-    <div className="video-thumbnail">
-      <div
-        onMouseEnter={onMouseEnter}
-        onMouseLeave={onMouseLeave}
-        style={{backgroundImage: `${hovered ? "linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3))," : "linear-gradient(0deg, #000000 0%, rgba(0, 0, 0, 0) 0.83%),"}  url(${background})`}}
-        className="video-thumbnail-image"
-      >
+    <div onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave} className="video-thumbnail">
+      <Link to={link}>
+      <img className="video-thumbnail-img" src={background} alt=""/>
         {hovered && 
         <div className="video-thumbnail-popup-play">
           <div>
@@ -21,8 +18,8 @@ export default function VideoThumbnail({hovered, background, text, onMouseEnter,
           </div>
         </div>
         }
-      </div>
         <div className="video-thumbnail-text">{text}</div>
+    </Link>
     </div>
   );
 }

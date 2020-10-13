@@ -2,7 +2,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 from app import app, db
-from app.models import User, Video, Category
+from app.models import User, Video, Category, Comment
 
 with app.app_context():
   db.drop_all()
@@ -52,5 +52,16 @@ with app.app_context():
   db.session.add(video3)
   db.session.add(video4)
   db.session.add(video5)
+
+  # COMMENTS
+
+  comment1 = Comment(title = 'comment1', text = 'some text', timestamp = 1, video_id = 1, user_id = 1)
+  comment2 = Comment(title = 'comment2', text = 'some text', timestamp = 2, video_id = 1, user_id = 2)
+  comment3 = Comment(title = 'comment3', text = 'some text', timestamp = 3, video_id = 1, user_id = 3)
+
+  db.session.add(comment1)
+  db.session.add(comment2)
+  db.session.add(comment3)
+
 
   db.session.commit()

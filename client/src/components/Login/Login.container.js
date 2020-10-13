@@ -1,7 +1,9 @@
 import React, { useEffect } from 'react';
 import { useState } from 'react';
+import {useHistory} from 'react-router-dom'
 import { connect, useDispatch, useSelector } from 'react-redux';
 import { authenticate, login } from '../../store/user/user-actions';
+import HeroImage from '../Shared/HeroImage/HeroImage';
 import Login from './Login';
 import './login.style.scss';
 function LoginContainer({login, authenticated}) {
@@ -9,7 +11,7 @@ function LoginContainer({login, authenticated}) {
   const [password, setPassword] = useState('');
 
 /*   const currentUserId = useSelector((state) => state.auth.id); */
-
+  const history = useHistory()
 
   useEffect(() => {
   if(authenticated) {
@@ -35,17 +37,21 @@ function LoginContainer({login, authenticated}) {
 
   const handleOnDemoClick = () => {
     login("demo@demo.com", "password")
+    .then((res) => history.push('/'))
   };
 
   return (
-    <Login
-      onPasswordChange={(event) => handleOnPasswordChange(event)}
-      onEmailChange={(event) => handleOnEmailChange(event)}
-      onDemoClick={() => handleOnDemoClick()}
-      onLoginClick={() => handleOnLoginClick()}
-      email={email}
-      password={password}
-    />
+    <div className="login-page">
+      <HeroImage image={""} />
+      <Login
+        onPasswordChange={(event) => handleOnPasswordChange(event)}
+        onEmailChange={(event) => handleOnEmailChange(event)}
+        onDemoClick={() => handleOnDemoClick()}
+        onLoginClick={() => handleOnLoginClick()}
+        email={email}
+        password={password}
+      />
+    </div>
   );
 }
 
