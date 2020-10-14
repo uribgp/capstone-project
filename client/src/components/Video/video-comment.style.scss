@@ -1,0 +1,21 @@
+.video-comment {
+  &-username {
+    font-size: 16px;
+    font-weight: 600;
+  }
+  &-profile-image {
+    margin-right: 16px;
+  }
+  &-info {
+    display: flex;
+    align-items: center;
+  }
+  &-timestamp {
+    margin-top: 4px;
+    color: var(--text-faded) !important;
+    font-size: 14px;
+  }
+  &-comment {
+    margin-top: 16px;
+  }
+}

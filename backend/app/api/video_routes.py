@@ -1,5 +1,5 @@
 from flask import Blueprint, jsonify, redirect, url_for, session, request
-from app.models import User, db, Video, Category
+from app.models import User, db, Video, Category, Comment
 from flask_jwt_extended import create_access_token, jwt_required
 from flask_login import current_user
 from werkzeug.utils import secure_filename
@@ -7,6 +7,9 @@ from .s3class import AwsS3UploadClass
 import boto3
 import os
 import requests
+import datetime
+from collections import Counter
+from sqlalchemy import desc
 
 video_routes = Blueprint('videos', __name__)
 
@@ -99,3 +102,38 @@ def get_by_category():
   videos = Video.query.filter(Video.category_id==categoryId).all()
   data = [video.to_dict() for video in videos]
   return {"videos": data}
+
+@video_routes.route('/search_popular')
+def get_popular():
+  timeframe = datetime.datetime.now() - datetime.timedelta(days=7)
+  comments = Comment.query.filter(Comment.created_at >= timeframe).all()
+  commentsByVid = [comment.video_id for comment in comments]
+  vidDict = Counter(commentsByVid)
+  videos = []
+  for key in vidDict.keys():
+    videos.append(Video.query.filter(Video.id==key).first())
+  data = [video.to_dict() for video in videos]
+  return {"videos" : data}
+
+@video_routes.route('/by_recent')
+def get_recent():
+  videos = Video.query.order_by(desc(Video.created_at)).all()
+  data = [video.to_dict() for video in videos]
+  return {"videos" : data}
+
+@video_routes.route('/by_need')
+def get_need():
+  timeframe = datetime.datetime.now() - datetime.timedelta(days=7)
+  videos = Video.query.order_by(desc(Video.created_at >= timeframe)).all()
+  videosById = [video.id for video in videos]
+  comments = Comment.query.filter(Comment.created_at >= timeframe).all()
+  commentsByVid = [comment.video_id for comment in comments]
+  vidDict = Counter(commentsByVid)
+  for key in vidDict.keys():
+    if key in videosById:
+      videosById.remove(key)
+  videos = []
+  for vidId in videosById:
+    videos.append(Video.query.filter(Video.id==vidId).first())
+  data = [video.to_dict() for video in videos]
+  return {"videos" : data}

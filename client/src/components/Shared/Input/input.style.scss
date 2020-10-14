@@ -2,14 +2,18 @@
   display: flex;
   box-shadow: 0 0 7px rgba(0,0,0,0.1);
   align-items: center;
+  cursor: pointer;
   .input-icon {
     font-size: 24px;
     padding:0  10px;
+    position: absolute;
   }
   .input {
+    padding-left:44px;
     border:none;
     height: 50px;
     font-weight: 500;
     outline: none;
+    width: 100%;
   }
 }

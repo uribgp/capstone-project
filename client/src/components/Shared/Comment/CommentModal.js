@@ -4,15 +4,18 @@ import Textarea from '../Textarea/Textarea';
 import UserProfile from '../UserProfile/UserProfile';
 import './comment-modal.style.scss';
 import {AiOutlineClose} from 'react-icons/ai'
+import IconButton from '../IconButton/IconButton';
 export default function CommentModal({
   onCommentChange,
   onCommentSubmit,
   commentValue,
   placeholder,
+  onCloseClick,
+  buttonText
 }) {
   return (
     <div className="comment-modal">
-      <AiOutlineClose className="comment-modal-close" />
+      <IconButton icon={<AiOutlineClose />} sizeInPx={24} onClick={onCloseClick} />
       <div className="comment-modal-user-text-wrap">
         <UserProfile />
         <div className="textarea-wrap">
@@ -23,7 +26,7 @@ export default function CommentModal({
           />
         </div>
       </div>
-      <Button onClick={onCommentSubmit} text="Next" />
+      <Button onClick={onCommentSubmit} text={buttonText} />
     </div>
   );
 }

@@ -8,13 +8,12 @@ import Category from './pages/Category';
 import VideoPlayerContainer from './components/Video/VideoPlayer.container';
 import HomepageGuestContainer from './components/HomePage/HomepageGuest.container';
 import Container from './components/Shared/Container/Container';
-
 export default function PublicRoutes() {
 
   return (
     <>
     <Container>
-      <Route exact path="/" component={HomePage} />
+      <Route exact path="/" component={HomepageGuestContainer} />
       <Route exact path="/dashboard/guest" component={HomepageGuestContainer} />
       <Route exact path="/login" component={LoginContainer} />
       <Route exact path ="/user/:id" component={UserPage} />

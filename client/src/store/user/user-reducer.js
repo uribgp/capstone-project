@@ -28,8 +28,8 @@ export default (state = DEFAULT_STATE, action) => {
             loading: false,
               error: false,
               authenticated: true,
-              user: action.user.username,
-              id: action.user.id
+              username: action.user.user.username,
+              id: action.user.user.id
           }
           default:
           return {

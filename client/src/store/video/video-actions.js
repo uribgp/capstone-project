@@ -5,6 +5,9 @@ export const SET_VIDEO = '/videos/single';
 export const SET_VIDEOS_BY_OWNER = 'videos/owner';
 export const SET_FEATURED_VIDEOS = 'videos/get_featured';
 export const VIDEOS_LOADING = 'videos/loading';
+export const SET_POPULAR_VIDEOS = 'videos/popular';
+export const SET_RECENT_VIDEOS = 'videos/recent';
+export const SET_NEED_VIDEOS = 'videos/by_need';
 
 export const loadVideos = (videos) => { 
     return {
@@ -19,11 +22,25 @@ export const videosLoading = () => {
   }
 }
 
+export const loadPopularVideos = (videos) => {
+  return {
+    type: SET_POPULAR_VIDEOS,
+    videos
+  }
+}
+
 export const setVideo = (video) => {
     return {
         type: SET_VIDEO,
         video
     }
+}
+
+export const loadNeedVideos = (videos) => {
+  return {
+    type: SET_NEED_VIDEOS,
+    videos
+  }
 }
 
 export const setVideosByOwner = (videos) => {
@@ -33,11 +50,25 @@ export const setVideosByOwner = (videos) => {
   }
 }
 
+export const loadFeaturedVideos = (videos) => {
+  return {
+    type: SET_FEATURED_VIDEOS,
+    videos
+  }
+}
+
+export const loadRecentVideos = (videos) => {
+  return {
+    type: SET_RECENT_VIDEOS,
+    videos
+  }
+}
+
 export const getVideos = () => {
-    return async dispatch => {
+  return async dispatch => {
       dispatch(videosLoading())
       const res = await axios.get('/api/videos/')
-      console.log(res)
+
       if(res.statusText){
       dispatch(loadVideos(res.data.videos));
     }
@@ -45,10 +76,25 @@ export const getVideos = () => {
   }
 }
 
-export const loadFeaturedVideos = (videos) => {
-  return {
-    type: SET_FEATURED_VIDEOS,
-    videos: videos
+export const getRecentVideos = () => {
+  return async dispatch => {
+    const res = await axios.get('/api/videos/by_recent')
+
+    if(res.statusText){
+      dispatch(loadRecentVideos(res.data.videos))
+    }
+    return res;
+  }
+} 
+
+export const getNeedVideos = () => {
+  return async dispatch => {
+    const res = await axios.get('/api/videos/by_need')
+
+    if(res.statusText){
+      dispatch(loadNeedVideos(res.data.videos))
+    }
+    return res
   }
 }
 
@@ -110,6 +156,16 @@ export const getFeaturedVideos = () => {
     const res = await axios.get('/api/videos/search_by_featured')
     if (res.statusText) {
       dispatch(loadFeaturedVideos(res.data.videos))
+    }
+    return res;
+  }
+}
+
+export const getPopularVideos = () => {
+  return async dispatch => {
+    const res = await axios.get('api/videos/search_popular')
+    if (res.statusText) {
+      dispatch(loadPopularVideos(res.data.videos))
     }
     return res;
   }

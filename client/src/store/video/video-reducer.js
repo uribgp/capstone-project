@@ -1,4 +1,4 @@
-import { SET_VIDEO, SET_VIDEOS, SET_FEATURED_VIDEOS, SET_VIDEOS_BY_OWNER, VIDEOS_LOADING } from './video-actions';
+import { SET_VIDEO, SET_VIDEOS, SET_FEATURED_VIDEOS, SET_VIDEOS_BY_OWNER, VIDEOS_LOADING, SET_POPULAR_VIDEOS, SET_RECENT_VIDEOS, SET_NEED_VIDEOS } from './video-actions';
 
 const DEFAULT_STATE = {
  videos: [],
@@ -16,7 +16,13 @@ export default function videosReducer(state= DEFAULT_STATE, action) {
         case SET_FEATURED_VIDEOS:
             return { ...state, featuredVideos: action.videos};
         case VIDEOS_LOADING: 
-        return {...state, loading: true}
+            return {...state, loading: true}
+        case SET_POPULAR_VIDEOS:
+            return {...state, popularVideos: action.videos}
+        case SET_RECENT_VIDEOS:
+            return {...state, recentVideos: action.videos}
+        case SET_NEED_VIDEOS:
+            return {...state, needVideos: action.videos}
         default:
             return state;
     }

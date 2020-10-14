@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { getVideos, postVideo, getFeaturedVideos } from '../store/video/video-actions';
+import { getVideos, postVideo, getFeaturedVideos, getPopularVideos } from '../store/video/video-actions';
 import { getCategories, getVideosByCategory } from '../store/category/category-actions';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
@@ -19,6 +19,7 @@ import Featured from '../components/HomePage/Featured';
     dispatch(getVideos())
     dispatch(getCategories())
     dispatch(getFeaturedVideos())
+    dispatch(getPopularVideos())
   }, [dispatch])
 
   function searchCategory(e) {

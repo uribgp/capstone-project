@@ -74,6 +74,7 @@ class Video(db.Model):
   thumbnail = Column(String(300), nullable=False)
   staff_pick = Column(Boolean, default=False)
   total_comments = Column(Integer,default=0)
+  total_views = Column(Integer,default=0)
   owner_id = Column(Integer, ForeignKey('users.id'), nullable=False)
   category_id = Column(Integer, ForeignKey('categories.id'))
   created_at = Column(DateTime, nullable=False, default=datetime.datetime.utcnow)
@@ -91,7 +92,8 @@ class Video(db.Model):
       "description": self.description,
       "link": self.link,
       "thumbnail": self.thumbnail,
-      "created_at": self.created_at.strftime("%B %Y")
+      "created_at": self.created_at.strftime("%B %Y"),
+      "total_views": self.total_views
     }
 
 

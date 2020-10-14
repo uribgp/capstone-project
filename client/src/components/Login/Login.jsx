@@ -22,7 +22,7 @@ export default function Login({
           placeholder="Password"
         />
       </div>
-      <div>
+      <div className="login-modal-button-wrap">
         <Button onClick={onLoginClick} text="Login" />
         <Button onClick={onDemoClick} text="Demo" />
       </div>

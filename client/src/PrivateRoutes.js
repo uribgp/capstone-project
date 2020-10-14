@@ -5,7 +5,7 @@ import LoginContainer from './components/Login/Login.container';
 
 function PrivateRoutes({authenticated}) {
   
-  if(authenticated) {
+/*   if(authenticated) {
     return (
       <>
       </>
@@ -13,7 +13,7 @@ function PrivateRoutes({authenticated}) {
 
   } else {
     return <Redirect to="/" />
-  }
+  } */
 } 
 
 const mapStateToProps = (state) => ({

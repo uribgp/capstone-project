@@ -1,9 +1,6 @@
-.login-page {
-  display: flex;
-  height: 100vh;
-  align-items: center;
-
-  width:100vw;
+.login-modal {
+  background:white;
+  padding: 40px 16px;
   .hero-image-wrap {
     width: 50%;
   .hero-image {
@@ -11,8 +8,11 @@
     height: 100vh;
   } 
   }
-  .login-modal {
-    margin-left:40px;
+  &-button-wrap {
+    display: flex;
+    .button:last-child {
+      margin-left: 16px;
+    }
   }
   .input-wrap {
     min-width: 350px;

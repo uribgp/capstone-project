@@ -1,6 +1,4 @@
 .icon-button {
-  height: 50px;
-  width: 50px;
   background: black; 
   border-radius: 50%;
   color:white;
@@ -10,6 +8,7 @@
   justify-content: center;
   cursor: pointer;
   > svg {
-    font-size: 18px;
+    font-size: 100%;
+    color: White;
   }
 }

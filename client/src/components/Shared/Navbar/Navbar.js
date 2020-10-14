@@ -11,7 +11,7 @@ export default function Navbar({onSignUpClick, onSignInClick}) {
      </div>
 
        <ul className="navbar-items-list">
-         <li className="navbar-list-item"><a className="navbar-list-link" href="">Videos</a></li>
+         <li className="navbar-list-item"><a className="navbar-list-link" href="/">Videos</a></li>
         <li className="navbar-list-item"><Button buttonType="primary" text="Sign up" onClick={onSignUpClick} /></li>
         <li className="navbar-list-item"><Button buttonType="outline" text="Sign in" onClick={onSignInClick} /></li>
        </ul>

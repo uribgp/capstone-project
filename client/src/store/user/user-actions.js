@@ -12,7 +12,7 @@ export const loginFailed = () => ({
 
 export const loginSucceeded = (user) => ({
   type: 'LOGIN_SUCCEEDED',
-  payload: user
+  user
 })
 
 export const authenticate = () => {
@@ -30,7 +30,7 @@ export const authenticate = () => {
 
 export const login = (email, password) => {
   return async dispatch => {
-    dispatch(loginLoading)
+    dispatch(loginLoading())
     try {
       console.log(email, password)
       const response = await axios.post('/api/session', {

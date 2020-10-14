@@ -27,9 +27,9 @@ export const getComments = (id) => {
 }
 }
 
-export const postComment = (title, text, timestamp, user_name, video_id, user_id) => {
+export const postComment = (title, text, timestamp, video_id, user_id) => {
       return async dispatch => {
-        const res = await axios.post(`/api/comments?id=${video_id}`, {title, text, timestamp, user_name, user_id})
+        const res = await axios.post(`/api/comments?id=${video_id}`, {title, text, timestamp, user_id})
         if (res.statusText) {
           dispatch(setComment(res.data.comment));
         }

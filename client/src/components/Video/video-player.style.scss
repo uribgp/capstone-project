@@ -1,0 +1,25 @@
+.video-player-page {
+  display: flex;
+  margin-top: 50px;
+  height: calc(100vh - 120px);
+  justify-content: space-between;
+  .video-wrap {
+    width: 50%;
+    video {
+      display: block;
+      margin-bottom: 24px;
+    }
+  }
+
+  .video-comment-list {
+    height: calc(100vh - 120px);
+    background: var(--color-list);
+    overflow: scroll;
+    width: 45%;
+    padding:32px 16px;
+    .video-comment {
+      margin-bottom: 32px;
+    }
+  }
+
+}
