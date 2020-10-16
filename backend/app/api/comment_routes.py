@@ -9,9 +9,11 @@ comment_routes = Blueprint('comment', __name__)
 def comment():
   vidId = request.args.get('id', None)
   if(request.method =='GET'):
-    comments = Comment.query.filter(Comment.video_id==vidId).order_by("timestamp").all()
+    comments = Comment.query.filter(Comment.video_id==vidId, Comment.hasTimestamp==True).order_by("timestamp").all()
+    commentsGeneral = Comment.query.filter(Comment.video_id==vidId, Comment.hasTimestamp==False).all()
     data = [comment.to_dict() for comment in comments]
-    return {"comments": data}, 200
+    data1 = [comment.to_dict() for comment in commentsGeneral]
+    return {"comments": data, "commentsGeneral": data1}, 200
 
   if(request.method=='POST'):
     comment = Comment(
@@ -24,6 +26,7 @@ def comment():
     db.session.add(comment)
     video = Video.query.get(vidId)
     video.increment()
+    video.new_comment()
     db.session.add(video)
     db.session.commit()
     video = video.to_dict()

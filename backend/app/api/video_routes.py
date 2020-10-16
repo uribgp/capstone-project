@@ -1,5 +1,5 @@
 from flask import Blueprint, jsonify, redirect, url_for, session, request
-from app.models import User, db, Video, Category, Comment
+from app.models import User, db, Video, Category, Comment, Video_category
 from flask_jwt_extended import create_access_token, jwt_required
 from flask_login import current_user
 from werkzeug.utils import secure_filename
@@ -82,10 +82,21 @@ def load_video():
   vidId = request.args.get('id', None)
   video = Video.query.get(vidId)
   s3 = AwsS3UploadClass(ACCESS_ID, ACCESS_KEY, BUCKET_NAME)
+  # user = session['user']
+  # if user["id"] == video.owner_id:
+  #   video.watch_comment()
+  # db.session.commit()
   url = s3.create_presigned_url(video.link)
   if url is not None:
     response = requests.get(url)
     video.link = url
+  # joinTable = Video_category.query.filter(Video_category.video_id==vidId).all()
+  # if(len(joinTable)):
+  #   categories = []
+  #   for jt in joinTable:
+  #     categories.append(Category.query.get(jt.category_id))
+  #   print(categories)
+
   video = video.to_dict()
   return { "video": video }, 200
 
@@ -137,3 +148,11 @@ def get_need():
     videos.append(Video.query.filter(Video.id==vidId).first())
   data = [video.to_dict() for video in videos]
   return {"videos" : data}
+
+@video_routes.route('/add_view')
+def add_view():
+  vidId = request.args.get('id', None)
+  video = Video.query.get(vidId)
+  video.add_view()
+  db.session.commit()
+  return {"msg": "successful"}
