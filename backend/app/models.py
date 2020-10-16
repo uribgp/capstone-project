@@ -15,6 +15,7 @@ class User(db.Model, UserMixin):
   username = Column(String(30), nullable=False)
   email = Column(String(30), nullable=False, unique=True)
   hashed_password = Column(String(100), nullable=False)
+  alert = Column(Boolean, default=False)
   created_at = Column(DateTime, nullable=False, default=datetime.datetime.utcnow)
   updated_at = Column(DateTime, nullable=False, default=datetime.datetime.utcnow)
 
@@ -29,11 +30,15 @@ class User(db.Model, UserMixin):
   def check_password(self, password):
     return check_password_hash(self.password, password)
 
+  def new_alert(self):
+    self.alert = True
+
   def to_dict(self):
     return {
       "id": self.id,
       "username": self.username,
       "email": self.email,
+      "alert": self.alert,
       "created_at": self.created_at.strftime("%B %Y")
     }
 
@@ -94,7 +99,7 @@ class Video(db.Model):
   def add_view(self):
     self.total_views += 1
 
-  def new_comment(self):
+  def comment_alert(self):
     self.new_comment = True
   
   def watch_comment(self):

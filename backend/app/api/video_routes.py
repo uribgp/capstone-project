@@ -90,15 +90,14 @@ def load_video():
   if url is not None:
     response = requests.get(url)
     video.link = url
-  # joinTable = Video_category.query.filter(Video_category.video_id==vidId).all()
-  # if(len(joinTable)):
-  #   categories = []
-  #   for jt in joinTable:
-  #     categories.append(Category.query.get(jt.category_id))
-  #   print(categories)
-
+  joinTable = Video_category.query.filter(Video_category.video_id==vidId).all()
+  categories = []
+  for jt in joinTable:
+    categories.append(Category.query.get(jt.category_id))
+  categories = [category.to_dict() for category in categories]
   video = video.to_dict()
-  return { "video": video }, 200
+  video.update({"categories" : categories})
+  return { "video": video, "categories": categories }, 200
 
 @video_routes.route('/search_by_featured')
 def get_featured_videos():

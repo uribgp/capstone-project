@@ -93,9 +93,16 @@ with app.app_context():
   jt1 = Video_category(category_id = 1, video_id = 1)
   jt2 = Video_category(category_id = 2, video_id = 1)
   jt3 = Video_category(category_id = 3, video_id = 1)
+  jt4 = Video_category(category_id = 3, video_id = 2)
+  jt5 = Video_category(category_id = 3, video_id = 3)
+  jt6 = Video_category(category_id = 3, video_id = 4)
+  jt7 = Video_category(category_id = 3, video_id = 5)
 
   db.session.add(jt1)
   db.session.add(jt2)
   db.session.add(jt3)
-
+  db.session.add(jt4)
+  db.session.add(jt5)
+  db.session.add(jt6)
+  db.session.add(jt7)
   db.session.commit()
