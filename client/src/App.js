@@ -2,10 +2,9 @@ import React, { useEffect, useState } from 'react';
 import { connect, useDispatch } from 'react-redux';
 import { BrowserRouter, Switch } from 'react-router-dom';
 import LoadingSpinner from './components/Shared/LoadingSpinner/LoadingSpinner';
-import Pages from './pages/Pages';
 import PrivateRoutes from './PrivateRoutes';
 import PublicRoutes from './PublicRoutes';
-import { setUser } from './store/auth';
+// import { setUser } from './store/auth';
 import { authenticate, login } from './store/user/user-actions';
 
 function App({ authenticateUser, userLoading, userAuthenticated }) {

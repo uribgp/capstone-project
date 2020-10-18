@@ -1,11 +1,11 @@
 import { SET_VIDEO, SET_VIDEOS, SET_FEATURED_VIDEOS, SET_VIDEOS_BY_OWNER, VIDEOS_LOADING, SET_POPULAR_VIDEOS, SET_RECENT_VIDEOS, SET_NEED_VIDEOS } from './video-actions';
 
-const DEFAULT_STATE = {
- videos: [],
- loading: true, 
-}
+// const DEFAULT_STATE = {
+//  videos: {}
+//  loading: true, 
+// }
 
-export default function videosReducer(state= DEFAULT_STATE, action) {
+export default function videosReducer(state= {}, action) {
     switch (action.type) {
         case SET_VIDEOS:
             return {...state, videos: action.videos.slice(0, 4), loading: false};

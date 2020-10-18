@@ -4,10 +4,10 @@ export const SET_COMMENT = '/comments/add_comment'
 export const SET_COMMENTS = '/comments/all'
 
 export const setComment = (comment) => {
-    return {
-        type: SET_COMMENT,
-        comment
-    }
+  return {
+    type: SET_COMMENT,
+    comment
+  }
 }
 
 export const loadComments = (comments) => {
@@ -20,20 +20,21 @@ export const loadComments = (comments) => {
 export const getComments = (id) => {
   return async dispatch => {
     const res = await axios.get(`/api/comments?id=${id}`)
-    if(res.statusText){
-    dispatch(loadComments(res.data.comments));
+    if (res.statusText) {
+      dispatch(loadComments(res.data.comments));
+    }
+    return res;
   }
-  return res;
-}
 }
 
-export const postComment = (title, text, timestamp, video_id, user_id) => {
-      return async dispatch => {
-        const res = await axios.post(`/api/comments?id=${video_id}`, {title, text, timestamp, user_id})
-        if (res.statusText) {
-          dispatch(setComment(res.data.comment));
-        }
-        return res;
-      }
+export const postComment = (videoId, comment) => {
+  return async dispatch => {
+    const res = await axios.post(`/api/comments?id=${videoId}`, {
+      comment
+    })
+    if (res.statusText) {
+      dispatch(setComment(res.data.comment));
     }
-  
+    return res;
+  }
+}

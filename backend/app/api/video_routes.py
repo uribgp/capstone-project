@@ -81,6 +81,7 @@ def vids_by_owner():
 def load_video():
   vidId = request.args.get('id', None)
   video = Video.query.get(vidId)
+  user = User.query.get(video.owner_id)
   s3 = AwsS3UploadClass(ACCESS_ID, ACCESS_KEY, BUCKET_NAME)
   # user = session['user']
   # if user["id"] == video.owner_id:
@@ -97,6 +98,7 @@ def load_video():
   categories = [category.to_dict() for category in categories]
   video = video.to_dict()
   video.update({"categories" : categories})
+  video.update({"user": user.username})
   return { "video": video, "categories": categories }, 200
 
 @video_routes.route('/search_by_featured')
@@ -121,13 +123,14 @@ def get_popular():
   vidDict = Counter(commentsByVid)
   videos = []
   for key in vidDict.keys():
-    videos.append(Video.query.filter(Video.id==key).first())
+    if len(videos) < 4:
+      videos.append(Video.query.filter(Video.id==key).first())
   data = [video.to_dict() for video in videos]
   return {"videos" : data}
 
 @video_routes.route('/by_recent')
 def get_recent():
-  videos = Video.query.order_by(desc(Video.created_at)).all()
+  videos = Video.query.order_by(desc(Video.created_at)).limit(4)
   data = [video.to_dict() for video in videos]
   return {"videos" : data}
 

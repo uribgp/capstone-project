@@ -4,11 +4,12 @@ import user from './user/user-reducer';
 import videos from './video/video-reducer';
 import categories from './category/category-reducer';
 import comments from './comment/comment-reducer';
+import profile from './profile/profile-reducer';
 import logger from 'redux-logger';
 
 
 const rootReducer = combineReducers({
-  user, videos, categories, comments
+  user, videos, categories, comments, profile
 });
 
 let storeEnhancer;

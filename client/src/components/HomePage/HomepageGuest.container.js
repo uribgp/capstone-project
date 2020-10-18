@@ -7,13 +7,20 @@ import VideoThumbnailContainer from '../Shared/VideoThumbnail/VideoThumbnail.con
 export default function HomepageGuestContainer() {
 
   const dispatch = useDispatch()
-  const {videos, loading} = useSelector(state => state.videos)
+  const { videos } = useSelector(state => state)
   // state.videos.popularVideos
   // state.videos.recentVideos
   // state.videos.needVideos
+  console.log(videos)
+  let loading = false
+  if (!videos.popularVideos || !videos.recentVideos || !videos.needVideos){
+    loading = true
+  } else {
+    loading = false
+  }
 
   useEffect(() => {
-    dispatch(getVideos())
+    // dispatch(getVideos())
     dispatch(getPopularVideos())
     dispatch(getRecentVideos())
     dispatch(getNeedVideos())
@@ -27,9 +34,9 @@ export default function HomepageGuestContainer() {
 
   return (
     <div>
-        <VideoSection sectionTitle="Popular Videos" videos={videos} />
-        <VideoSection sectionTitle="Recent videos" videos={videos} />
-        <VideoSection sectionTitle="People that need your support" videos={videos} />
+        <VideoSection key={"Popular Videos"} sectionTitle="Popular Videos" videos={videos.popularVideos} />
+        <VideoSection key={"Recent Videos"} sectionTitle="Recent videos" videos={videos.recentVideos} />
+        <VideoSection key={"Support these Videos"} sectionTitle="People that need your support" videos={videos.needVideos} />
     </div>
   )
 }

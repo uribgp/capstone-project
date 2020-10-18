@@ -58,18 +58,26 @@ with app.app_context():
   db.session.add(moreThan)
   # VIDEOS
 
-  video1 = Video(title = 'hello', description = "'This is my third set of five squats.  I felt good on my first four, but the almost bailed on the bar for the fifth.  It felt like my lowerback caved a bit and I had to shrug my shoulders to get the bar up the rest of the way.'", link = '555/videos/VID_20201008_212621996.mp4', owner_id = 1, category_id = 2, staff_pick = True, thumbnail = "https://images.unsplash.com/flagged/photo-1580051743902-bfebe05d70e0?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2640&q=80")
-  video2 = Video(title = 'hello', description = "it's me", link = '555/videos/VID_20201008_212621996.mp4', owner_id = 1, category_id = 1, staff_pick = True, thumbnail = "https://images.unsplash.com/flagged/photo-1580051743902-bfebe05d70e0?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2640&q=80")
-  video3 = Video(title = 'hello', description = "it's me", link = '555/videos/VID_20201008_212621996.mp4', thumbnail = "https://images.unsplash.com/flagged/photo-1580051743902-bfebe05d70e0?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2640&q=80", owner_id = 1, category_id = 3, staff_pick = True)
-  video4 = Video(title = 'hello', description = "it's me", link = '555/videos/VID_20201008_212621996.mp4', thumbnail = "https://images.unsplash.com/flagged/photo-1580051743902-bfebe05d70e0?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2640&q=80", owner_id = 1, category_id = 4, staff_pick = True)
-
-  video5 = Video(title = 'video2', description = "asdfasdf", link = '555/videos/VID_20201008_212621996.mp4', owner_id = 555, category_id = 1, thumbnail = "https://images.unsplash.com/flagged/photo-1580051743902-bfebe05d70e0?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2640&q=80")
-  
+  video1 = Video(title = 'hello', description = "'This is my third set of five squats.  I felt good on my first four, but the almost bailed on the bar for the fifth.  It felt like my lowerback caved a bit and I had to shrug my shoulders to get the bar up the rest of the way.'", link = '555/videos/VID_20201008_212621996.mp4', owner_id = 555, category_id = 2, staff_pick = True, thumbnail = "https://images.unsplash.com/flagged/photo-1580051743902-bfebe05d70e0?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2640&q=80", new_comment = True)
+  video2 = Video(title = 'hello', description = "it's me", link = '555/videos/VID_20201008_212621996.mp4', owner_id = 555, category_id = 1, staff_pick = True, thumbnail = "https://images.unsplash.com/flagged/photo-1580051743902-bfebe05d70e0?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2640&q=80")
+  video3 = Video(title = 'hello', description = "it's me", link = '555/videos/VID_20201008_212621996.mp4', thumbnail = "https://images.unsplash.com/flagged/photo-1580051743902-bfebe05d70e0?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2640&q=80", owner_id = 555, category_id = 3, staff_pick = True)
+  video4 = Video(title = 'hello', description = "it's me", link = '555/videos/VID_20201008_212621996.mp4', thumbnail = "https://images.unsplash.com/flagged/photo-1580051743902-bfebe05d70e0?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2640&q=80", owner_id = 555, category_id = 4, staff_pick = True, total_comments = 1)
+  video5 = Video(title = 'video2', description = "asdfasdf", link = '555/videos/VID_20201008_212621996.mp4', owner_id = 555, category_id = 1, thumbnail = "https://images.unsplash.com/flagged/photo-1580051743902-bfebe05d70e0?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2640&q=80", new_comment = True)
+  video6 = Video(title = 'hello', description = "'This is my third set of five squats.  I felt good on my first four, but the almost bailed on the bar for the fifth.  It felt like my lowerback caved a bit and I had to shrug my shoulders to get the bar up the rest of the way.'", link = '555/videos/VID_20201008_212621996.mp4', owner_id = 1, category_id = 2, staff_pick = True, thumbnail = "https://images.unsplash.com/flagged/photo-1580051743902-bfebe05d70e0?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2640&q=80")
+  video7 = Video(title = 'hello', description = "it's me", link = '555/videos/VID_20201008_212621996.mp4', owner_id = 1, category_id = 1, staff_pick = True, thumbnail = "https://images.unsplash.com/flagged/photo-1580051743902-bfebe05d70e0?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2640&q=80")
+  video8 = Video(title = 'hello', description = "it's me", link = '555/videos/VID_20201008_212621996.mp4', thumbnail = "https://images.unsplash.com/flagged/photo-1580051743902-bfebe05d70e0?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2640&q=80", owner_id = 3, category_id = 3, staff_pick = True, new_comment = True)
+  video9 = Video(title = 'hello', description = "it's me", link = '555/videos/VID_20201008_212621996.mp4', thumbnail = "https://images.unsplash.com/flagged/photo-1580051743902-bfebe05d70e0?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2640&q=80", owner_id = 4, category_id = 4, staff_pick = True)
+  video10 = Video(title = 'video2', description = "asdfasdf", link = '555/videos/VID_20201008_212621996.mp4', owner_id = 2, category_id = 1, thumbnail = "https://images.unsplash.com/flagged/photo-1580051743902-bfebe05d70e0?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2640&q=80")
   db.session.add(video1)
   db.session.add(video2)
   db.session.add(video3)
   db.session.add(video4)
   db.session.add(video5)
+  db.session.add(video6)
+  db.session.add(video7)
+  db.session.add(video8)
+  db.session.add(video9)
+  db.session.add(video10)
 
   # COMMENTS
 
@@ -79,6 +87,11 @@ with app.app_context():
   comment4 = Comment(title = 'comment4', text = 'some text', timestamp = 2, video_id = 3, user_id = 2, hasTimestamp=True)
   comment5 = Comment(title = 'comment5', text = 'some text', timestamp = 2, video_id = 2, user_id = 2)
   comment6 = Comment(title = 'comment6', text = 'some text', timestamp = 2, video_id = 3, user_id = 2)
+  comment7 = Comment(title = 'comment1', text = 'This is a lot of text in order to test that in depth comments will still show up nicely.  Maybe we shudl make the highlighted comments show up larger or something.', timestamp = 1, video_id = 1, user_id = 1, hasTimestamp=True)
+  comment8 = Comment(title = 'comment2', text = 'some text', timestamp = 2, video_id = 7, user_id = 2, hasTimestamp=True)
+  comment9 = Comment(title = 'comment3', text = 'some text', timestamp = 3, video_id = 6, user_id = 3)
+  comment10 = Comment(title = 'comment4', text = 'some text', timestamp = 2, video_id = 5, user_id = 2, hasTimestamp=True)
+  comment11 = Comment(title = 'comment5', text = 'some text', timestamp = 2, video_id = 8, user_id = 2)
   
   db.session.add(comment1)
   db.session.add(comment2)
@@ -86,6 +99,11 @@ with app.app_context():
   db.session.add(comment4)
   db.session.add(comment5)
   db.session.add(comment6)
+  db.session.add(comment7)
+  db.session.add(comment8)
+  db.session.add(comment9)
+  db.session.add(comment10)
+  db.session.add(comment11)
 
   db.session.commit()
   # Video_category
@@ -97,6 +115,11 @@ with app.app_context():
   jt5 = Video_category(category_id = 3, video_id = 3)
   jt6 = Video_category(category_id = 3, video_id = 4)
   jt7 = Video_category(category_id = 3, video_id = 5)
+  jt8 = Video_category(category_id = 3, video_id = 6)
+  jt9 = Video_category(category_id = 3, video_id = 7)
+  jt10 = Video_category(category_id = 3, video_id = 8)
+  jt11 = Video_category(category_id = 3, video_id = 9)
+  jt12 = Video_category(category_id = 3, video_id = 10)
 
   db.session.add(jt1)
   db.session.add(jt2)

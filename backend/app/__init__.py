@@ -8,6 +8,7 @@ from .api.session_routes import session_routes
 from .api.video_routes import video_routes
 from .api.category_routes import category_routes
 from .api.comment_routes import comment_routes
+from .api.profile_routes import profile_routes
 from .config import Config
 from flask_migrate import Migrate
 from flask_jwt_extended import JWTManager
@@ -21,6 +22,7 @@ app.register_blueprint(session_routes, url_prefix='/api/session')
 app.register_blueprint(video_routes, url_prefix='/api/videos')
 app.register_blueprint(category_routes, url_prefix='/api/categories')
 app.register_blueprint(comment_routes, url_prefix='/api/comments')
+app.register_blueprint(profile_routes, url_prefix='/api/profile')
 db.init_app(app)
 migrate = Migrate(app, db)
 # jwt = JWTManager(app)

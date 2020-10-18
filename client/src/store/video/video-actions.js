@@ -98,6 +98,13 @@ export const getNeedVideos = () => {
   }
 }
 
+export const addView = (vidId) => {
+  return async dispatch => {
+    const res = await axios.get(`/api/videos/add_view?id=${vidId}`)
+    return res
+  }
+}
+
 
 export const postVideo = (title, description, link, thumbnail, id, category_id, file) => {
   let formData = new FormData()

@@ -11,6 +11,11 @@
     color:#FAFAFA;
   }
  
+  &-outline {
+    border: 1px solid black;
+    background:none;
+    
+  }
   &-transparent {
   background: None;
   box-shadow: none;
@@ -22,7 +27,7 @@
     justify-content: center;
     svg {
       margin-left:10px;
-      font-size: 14px;
+      font-size: 32px;
     }
   }
 }

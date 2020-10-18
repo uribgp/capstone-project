@@ -11,6 +11,7 @@ import CommentModal from '../Shared/Comment/CommentModal';
 import FullscreenModal from '../Shared/FullscreenModal/FullscreenModal';
 import LoginContainer from '../Login/Login.container';
 import './video-player.style.scss';
+import CreateVideoCommentContainer from './CreateVideoComment.container';
 export default function VideoPlayerContainer() {
   const player = useRef(null);
   const [play, setPlay] = useState(true);
@@ -19,21 +20,44 @@ export default function VideoPlayerContainer() {
   const [displayCommentModal, setDisplayCommentModal] = useState(false);
   const [feedbackComment, setFeedbackComment] = useState('');
   const [displayLoginModal, setDisplayLoginModal] = useState(false);
+
   const dispatch = useDispatch();
   const { id: videoId } = useParams();
   const firstMount = useRef(true);
+  const videoCommentRef = useRef();
+  const videoPlayerRef = useRef();
   const { video } = useSelector((state) => state.videos);
   const { id: userId, username, authenticated } = useSelector(
     (state) => state.user
   );
   const comments = useSelector((state) => state.comments.comments);
-  const videoPlayerRef = useRef();
   // let timestamp = useSelector(state => state.videos.timestamp);
 
   useEffect(() => {
     dispatch(getVideoById(videoId));
     dispatch(getComments(videoId));
   }, []);
+
+  useEffect(() => {
+    if (videoCommentRef.current !== null && videoCommentRef.current) {
+      const [...children] = videoCommentRef.current.children;
+      const x = children;
+      const xToArr = [...x];
+
+      const item = [];
+      let final;
+      for (let i = 0; i < xToArr.length; i++) {
+        [...final] = xToArr[i].classList;
+        if (final.includes('video-comment-active')) {
+          item.push(xToArr[i]);
+        }
+      }
+      if (item.length > 0) {
+        let activeItemOffsetTop = item[0].offsetTop;
+        videoCommentRef.current.scrollTop = activeItemOffsetTop;
+      }
+    }
+  }, [commentsToDisplay]);
 
   function grabTimestamp() {
     let currentTime =
@@ -55,11 +79,10 @@ export default function VideoPlayerContainer() {
   };
 
   function handleOnProgress(event) {
-
-    if(secondsPlayed === -1) {
-      return 
+    if (secondsPlayed === -1) {
+      return;
     }
-    console.log(event)
+    console.log(event);
     const videoTimeRoundedToSeconds = Math.floor(event.playedSeconds);
 
     // Make sure the callback only runs once for each second.
@@ -73,14 +96,11 @@ export default function VideoPlayerContainer() {
     for (let i = 0; i < comments.length; i++) {
       if (comments[i].timestamp === videoTimeRoundedToSeconds) {
         setPlay(false);
-        return displayCommentsWithSameTimestampAsVideo(videoTimeRoundedToSeconds);
+        return displayCommentsWithSameTimestampAsVideo(
+          videoTimeRoundedToSeconds
+        );
       }
     }
-  }
-
-  const displayOneComment = (commentId) => {
-    setSecondsPlayed(-1)
-    setCommentsToDisplay([commentId])
   }
 
   const handleOnPlayClick = () => {
@@ -93,44 +113,25 @@ export default function VideoPlayerContainer() {
   };
 
   const handleOnCreateCommentClick = () => {
-    return authenticated
-      ? setDisplayCommentModal(!displayCommentModal)
-      : setDisplayLoginModal(!displayLoginModal);
+    if (authenticated) {
+      setDisplayCommentModal(!displayCommentModal);
+      setPlay(false);
+    } else {
+      setDisplayLoginModal(!displayLoginModal);
+    }
   };
 
   const handleOnCommentChange = (event) => {
     setFeedbackComment(event.target.value);
   };
 
-  const handleOnCommentSubmit = () => {
-    const currentSecondsInClip = Math.floor(
-      videoPlayerRef.current.getCurrentTime()
-    );
 
-
-       dispatch(
-        postComment(
-          'comment',
-          feedbackComment,
-          currentSecondsInClip,
-          videoId,
-          userId
-        )
-      );
-      setDisplayCommentModal()
-  };
 
   const handleOnVideoCommentClick = (comment) => {
-    console.log(comment)
     videoPlayerRef.current.player.player.player.currentTime = comment.timestamp;
-    displayOneComment(comment.id)
+    setSecondsPlayed(-1);
+    setCommentsToDisplay([comment.id]);
   };
-
-  useEffect(() => {
-    console.log(play)
-  }, [play])
-
-  const generateTimestamp = (timestamp) => {};
 
   useEffect(() => {
     if (firstMount.current) {
@@ -138,26 +139,11 @@ export default function VideoPlayerContainer() {
     }
   }, []);
 
-  if (!comments || !video) {
-    return <div> loading </div>;
-  }
-
+  if(!video) return null
   return (
     <div className="video-player-page">
-      {displayCommentModal && (
-        <FullscreenModal
-          onOutsideClick={handleOnCreateCommentClick}
-          onCloseClick={handleOnCreateCommentClick}
-        >
-          <CommentModal
-            buttonText="Submit"
-            placeholder="Write your comment..."
-            onCloseClick={handleOnCreateCommentClick}
-            onCommentSubmit={handleOnCommentSubmit}
-            onCommentChange={(event) => handleOnCommentChange(event)}
-          />
-        </FullscreenModal>
-      )}
+      {' '}
+      {displayCommentModal && <CreateVideoCommentContainer />}{' '}
       {displayLoginModal && (
         <FullscreenModal
           onOutsideClick={handleOnCreateCommentClick}
@@ -165,43 +151,54 @@ export default function VideoPlayerContainer() {
         >
           <LoginContainer />
         </FullscreenModal>
-      )}
+      )}{' '}
       <div className="video-wrap">
-        <ReactPlayer
-            
-          width={"100%"}
-          progressInterval={1000}
-          onPlay={handleOnPlayClick}
-          onEnded={handleOnEnded}
-          playing={play}
-          ref={videoPlayerRef}
-          url={video.link}
-          controls={true}
-          loop={false}
-          playsinline
-          onProgress={(event) => handleOnProgress(event)}
-          onPause={grabTimestamp}
-        />
+        {video && comments ? (
+          <ReactPlayer
+            width={'100%'}
+            progressInterval={1000}
+            onPlay={handleOnPlayClick}
+            onEnded={handleOnEnded}
+            playing={play}
+            ref={videoPlayerRef}
+            url={video.link}
+            controls={true}
+            loop={false}
+            playsinline
+            onProgress={(event) => handleOnProgress(event)}
+            onPause={grabTimestamp}
+          />
+        ) : (
+          <div>Loading </div>
+        )}{' '}
         <IconButton
           onClick={handleOnCreateCommentClick}
           icon={<AiOutlineComment />}
-        />
-      </div>
-      <div className="video-comment-list">
-        {comments.map(({ text, timestamp, id, user }) => {
-          return (
-            <VideoComment
-            key={id}
-              id={id}
-              active={commentsToDisplay.includes(id)}
-              comment={text}
-              timestamp={timestamp}
-              username={user}
-              onClick={(comment) => handleOnVideoCommentClick(comment)}
-            />
-          );
-        })}
-      </div>
+        />{' '}
+          <h1>{video.title}{video.created_at} views: {video.total_views} {video.user}</h1>
+          {video.categories.map((category) => <h1>{category.title}</h1>)}
+      </div>{' '}
+      <div ref={videoCommentRef} className="video-comment-list">
+        {' '}
+        {video && comments ? (
+          comments.map(({ text, timestamp, id, user, formatted_timestamp }) => {
+            return (
+              <VideoComment
+                key={id}
+                id={id}
+                active={commentsToDisplay.includes(id)}
+                comment={text}
+                timestamp={timestamp}
+                formatted_timestamp={formatted_timestamp}
+                username={user}
+                onClick={(comment) => handleOnVideoCommentClick(comment)}
+              />
+            );
+          })
+        ) : (
+          <div>Loading </div>
+        )}{' '}
+      </div>{' '}
     </div>
   );
 }

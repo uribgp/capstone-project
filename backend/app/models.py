@@ -77,7 +77,7 @@ class Video(db.Model):
   __tablename__ = 'videos'
 
   id = Column(Integer, primary_key=True)
-  title = Column(String(30), nullable=False)
+  title = Column(String(50), nullable=False)
   description = Column(String(1200), nullable=False)
   link = Column(String(300), nullable=False)
   thumbnail = Column(String(300), nullable=False)
@@ -112,7 +112,7 @@ class Video(db.Model):
       "description": self.description,
       "link": self.link,
       "thumbnail": self.thumbnail,
-      "created_at": self.created_at.strftime("%B %Y"),
+      "created_at": self.created_at.strftime("%B %d, %Y"),
       "total_views": self.total_views,
       "total_comments": self.total_comments,
       "new_comment": self.new_comment
@@ -159,6 +159,7 @@ class Comment(db.Model):
       "title": self.title,
       "text": self.text,
       "timestamp": self.timestamp,
+      "formatted_timestamp": str(datetime.timedelta(seconds=self.timestamp))[2:],
       "created_at": self.created_at.strftime("%B %Y"),
       "user": self.user.username
     }

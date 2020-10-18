@@ -8,7 +8,7 @@ export default function VideoSection({videos, onViewMoreClick, sectionTitle}) {
       <div className="video-section-title">{sectionTitle}</div>
       <div className="video-section-videos">
       {videos.map((video) => {
-        return <VideoThumbnailContainer video={video} /> 
+        return <VideoThumbnailContainer key={video.id} video={video} /> 
       })}
       </div>
     <div className="video-section-view-more">
