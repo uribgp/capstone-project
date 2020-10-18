@@ -121,17 +121,25 @@ def get_popular():
   comments = Comment.query.filter(Comment.created_at >= timeframe).all()
   commentsByVid = [comment.video_id for comment in comments]
   vidDict = Counter(commentsByVid)
-  videos = []
+  data = []
   for key in vidDict.keys():
-    if len(videos) < 4:
-      videos.append(Video.query.filter(Video.id==key).first())
-  data = [video.to_dict() for video in videos]
+    if len(data) < 4:
+      video = Video.query.get(key)
+      user = User.query.get(video.owner_id)
+      video = video.to_dict()
+      video.update({"user": user.username})
+      data.append(video)
   return {"videos" : data}
 
 @video_routes.route('/by_recent')
 def get_recent():
   videos = Video.query.order_by(desc(Video.created_at)).limit(4)
-  data = [video.to_dict() for video in videos]
+  data = []
+  for video in videos:
+    user = User.query.get(video.owner_id)
+    video = video.to_dict()
+    video.update({"user": user.username})
+    data.append(video)
   return {"videos" : data}
 
 @video_routes.route('/by_need')
@@ -145,10 +153,13 @@ def get_need():
   for key in vidDict.keys():
     if key in videosById:
       videosById.remove(key)
-  videos = []
+  data = []
   for vidId in videosById:
-    videos.append(Video.query.filter(Video.id==vidId).first())
-  data = [video.to_dict() for video in videos]
+    video = Video.query.get(vidId)
+    user = User.query.get(video.owner_id)
+    video = video.to_dict()
+    video.update({"user": user.username})
+    data.append(video)
   return {"videos" : data}
 
 @video_routes.route('/add_view')

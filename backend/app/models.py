@@ -86,7 +86,6 @@ class Video(db.Model):
   total_views = Column(Integer,default=0)
   new_comment = Column(Boolean, default=False)
   owner_id = Column(Integer, ForeignKey('users.id'), nullable=False)
-  category_id = Column(Integer, ForeignKey('categories.id'))
   created_at = Column(DateTime, nullable=False, default=datetime.datetime.utcnow)
   updated_at = Column(DateTime, nullable=False, default=datetime.datetime.utcnow)
 
@@ -143,8 +142,7 @@ class Comment(db.Model):
   id = Column(Integer, primary_key=True)
   title = Column(String(30), nullable=False)
   text = Column(String(1200), nullable=False)
-  timestamp = Column(Integer, nullable=False)
-  hasTimestamp = Column(Boolean, nullable=False, default=False)
+  timestamp = Column(Integer)
   video_id = Column(Integer, ForeignKey("videos.id"), nullable=False)
   user_id = Column(Integer, ForeignKey("users.id"), nullable=False)
   created_at = Column(DateTime, nullable=False, default=datetime.datetime.utcnow)
@@ -159,7 +157,7 @@ class Comment(db.Model):
       "title": self.title,
       "text": self.text,
       "timestamp": self.timestamp,
-      "formatted_timestamp": str(datetime.timedelta(seconds=self.timestamp))[2:],
+      "formatted_timestamp": str(datetime.timedelta(seconds=self.timestamp))[2:] if self.timestamp else "0:00",
       "created_at": self.created_at.strftime("%B %Y"),
       "user": self.user.username
     }
