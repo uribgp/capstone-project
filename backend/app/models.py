@@ -159,7 +159,7 @@ class Comment(db.Model):
       "timestamp": self.timestamp,
       "formatted_timestamp": str(datetime.timedelta(seconds=self.timestamp))[2:] if self.timestamp else "0:00",
       "created_at": self.created_at.strftime("%B %Y"),
-      "user": self.user.username
+      "comment_user": self.user.username
     }
 
 
