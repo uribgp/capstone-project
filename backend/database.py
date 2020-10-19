@@ -68,6 +68,7 @@ with app.app_context():
   video8 = Video(title = 'hello', description = "it's me", link = '555/videos/VID_20201008_212621996.mp4', thumbnail = "https://capstone-project-steven-2.s3-us-west-1.amazonaws.com/squatball.png", owner_id = 3, staff_pick = True, new_comment = True)
   video9 = Video(title = 'hello', description = "it's me", link = '555/videos/VID_20201008_212621996.mp4', thumbnail = "https://capstone-project-steven-2.s3-us-west-1.amazonaws.com/squatjerk.png", owner_id = 4, staff_pick = True)
   video10 = Video(title = 'video2', description = "asdfasdf", link = '555/videos/VID_20201008_212621996.mp4', owner_id = 2, thumbnail = "https://capstone-project-steven-2.s3-us-west-1.amazonaws.com/clarencesquat.png")
+  
   db.session.add(video1)
   db.session.add(video2)
   db.session.add(video3)
@@ -83,9 +84,9 @@ with app.app_context():
 
   comment1 = Comment(title = 'comment1', text = 'On this rep your hips begin rising but the barbell lags behind.  This results in unnecessary strain on your lower back because you end up doing a goodmorning instead of a proper squat.', timestamp = 12, video_id = 1, user_id = 1)
   comment2 = Comment(title = 'comment2', text = 'Great Squat, these look way better than last week!', timestamp = None, video_id = 1, user_id = 2)
-  comment3 = Comment(title = 'comment3', text = 'some text', timestamp = 3, video_id = 2, user_id = 3)
+  comment3 = Comment(title = 'comment3', text = 'some text', timestamp = 3, video_id = 3, user_id = 3)
   comment4 = Comment(title = 'comment4', text = 'some text', timestamp = 2, video_id = 3, user_id = 2)
-  comment5 = Comment(title = 'comment5', text = 'some text', timestamp = 2, video_id = 2, user_id = 2)
+  comment5 = Comment(title = 'comment5', text = 'some text', timestamp = 2, video_id = 5, user_id = 2)
   comment6 = Comment(title = 'comment6', text = 'some text', timestamp = 2, video_id = 3, user_id = 2)
   comment7 = Comment(title = 'comment1', text = 'This is a lot of text in order to test that in depth comments will still show up nicely.  Maybe we shudl make the highlighted comments show up larger or something.', timestamp = 1, video_id = 3, user_id = 1)
   comment8 = Comment(title = 'comment2', text = 'some text', timestamp = 2, video_id = 7, user_id = 2)

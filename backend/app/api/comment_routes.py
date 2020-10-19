@@ -9,15 +9,12 @@ comment_routes = Blueprint('comment', __name__)
 def comment():
   if(request.method =='GET'):
     vidId = request.args.get('id', None)
-    comments = Comment.query.filter(Comment.video_id==vidId, Comment.timestamp > 0).order_by("timestamp").all()
-    commentsGeneral = Comment.query.filter(Comment.video_id==vidId, Comment.timestamp == None).all()
+    comments = Comment.query.filter(Comment.video_id==vidId).order_by("timestamp").all()
+    # commentsGeneral = Comment.query.filter(Comment.video_id==vidId, Comment.timestamp == None).all()
     data = []
-    data1 = []
     if comments:
       data = [comment.to_dict() for comment in comments]
-    if commentsGeneral:
-      data1 = [comment.to_dict() for comment in commentsGeneral]
-    return {"comments": data, "commentsGeneral": data1}, 200
+    return {"comments": data}, 200
 
   if(request.method=='POST'):
     vidId = request.json.get('video_id', None)
