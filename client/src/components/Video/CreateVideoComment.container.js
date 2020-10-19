@@ -4,7 +4,7 @@ import './create-comment.style.scss';
 import FullscreenModal from '../Shared/FullscreenModal/FullscreenModal';
 import { useDispatch, useSelector } from 'react-redux';
 import { postComment } from '../../store/comment/comment-actions';
-export default function CreateVideoCommentContainer({onCommentSubmitted}) {
+export default function CreateVideoCommentContainer({onOutsideClick, onCloseClick, onCommentSubmitClick}) {
   const [formStage, setFormStage] = useState(1);
   const [hasTimestamp, setHasTimestamp] = useState(false);
   const [comment, setComment] = useState('');
@@ -38,23 +38,18 @@ export default function CreateVideoCommentContainer({onCommentSubmitted}) {
 
   const handleOnCommentSubmit = () => {
 
-
-    console.log(hasTimestamp)
-    const userComment = {
-      title: "Hello",
+    const commentData = {
+      title: "Comment",
       text: comment,
       user_id: userId,
       video_id: videoId,
     }
 
-    if(hasTimestamp) Object.assign(userComment, {timestamp})
-    
+    if(hasTimestamp) Object.assign(commentData, {timestamp})
+      
+    // Dispatcherasd
+    dispatch(postComment(commentData));
 
-    console.log(userComment)
-    dispatch(postComment(videoId, userComment));
-
-
-  
   }
 
 
@@ -64,8 +59,9 @@ export default function CreateVideoCommentContainer({onCommentSubmitted}) {
   }
 
   return (
-    <FullscreenModal>
+    <FullscreenModal onCloseClick={onCloseClick} onOutsideClick={onOutsideClick}>
       <CreateVideoComment
+        onCommentSubmit={handleOnCommentSubmit}
         commentValue={comment}
         onBackClick={handleOnBackClick}
         onSelectTimestampClick={timestamp =>handleOnSelectTimestampClick(timestamp)}
@@ -74,7 +70,7 @@ export default function CreateVideoCommentContainer({onCommentSubmitted}) {
         onGeneralCommentClick={handleOnGeneralCommentClick}
         onTimestampedCommentClick={handleOnTimestampedCommentClick}
         formStage={formStage}
-        onCommentSubmit={handleOnCommentSubmit}
+        onCommentSubmit={() => {handleOnCommentSubmit(); onCommentSubmitClick()}}
         onCommentChange={event => handleOnCommentChange(event)}
       />{' '}
     </FullscreenModal>

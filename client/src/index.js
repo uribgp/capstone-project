@@ -15,9 +15,7 @@ if (process.env.NODE_ENV !== 'production') {
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
-      <Layout>
         <App />
-      </Layout>
     </Provider>
   </React.StrictMode>,
   document.getElementById('root')

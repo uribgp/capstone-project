@@ -3,6 +3,7 @@ import Button from '../Button/Button'
 import Container from '../Container/Container'
 import './navbar.style.scss'
 export default function Navbar({onSignUpClick, onSignInClick}) {
+  
   return (
    <nav className="navbar">
      <Container>

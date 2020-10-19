@@ -3,8 +3,8 @@ alembic==1.4.3
 astroid==2.4.2
 attrs==20.2.0
 Babel==2.8.0
-boto3==1.15.13
-botocore==1.18.16
+boto3==1.15.18
+botocore==1.18.18
 certifi==2020.6.20
 chardet==3.0.4
 click==7.1.2
@@ -19,11 +19,10 @@ Flask-SQLAlchemy==2.4.4
 Flask-WTF==0.14.3
 futures==3.1.1
 gunicorn==20.0.4
-humanize==3.0.1
 idna==2.10
 imagesize==1.2.0
-iniconfig==1.0.1
-isort==5.6.2
+iniconfig==1.1.1
+isort==5.6.4
 itsdangerous==1.1.0
 Jinja2==2.11.2
 jmespath==0.10.0

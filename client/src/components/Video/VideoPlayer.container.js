@@ -12,25 +12,40 @@ import FullscreenModal from '../Shared/FullscreenModal/FullscreenModal';
 import LoginContainer from '../Login/Login.container';
 import './video-player.style.scss';
 import CreateVideoCommentContainer from './CreateVideoComment.container';
+import { format } from 'timeago.js';
+import LoadingSpinner from '../Shared/LoadingSpinner/LoadingSpinner';
 export default function VideoPlayerContainer() {
   const player = useRef(null);
-  const [play, setPlay] = useState(true);
+  const [play, setPlay] = useState(false);
   const [commentsToDisplay, setCommentsToDisplay] = useState([]);
   const [secondsPlayed, setSecondsPlayed] = useState(0);
   const [displayCommentModal, setDisplayCommentModal] = useState(false);
   const [feedbackComment, setFeedbackComment] = useState('');
   const [displayLoginModal, setDisplayLoginModal] = useState(false);
-
+  const [reactPlayerLoading, setReactPlayerLoading] = useState(true)
   const dispatch = useDispatch();
   const { id: videoId } = useParams();
   const firstMount = useRef(true);
   const videoCommentRef = useRef();
   const videoPlayerRef = useRef();
-  const { video } = useSelector((state) => state.videos);
+  const {
+    video,
+    video: {
+      link: videoUrl,
+      created_at: createdAt,
+      total_views: views,
+      user,
+      description,
+      title,
+      categories
+    },
+    loading: videoLoading,
+  } = useSelector((state) => state.video);
   const { id: userId, username, authenticated } = useSelector(
     (state) => state.user
   );
-  const comments = useSelector((state) => state.comments.comments);
+  const {comments, loading: commentsLoading} = useSelector((state) => state.comments);
+
   // let timestamp = useSelector(state => state.videos.timestamp);
 
   useEffect(() => {
@@ -125,7 +140,9 @@ export default function VideoPlayerContainer() {
     setFeedbackComment(event.target.value);
   };
 
-
+  const handleOnVideoReady  = () => {
+    setReactPlayerLoading(false)
+  }
 
   const handleOnVideoCommentClick = (comment) => {
     videoPlayerRef.current.player.player.player.currentTime = comment.timestamp;
@@ -139,11 +156,19 @@ export default function VideoPlayerContainer() {
     }
   }, []);
 
-  if(!video) return null
+  const handleOnCloseCommentModalClick = () => {
+    setDisplayCommentModal(false);
+  };
+
   return (
     <div className="video-player-page">
-      {' '}
-      {displayCommentModal && <CreateVideoCommentContainer />}{' '}
+      {displayCommentModal && (
+        <CreateVideoCommentContainer
+          onCommentSubmitClick={handleOnCloseCommentModalClick}
+          onCloseClick={handleOnCloseCommentModalClick}
+          onCloseClick={handleOnCloseCommentModalClick}
+        />
+      )}{' '}
       {displayLoginModal && (
         <FullscreenModal
           onOutsideClick={handleOnCreateCommentClick}
@@ -151,37 +176,79 @@ export default function VideoPlayerContainer() {
         >
           <LoginContainer />
         </FullscreenModal>
-      )}{' '}
+      )}
       <div className="video-wrap">
-        {video && comments ? (
-          <ReactPlayer
-            width={'100%'}
-            progressInterval={1000}
-            onPlay={handleOnPlayClick}
-            onEnded={handleOnEnded}
-            playing={play}
-            ref={videoPlayerRef}
-            url={video.link}
-            controls={true}
-            loop={false}
-            playsinline
-            onProgress={(event) => handleOnProgress(event)}
-            onPause={grabTimestamp}
-          />
+        {!commentsLoading && !videoLoading  ? (
+          <div>
+            <ReactPlayer
+              onReady={handleOnVideoReady}
+              volume={0}
+              width={'100%'}
+              progressInterval={1000}
+              onPlay={handleOnPlayClick}
+              onEnded={handleOnEnded}
+              playing={play}
+              muted={true}
+              ref={videoPlayerRef}
+              url={video.link}
+              controls={true}
+              loop={false}
+              playsinline
+              onProgress={(event) => handleOnProgress(event)}
+              onPause={grabTimestamp}
+            />
+            
+            <div className="video-info">
+              <div className="video-info-upper">
+                <div className="video-info-user">{title}</div>
+                <div>
+                  <span className="video-info-views">{views} views</span>
+                  <span></span>
+                  <span className="video-info-createdAt">
+                    {format(createdAt)}
+                  </span>
+                </div>
+              </div>
+              <div className="">
+              <div>
+              {categories.length > 0? categories.map((category) => <p>{category.title}</p>) : null}
+              </div>
+                <div className="video-info-user">{user}</div>
+                <div className="video-info-description">{description}</div>
+                </div>
+            {
+              !videoLoading && 
+              <IconButton
+                onClick={handleOnCreateCommentClick}
+                icon={<AiOutlineComment />}
+              />
+
+            }
+            </div>
+          <div className="video-comment-general-list">
+            {comments.map(({text, timestamp, comment_user, created_at}) => {
+              if(timestamp === null){
+              console.log(text)
+              return ( 
+               <div className="video-comment-general">
+                 <div className="video-comment-general-user">
+                   {comment_user}
+                 </div>
+                <div className="video-comment-general-text">{text}</div>
+              <div className="video-comment-general-created-at">{format(created_at)}</div>
+               </div>
+              )}
+            })}
+          </div>
+          </div>
         ) : (
-          <div>Loading </div>
-        )}{' '}
-        <IconButton
-          onClick={handleOnCreateCommentClick}
-          icon={<AiOutlineComment />}
-        />{' '}
-          <h1>{video.title}{video.created_at} views: {video.total_views} {video.user}</h1>
-          {video.categories.map((category) => <h1>{category.title}</h1>)}
-      </div>{' '}
+          <LoadingSpinner width={32} />
+        )}
+      </div>
       <div ref={videoCommentRef} className="video-comment-list">
-        {' '}
-        {video && comments ? (
-          comments.map(({ text, timestamp, id, user, formatted_timestamp }) => {
+        {!commentsLoading && !videoLoading ? (
+          comments.map(({ text, timestamp, id, comment_user, formatted_timestamp }) => {
+            if(timestamp !== null){
             return (
               <VideoComment
                 key={id}
@@ -190,15 +257,15 @@ export default function VideoPlayerContainer() {
                 comment={text}
                 timestamp={timestamp}
                 formatted_timestamp={formatted_timestamp}
-                username={user}
+                username={comment_user}
                 onClick={(comment) => handleOnVideoCommentClick(comment)}
               />
-            );
+            )};
           })
         ) : (
-          <div>Loading </div>
-        )}{' '}
-      </div>{' '}
+          <LoadingSpinner />
+        )}
+      </div>
     </div>
   );
 }

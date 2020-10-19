@@ -1,15 +1,16 @@
 import { createStore, compose, combineReducers, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
 import user from './user/user-reducer';
-import videos from './video/video-reducer';
+import video from './video/video-reducer'
 import categories from './category/category-reducer';
 import comments from './comment/comment-reducer';
 import profile from './profile/profile-reducer';
+import videos from './videos/videos-reducer'
 import logger from 'redux-logger';
 
 
 const rootReducer = combineReducers({
-  user, videos, categories, comments, profile
+  user, videos, categories, comments, profile, video
 });
 
 let storeEnhancer;

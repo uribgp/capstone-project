@@ -10,12 +10,10 @@ export default function CommentModal({
   onCommentSubmit,
   commentValue,
   placeholder,
-  onCloseClick,
   buttonText
 }) {
   return (
     <div className="comment-modal">
-      <IconButton icon={<AiOutlineClose />} sizeInPx={24} onClick={onCloseClick} />
       <div className="comment-modal-user-text-wrap">
         <UserProfile />
         <div className="textarea-wrap">

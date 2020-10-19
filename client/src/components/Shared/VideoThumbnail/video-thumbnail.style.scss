@@ -7,8 +7,11 @@
     width: 100%;
     text-decoration: none;
   }
-  
+  &-img-wrap {
+    position: relative;
+  }
   &-img {
+    height: 200px;
     box-shadow: 0 0 15px rgba(0,0,0,0.2);
     object-fit: cover;
     width: 100%;
@@ -19,6 +22,11 @@
     color:black;
     text-decoration: none;
     font-weight: 600;
+  }
+  &-user {
+    margin-top: 8px;
+    font-size: 14px;
+    color:var(--text-faded);
   }
   &-popup-play {
     color:White;

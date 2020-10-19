@@ -10,7 +10,7 @@
     "http-proxy-middleware": "^1.0.5",
     "node-sass": "^4.14.1",
     "react": "^16.13.1",
-    "react-dom": "^16.13.1",
+    "react-dom": "^16.14.0",
     "react-icons": "^3.11.0",
     "react-player": "^2.6.2",
     "react-prism": "^4.3.2",
@@ -19,6 +19,8 @@
     "react-scripts": "3.4.3",
     "redux": "^4.0.5",
     "redux-thunk": "^2.3.0",
+    "timeago": "^1.6.7",
+    "timeago.js": "^4.0.2",
     "video-react": "^0.14.1"
   },
   "scripts": {

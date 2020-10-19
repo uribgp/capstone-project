@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { connect, useDispatch } from 'react-redux';
 import { BrowserRouter, Switch } from 'react-router-dom';
+import Layout from './components/Shared/Layout/Layout';
 import LoadingSpinner from './components/Shared/LoadingSpinner/LoadingSpinner';
 import PrivateRoutes from './PrivateRoutes';
 import PublicRoutes from './PublicRoutes';
@@ -18,10 +19,12 @@ function App({ authenticateUser, userLoading, userAuthenticated }) {
 
   return (
     <BrowserRouter>
+    <Layout>
       <Switch>
         <PublicRoutes />
         <PrivateRoutes />
       </Switch>
+    </Layout>
     </BrowserRouter>
   );
 }

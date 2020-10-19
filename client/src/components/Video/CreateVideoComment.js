@@ -27,7 +27,7 @@ export default function CreateVideoComment({
   return (
     <div className="create-comment-modal">
       {formStage === 1 && (
-        <div className="comment-modal">
+          <div>
           <div className="create-comment-modal-title">
             What type of comment?
           </div>
@@ -50,23 +50,25 @@ export default function CreateVideoComment({
           <div className="create-comment-modal-title">
             Select moment in video
           </div>
-          <ReactPlayer ref={playerRef} playing={false} url={video.link} controls={true} />
+          <ReactPlayer volume={0} width="100%" ref={playerRef} muted={true} playing={false} url={video.link} controls={true} />
+          <div className="create-comment-modal-button-wrap">
+            <ButtonIcon
+              onClick={onBackClick}
+              text="Back"
+              icon={<AiFillCaretLeft />}
+            />
           <ButtonIcon
             onClick={() =>onSelectTimestampClick(playerRef.current.getCurrentTime())}
             text="Next"
             icon={<AiFillCaretRight />}
           />
-          <ButtonIcon
-            onClick={onBackClick}
-            text="Back"
-            icon={<AiFillCaretLeft />}
-          />
+
+          </div>
         </div>
       )}
       {formStage === 3 && (
         <CommentModal
           buttonText="Submit"
-          onCloseClick={onCloseClick}
           onCommentSubmit={onCommentSubmit}
           onCommentChange={(event) => onCommentChange(event)}
           commentValue={commentValue}

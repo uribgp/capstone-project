@@ -7,8 +7,13 @@ export default function FullscreenModal({ children, onOutsideClick, onCloseClick
   return (
     <Portal>
       <div onClick={onOutsideClick} className="fullscreen-modal">
-        <IconButton icon={AiOutlineClose} sizeInPx={24} onClick={() => {onCloseClick(); console.log("yeet")}} />
-       <div onClick={e => e.stopPropagation()} className="fullscreen-modal-content">{children}</div> 
+       <div onClick={e => e.stopPropagation()} className="fullscreen-modal-content">
+         <div>
+         {children}
+           </div>
+        <IconButton className="fullscreen-modal-close-icoxn" icon={<AiOutlineClose />} sizeInPx={24} onClick={() => {onCloseClick(); console.log("yeet")}} />
+           
+           </div> 
         </div>
     </Portal>
   );

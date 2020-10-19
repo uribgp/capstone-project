@@ -8,19 +8,12 @@ export const VIDEOS_LOADING = 'videos/loading';
 export const SET_POPULAR_VIDEOS = 'videos/popular';
 export const SET_RECENT_VIDEOS = 'videos/recent';
 export const SET_NEED_VIDEOS = 'videos/by_need';
-export const SET_VIDEO_ERROR = "SET_VIDEO_ERROR"
-export const SET_VIDEO_LOADING = "SET_VIDEO_LOADING"
+
 export const loadVideos = (videos) => { 
     return {
         type: SET_VIDEOS,
         videos
-      }
     }
-
-export const setVideoLoading = () => {
-  return {
-    type: SET_VIDEO_LOADING
-  }
 }
 
 export const videosLoading = () => {
@@ -71,12 +64,6 @@ export const loadRecentVideos = (videos) => {
   }
 }
 
-export const setVideoError = () => {
-  return {
-    type: SET_VIDEO_ERROR
-  }
-}
-
 export const getVideos = () => {
   return async dispatch => {
       dispatch(videosLoading())
@@ -119,6 +106,36 @@ export const addView = (vidId) => {
 }
 
 
+export const postVideo = (title, description, link, thumbnail, id, category_id, file) => {
+  let formData = new FormData()
+  // how fast is it uploading larger files?
+  // limit file size?
+  // s3 bucket, is there a limitation?  Do I need to check settings.  
+  // if a file is too big or s3 is getting full, protect myself.
+  formData.append("title", title)
+  formData.append("description", description)
+  formData.append("link", link)
+  formData.append("thumbnail", thumbnail)
+  formData.append("id", id)
+  formData.append("category_id", category_id)
+  formData.append("file", file.raw)
+  let config = { headers: {
+    'Content-Type': 'multipart/form-data'
+  } }
+    return async dispatch => {
+      const res = await axios.post('/api/videos/', formData, config)
+      if (res.statusText) {
+        // let signature = res.data.response
+        // let formData2 = new FormData()
+        // console.log(signature)
+        // formData2.append("file", file.raw)
+        // const res2 = await axios.post(signature['url'], formData2, signature['fields'])
+        // console.log(res2)
+        dispatch(setVideo(res.data.video));
+      }
+      return res;
+    }
+  }
 
 export const getVideosByOwner = () => {
   return async dispatch => {
@@ -131,17 +148,12 @@ export const getVideosByOwner = () => {
 }
 
 export const getVideoById = (id) => {
-
   return async dispatch => {
-    dispatch(videosLoading())
-
-    try {
-      const res = await axios.get(`/api/videos/single?id=${id}`)
-      console.log(res)
+    const res = await axios.get(`/api/videos/single?id=${id}`)
+    if (res.statusText){
       dispatch(setVideo(res.data.video))
-    } catch (error) {
-      dispatch(setVideoError())
     }
+    return res;
   }
 }
 
