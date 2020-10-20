@@ -34,16 +34,16 @@ def user_profile():
       data = [video.to_dict() for video in noComments]
       data1 = [video.to_dict() for video in newComments]
       data2 = [video.to_dict() for video in oldComments]
-      return {"profile": { "no_comments": data, "new_comments": data1, "oldComments": data2}}, 200
+      return {"profile": { "no_comments": data, "new_comments": data1, "oldComments": data2} }, 200
 
   elif(request.method == 'PATCH'):
     user_session = session['user']
     user = User.query.get(user_session["id"])
-    new_username = request.json.get("username", None)
-    new_email = request.json.get("email", None)
-    new_about_me = request.json.get("about_me", None)
-    new_avatar_file = request.files["avatar"] or None
-    new_banner_file = request.files["banner"] or None
+    new_username = request.json.get("new_username", None)
+    new_email = request.json.get("new_email", None)
+    new_about_me = request.json.get("new_about_me", None)
+    new_avatar_file = request.files["new_avatar"] or None
+    new_banner_file = request.files["new_banner"] or None
 
     if new_username:
       user.username = new_username
@@ -75,6 +75,7 @@ def user_profile():
       s3.upload_fileobj(file, BUCKET_NAME, file_path, ExtraArgs={"ContentType": file.content_type, 'ACL': 'public-read' })
       external_link = f'{BUCKET_URL}/{folder}{file.filename}'
       user.banner = external_link
+    return {"msg": "profile updated"}
     
     db.session.add(user)
     db.session.commit()
