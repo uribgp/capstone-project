@@ -50,16 +50,31 @@ def user_profile():
       username_check = User.query.filter(User.username == new_username)
       if username_check:
         return jsonify(msg="Username already exists."), 401
+    
     if new_email:
       user.email = new_email
       user_email_check = User.query.filter(User.email == new_email)
       if user_email_check:
         return jsonify(msg="That email is already in use"), 401
+    
     if new_about_me:
       user.about_me = new_about_me
-# username
-# email
-# avatar
-# banner
-# about_me
-# coach
+    
+    if new_avatar_file:
+      new_avatar_file.filename = secure_filename(new_avatar_file.filename)
+      folder = f'{user_id}/files/'
+      file_path = folder + file.filename
+      s3.upload_fileobj(file, BUCKET_NAME, file_path, ExtraArgs={"ContentType": file.content_type, 'ACL': 'public-read' })
+      external_link = f'{BUCKET_URL}/{folder}{file.filename}'
+      user.avatar = external_link
+    
+    if new_banner_file:
+      new_banner_file.filename = secure_filename(new_banner_file.filename)
+      folder = f'{user_id}/files/'
+      file_path = folder + file.filename
+      s3.upload_fileobj(file, BUCKET_NAME, file_path, ExtraArgs={"ContentType": file.content_type, 'ACL': 'public-read' })
+      external_link = f'{BUCKET_URL}/{folder}{file.filename}'
+      user.banner = external_link
+    
+    db.session.add(user)
+    db.session.commit()
