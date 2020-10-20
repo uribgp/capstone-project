@@ -15,23 +15,22 @@ profile_routes = Blueprint('profile', __name__)
 
 @profile_routes.route('')
 def load_profile():
-    if 'user' in session:
-      user = session['user']
-      noComments = Video.query.filter(Video.owner_id == user["id"], Video.total_comments==0).limit(4)
-      newComments = Video.query.filter(Video.owner_id == user["id"], Video.new_comment==True).limit(4)
-      oldComments = Video.query.filter(Video.owner_id == user["id"], Video.total_comments>0).limit(4)
-      data = [video.to_dict() for video in noComments]
-      data1 = [video.to_dict() for video in newComments]
-      data2 = [video.to_dict() for video in oldComments]
-      return {"profile": { "no_comments": data, "new_comments": data1, "oldComments": data2}}, 200
 
-@profile_routes.route('/user')
-def view_profile():
-    userId = request.args.get('id', None)
-    noComments = Video.query.filter(Video.owner_id == userId, Video.total_comments==0).all()
-    newComments = Video.query.filter(Video.owner_id == userId, Video.new_comment==True).all()
-    oldComments = Video.query.filter(Video.owner_id == userId, Video.total_comments>0).all()
+  if(request.method == 'GET', methods=['GET', 'PATCH']))
+  if 'user' in session:
+    user = session['user']
+    noComments = Video.query.filter(Video.owner_id == user["id"], Video.total_comments==0).limit(4)
+    newComments = Video.query.filter(Video.owner_id == user["id"], Video.new_comment==True).limit(4)
+    oldComments = Video.query.filter(Video.owner_id == user["id"], Video.total_comments>0).limit(4)
     data = [video.to_dict() for video in noComments]
     data1 = [video.to_dict() for video in newComments]
     data2 = [video.to_dict() for video in oldComments]
-    return {"profile": {"no_comments": data, "new_comments": data1, "oldComments": data2}}, 200
+    return {"profile": { "no_comments": data, "new_comments": data1, "oldComments": data2}}, 200
+
+  elif(request.method == 'PATCH'):
+# username
+# email
+# avatar
+# banner
+# about_me
+# coach
