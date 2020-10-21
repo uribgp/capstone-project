@@ -247,12 +247,14 @@ export default function VideoPlayerContainer() {
       </div>
       <div ref={videoCommentRef} className="video-comment-list">
         {!commentsLoading && !videoLoading ? (
-          comments.map(({ text, timestamp, id, comment_user, formatted_timestamp }) => {
+          comments.map(({ text, timestamp, id, comment_user, formatted_timestamp, likes, dislikes  }) => {
             if(timestamp !== null){
             return (
               <VideoComment
                 key={id}
                 id={id}
+                likes={likes}
+                dislikes={dislikes}
                 active={commentsToDisplay.includes(id)}
                 comment={text}
                 timestamp={timestamp}

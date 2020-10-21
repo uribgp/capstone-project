@@ -10,6 +10,7 @@ export default function CategoryCard({ text, background, uppercase = false }) {
         }}
       >
         <div className="category-card-text">{text}</div>
+        <div className="likes">Awesome</div>
       </div>
     </div>
   );

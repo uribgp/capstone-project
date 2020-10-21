@@ -35,33 +35,39 @@ def comment():
     comment = comment.to_dict()
   return {"video": video, "comment": comment}, 200
 
-@comment_routes.route('/likes', methods=['POST'])
+@comment_routes.route('/likes', methods=['GET','POST'])
 def likes():
-  user_session = session['user']
-  comment_id = request.args.get('comment_id')
-  like_comment = request.args.get('like')
-  dislike_comment = request.args.get('dislike')
-  previous_like = Likes_model.query.get(user_session["id"], comment_id)
-  if previous_like:
-    if previous_like.liked and liked_comment or previous_like.disliked and dislike_comment:
-      previous_like.reset()
-      return {"msg": "liked comment reset"}
-    elif liked_comment == True:
-      previous_like.like_comment()
-      return {"msg": "comment changed to liked"}
-    elif dislike_comment == True:
-      previous_like.dislike_comment()
-      return {"msg": "comment changed to dislike"}
+  if request.method == 'POST':
+    user_session = session['user']
+    comment_id = request.args.get('comment_id')
+    like_comment = bool(request.json.get('like_comment', None))
+    dislike_comment = bool(request.json.get('dislike_comment', None))
+    previous_like = Likes_model.query.get((user_session["id"],comment_id))
+    print(previous_like.liked and like_comment)
+    print("~~~")
+    if previous_like:
+      if previous_like.liked and like_comment or previous_like.disliked and dislike_comment:
+        previous_like.reset()
+        db.session.commit()
+        return {"msg": "liked comment reset"}
+      elif like_comment == True:
+        previous_like.like_comment()
+        db.session.commit()
+        return {"msg": "comment changed to liked"}
+      elif dislike_comment == True:
+        previous_like.dislike_comment()
+        db.session.commit()
+        return {"msg": "comment changed to dislike"}
 
-  new_like = Likes_model(
-    user_id = user_session["id"],
-    comment_id = comment_id,
-    liked = like_comment,
-    disliked = dislike_comment
-  )
-  db.session.add(new_like)
-  db.session.commit()
-  return {"msg": "new liked_model"}
+    new_like = Likes_model(
+      user_id = user_session["id"],
+      comment_id = comment_id,
+      liked = like_comment,
+      disliked = dislike_comment
+    )
+    db.session.add(new_like)
+    db.session.commit()
+    return {"msg": "new liked_model"}
 
 
 # if(request.method=='DELETE'):

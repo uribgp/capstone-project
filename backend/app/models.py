@@ -156,6 +156,20 @@ class Comment(db.Model):
   video = relationship("Video", foreign_keys=[video_id])
   likes = relationship("Likes_model", backref='comment')
 
+  def get_likes(self):
+    count = 0
+    for like in self.likes:
+      if like.liked == True:
+        count += 1
+    return count
+
+  def get_dislikes(self):
+    count = 0
+    for like in self.likes:
+      if like.disliked == True:
+        count += 1
+    return count
+
   def to_dict(self):
     return {
       "id": self.id,
@@ -164,7 +178,9 @@ class Comment(db.Model):
       "timestamp": self.timestamp,
       "formatted_timestamp": str(datetime.timedelta(seconds=self.timestamp))[2:] if self.timestamp else "0:00",
       "created_at": self.created_at.strftime("%B %Y"),
-      "comment_user": self.user.username
+      "comment_user": self.user.username,
+      "likes": self.get_likes(),
+      "dislikes": self.get_dislikes()
     }
 
 
