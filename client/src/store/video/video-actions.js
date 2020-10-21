@@ -8,8 +8,8 @@ export const VIDEOS_LOADING = 'videos/loading';
 export const SET_POPULAR_VIDEOS = 'videos/popular';
 export const SET_RECENT_VIDEOS = 'videos/recent';
 export const SET_NEED_VIDEOS = 'videos/by_need';
-export const SET_VIDEO_ERROR = "SET_VIDEO_ERROR"
-export const SET_VIDEO_LOADING = "SET_VIDEO_LOADING"
+export const SET_VIDEO_ERROR = "SET_VIDEO_ERROR";
+export const SET_VIDEO_LOADING = "SET_VIDEO_LOADING";
 export const loadVideos = (videos) => { 
     return {
         type: SET_VIDEOS,

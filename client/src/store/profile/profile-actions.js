@@ -39,16 +39,16 @@ export const getProfile = () => {
     }
   }
 
-  export const updateProfile = (new_username, description, link, thumbnail, id, category_id, file) => {
+  export const updateProfile = (new_username, new_email, description, new_avatar, new_banner) => {
     let formData = new FormData()
     // new_username = request.json.get("username", None)
     // new_email = request.json.get("email", None)
     // new_about_me = request.json.get("about_me", None)
     // new_avatar_file = request.files["avatar"] or None
     // new_banner_file = request.files["banner"] or None.
-    formData.append("new_user_name", new_user_name)
+    formData.append("new_user_name", new_username)
     formData.append("new_email", new_email)
-    formData.append("new_about_me", new_about_me)
+    formData.append("new_about_me", description)
     formData.append("new_avatar", new_avatar.raw)
     formData.append("new_banner", new_banner.raw)
 
