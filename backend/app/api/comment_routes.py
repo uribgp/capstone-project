@@ -1,5 +1,5 @@
 from flask import Blueprint, jsonify, redirect, url_for, session, request
-from app.models import User, db, Comment, Video
+from app.models import User, db, Comment, Video, Likes_model
 from flask_jwt_extended import create_access_token, jwt_required
 from flask_login import current_user
 
@@ -33,8 +33,35 @@ def comment():
     db.session.commit()
     video = video.to_dict()
     comment = comment.to_dict()
-    print(comment)
   return {"video": video, "comment": comment}, 200
+
+@comment_routes.route('/likes', methods=['POST'])
+def likes():
+  user_session = session['user']
+  comment_id = request.args.get('comment_id')
+  like_comment = request.args.get('like')
+  dislike_comment = request.args.get('dislike')
+  previous_like = Likes_model.query.get(user_session["id"], comment_id)
+  if previous_like:
+    if previous_like.liked and liked_comment or previous_like.disliked and dislike_comment:
+      previous_like.reset()
+      return {"msg": "liked comment reset"}
+    elif liked_comment == True:
+      previous_like.like_comment()
+      return {"msg": "comment changed to liked"}
+    elif dislike_comment == True:
+      previous_like.dislike_comment()
+      return {"msg": "comment changed to dislike"}
+
+  new_like = Likes_model(
+    user_id = user_session["id"],
+    comment_id = comment_id,
+    liked = like_comment,
+    disliked = dislike_comment
+  )
+  db.session.add(new_like)
+  db.session.commit()
+  return {"msg": "new liked_model"}
 
 
 # if(request.method=='DELETE'):

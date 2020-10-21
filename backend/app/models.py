@@ -154,6 +154,7 @@ class Comment(db.Model):
 
   user = relationship("User", foreign_keys =[user_id])
   video = relationship("Video", foreign_keys=[video_id])
+  likes = relationship("Likes_model", backref='comment')
 
   def to_dict(self):
     return {
@@ -201,3 +202,31 @@ class Video_category(db.Model):
   category_id = Column(Integer, ForeignKey("categories.id"), nullable=False)
   video_id = Column(Integer, ForeignKey("videos.id"), nullable=False)
   
+
+class Likes_model(db.Model):
+  __tablename__ = 'likes'
+
+  user_id = Column(Integer, primary_key=True, nullable=False)
+  comment_id = Column(Integer, ForeignKey("comments.id"), primary_key=True, nullable=False)
+
+  liked = Column(Boolean, default=False, nullable=False)
+  disliked = Column(Boolean, default=False, nullable=False)
+
+  def like_comment(self):
+    self.disliked = False
+    self.liked = True
+  
+  def dislike_comment(self):
+    self.liked = False
+    self.disliked = True
+
+  def reset(self):
+    self.liked = False
+    self.disliked = False
+
+  def to_dict(self):
+    return {
+      "id": self.id,
+      "liked": self.liked,
+      "disliked": self.disliked
+    }

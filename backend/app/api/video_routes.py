@@ -28,7 +28,7 @@ REGION_NAME = os.environ.get('AWS_REGION_NAME')
 def load_files():
   if request.method == 'POST':
     owner_id = request.form.get('id', None)
-    file = request.files["file"] or None
+    file = request.files["video_file"] or None
     if file == None:
       return jsonify({"error" : "requires file"})
     file.filename = secure_filename(file.filename)
@@ -52,7 +52,6 @@ def load_files():
       link=folder,
       thumbnail=request.form.get('thumbnail', None),
       owner_id=owner_id,
-      category_id=request.form.get('category_id', None)
     )
     db.session.add(video)
     db.session.commit()
