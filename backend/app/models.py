@@ -7,11 +7,18 @@ import datetime
 
 db = SQLAlchemy()
 
+class Follower(db.Model):
+  __tablename__ = 'followers'
+
+  follower_by_id = Column(Integer, ForeignKey("users.id"), primary_key=True, nullable=False)
+  following_id = Column(Integer, ForeignKey("users.id"), primary_key=True, nullable=False)
+  verified = Column(Boolean, nullable=False, default=False)
 
 class User(db.Model, UserMixin):
   __tablename__ = 'users'
 
   id = Column(Integer, primary_key=True)
+  
   username = Column(String(30), nullable=False)
   email = Column(String(30), nullable=False, unique=True)
   avatar = Column(String)
@@ -20,8 +27,14 @@ class User(db.Model, UserMixin):
   coach = Column(Boolean, default=False)
   hashed_password = Column(String(100), nullable=False)
   alert = Column(Boolean, default=False)
+  
   created_at = Column(DateTime, nullable=False, default=datetime.datetime.utcnow)
   updated_at = Column(DateTime, nullable=False, default=datetime.datetime.utcnow)
+
+  following = db.relationship('User', secondary='followers', foreign_keys='Follower.follower_by_id', primaryjoin=(Follower.follower_by_id == id))
+  followed_by = db.relationship('User', secondary='followers', foreign_keys='Follower.following_id', primaryjoin=(Follower.following_id == id))
+
+  # followers = relationship("Follower", backref='user')
 
   @property
   def password(self):
@@ -43,6 +56,7 @@ class User(db.Model, UserMixin):
       "username": self.username,
       "email": self.email,
       "alert": self.alert,
+      "followers": self.followers,
       "created_at": self.created_at.strftime("%B %Y")
     }
 
@@ -64,16 +78,6 @@ class Category(db.Model):
       "default_pic": self.default_pic
     }
 
-
-
-
-
-class Follower(db.Model):
-  __tablename__ = 'followers'
-
-  id = Column(Integer, primary_key=True)
-  follower_id = Column(Integer, ForeignKey('users.id'))
-  followed_id = Column(Integer, ForeignKey('users.id'))
 
 
 

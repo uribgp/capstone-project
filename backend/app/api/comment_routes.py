@@ -43,8 +43,6 @@ def likes():
     like_comment = bool(request.json.get('like_comment', None))
     dislike_comment = bool(request.json.get('dislike_comment', None))
     previous_like = Likes_model.query.get((user_session["id"],comment_id))
-    print(previous_like.liked and like_comment)
-    print("~~~")
     if previous_like:
       if previous_like.liked and like_comment or previous_like.disliked and dislike_comment:
         previous_like.reset()
