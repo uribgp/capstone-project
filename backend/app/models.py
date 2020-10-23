@@ -14,6 +14,17 @@ class Follower(db.Model):
   following_id = Column(Integer, ForeignKey("users.id"), primary_key=True, nullable=False)
   verified = Column(Boolean, nullable=False, default=False)
 
+  follower = relationship("User", foreign_keys =[follower_by_id])
+  creator = relationship("User", foreign_keys =[following_id])
+  
+  def to_dict(self):
+    return {
+      "follower": self.follower.username,
+      "follower_id": self.follower.id,
+      "creator": self.creator.username,
+      "creator_id": self.creator.id
+    }
+
 class User(db.Model, UserMixin):
   __tablename__ = 'users'
 

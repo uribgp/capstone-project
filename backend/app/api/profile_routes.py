@@ -75,7 +75,9 @@ def user_profile():
       s3.upload_fileobj(file, BUCKET_NAME, file_path, ExtraArgs={"ContentType": file.content_type, 'ACL': 'public-read' })
       external_link = f'{BUCKET_URL}/{folder}{file.filename}'
       user.banner = external_link
-    return {"msg": "profile updated"}
     
     db.session.add(user)
     db.session.commit()
+    
+    return {"msg": "profile updated"}
+    
