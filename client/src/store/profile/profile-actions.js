@@ -1,7 +1,9 @@
-import axios from 'axios'
+import axios from 'axios';
 
 export const SET_PROFILE = '/profile/my';
 export const SET_USER_PROFILE = '/profile/user';
+export const SET_FOLLOWS = '/profile/follows';
+export const ADD_FOLLOW = '/profile/follow';
 
 export const loadProfile = (profile) => { 
     return {
@@ -14,6 +16,20 @@ export const loadUserProfile = (profile) => {
   return {
     type: SET_USER_PROFILE,
     profile
+  }
+}
+
+export const loadFollows = (follows) => {
+  return {
+    type: SET_FOLLOWS,
+    follows
+  }
+}
+
+export const setFollow = (follow) => {
+  return {
+    type: ADD_FOLLOW,
+    follow
   }
 }
 
@@ -69,3 +85,31 @@ export const getProfile = () => {
         return res;
       }
     }
+
+  export const createFollow = (followId) => {
+    return async dispatch => {
+      const res = await axios.post(`/api/follow?follow=${followId}`)
+      if (res.statusText) {
+        dispatch(setFollow(res.data.follow))
+      }
+      return res;
+    }
+  }
+
+  export const getFollows = (followId) => {
+    return async dispatch => {
+      const res = await axios.get(`/api/follow?follow=${followId}`)
+      if (res.statusText) {
+        dispatch(loadFollows(res.data.follows))
+      }
+      return res;
+    }
+  }
+
+  export const deleteFollow = (followId) => {
+    return async dispatch => {
+      const res = await axios.delete(`/api/follow?unfollow=${followId}`)
+      
+      return res;
+    }
+  }

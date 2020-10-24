@@ -8,7 +8,7 @@ export default function VideoComment({ active, ref, comment, likes, dislikes, ti
   const handleUpVote = (e) => {
     dispatch(likeComment(e.target.id, true, null))
 }
-  console.log(likes)
+
   const handleDownVote = (e) => {
     dispatch(likeComment(e.target.id, null, true))
   }

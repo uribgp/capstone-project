@@ -23,11 +23,14 @@ def follows():
     to_unfollow = Follower.query.get((user_session["id"],unfollow))
     db.session.delete(to_unfollow)
     db.session.commit()
-    return {"msg": "unfollowed"}
+    return {"msg": "unfollowed"}, 200
   
   elif request.method == 'GET':
     follows_id = request.json.get("follow")
     follows = Follower.query.filter(Follower.follower_by_id==follows_id, Follower.verified==True).all()
     followed_by = Follower.query.filter(Follower.following_id==follows_id, Follower.verified==True).all()
     followed_by_requests = Follower.query.filter(Follower.following_id==follows_id, Follower.verified==False).all()
-    return{"follow": follows, "followed_by": followed_by, "followed_by_request": followed_by_requests}
+    follows = [follow.to_dict() for follow in follows]
+    followed_by = [follow.to_dict() for follow in followed_by]
+    followed_by_requests = [follow.to_dict() for follow in followed_by_requests]
+    return {"follows": follows, "followed_by": followed_by, "followed_by_request": followed_by_requests}, 200

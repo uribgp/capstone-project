@@ -1,7 +1,10 @@
 .navbar {
+  margin-top: 10px;
+  z-index: 1000;
   width: 100%;
+  margin-bottom: 100px;
+  background-color: var(--color-primary-0);
   box-shadow: 0 0 15px rgba(0,0,0,0.2);
-  height: 70px;
   > .container {
     display: flex;
     justify-content: space-between;
@@ -36,4 +39,13 @@
       margin: 0 30px;
     }
   }
+
+  .sticky {
+    position: fixed;
+    top: 0;
+    width: 100%;
+  }
+
+
+  
 }

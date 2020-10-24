@@ -14,6 +14,7 @@ import './video-player.style.scss';
 import CreateVideoCommentContainer from './CreateVideoComment.container';
 import { format } from 'timeago.js';
 import LoadingSpinner from '../Shared/LoadingSpinner/LoadingSpinner';
+import { likeComment } from '../../store/comment/comment-actions';
 export default function VideoPlayerContainer() {
   const player = useRef(null);
   const [play, setPlay] = useState(false);
@@ -73,6 +74,14 @@ export default function VideoPlayerContainer() {
       }
     }
   }, [commentsToDisplay]);
+
+  const handleUpVote = (e) => {
+    dispatch(likeComment(e.target.id, true, null))
+}
+
+  const handleDownVote = (e) => {
+    dispatch(likeComment(e.target.id, null, true))
+  }
 
   function grabTimestamp() {
     let currentTime =
@@ -209,8 +218,8 @@ export default function VideoPlayerContainer() {
                   </span>
                 </div>
               </div>
-              <div className="">
-              <div>
+              <div className="video-info-container">
+              <div className="categories">
               {categories.length > 0? categories.map((category) => <p>{category.title}</p>) : null}
               </div>
                 <div className="video-info-user">{user}</div>
@@ -226,7 +235,7 @@ export default function VideoPlayerContainer() {
             }
             </div>
           <div className="video-comment-general-list">
-            {comments.map(({text, timestamp, comment_user, created_at}) => {
+            {comments.map(({text, timestamp,likes,dislikes, comment_user, created_at, id}) => {
               if(timestamp === null){
               console.log(text)
               return ( 
@@ -236,6 +245,7 @@ export default function VideoPlayerContainer() {
                  </div>
                 <div className="video-comment-general-text">{text}</div>
               <div className="video-comment-general-created-at">{format(created_at)}</div>
+              <div className="likes"><button id={id} onClick={handleUpVote}>Upvote</button>{likes} <button id={id} onClick={handleDownVote}>DownVote</button> {dislikes}</div>
                </div>
               )}
             })}

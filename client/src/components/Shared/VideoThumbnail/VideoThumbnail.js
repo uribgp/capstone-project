@@ -9,7 +9,9 @@ export default function VideoThumbnail({
   onMouseEnter,
   onMouseLeave,
   id,
-  user
+  user,
+  views,
+  created_at
 }) {
   return (
     <div
@@ -30,7 +32,9 @@ export default function VideoThumbnail({
           )}
         </div>
         <div className="video-thumbnail-text">{text}</div>
-        <div className="video-thumbnail-user">By {user}</div>
+        <div className="video-thumbnail-user">By {user}
+          <div>{views} views   |   {created_at}</div>
+        </div>
       </Link>
     </div>
   );

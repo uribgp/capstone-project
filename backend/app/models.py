@@ -67,7 +67,8 @@ class User(db.Model, UserMixin):
       "username": self.username,
       "email": self.email,
       "alert": self.alert,
-      "followers": self.followers,
+      "followers": self.followed_by,
+      "following": self.following,
       "created_at": self.created_at.strftime("%B %Y")
     }
 
