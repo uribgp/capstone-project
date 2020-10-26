@@ -116,6 +116,7 @@ def get_by_category():
 
 @video_routes.route('/search_popular')
 def get_popular():
+  offset_value = request.args.get('offset', 0)
   timeframe = datetime.datetime.now() - datetime.timedelta(days=7)
   comments = Comment.query.filter(Comment.created_at >= timeframe).all()
   commentsByVid = [comment.video_id for comment in comments]
@@ -132,7 +133,7 @@ def get_popular():
 
 @video_routes.route('/by_recent')
 def get_recent():
-  offset_value = request.args.get('offset', 2)
+  offset_value = request.args.get('offset', 0)
   videos = Video.query.order_by(desc(Video.created_at)).offset(offset_value).limit(4)
   data = []
   for video in videos:
@@ -144,8 +145,9 @@ def get_recent():
 
 @video_routes.route('/by_need')
 def get_need():
+  offset_value = request.args.get('offset', 0)
   timeframe = datetime.datetime.now() - datetime.timedelta(days=7)
-  videos = Video.query.order_by(desc(Video.created_at >= timeframe)).all()
+  videos = Video.query.order_by(desc(Video.created_at >= timeframe)).offset(offset_value).limit(4)
   videosById = [video.id for video in videos]
   comments = Comment.query.filter(Comment.created_at >= timeframe).all()
   commentsByVid = [comment.video_id for comment in comments]

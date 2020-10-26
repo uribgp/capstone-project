@@ -51,8 +51,7 @@ export const signupUser = (username, email, password) => {
     const res = await axios.post('/api/users/signup',
        {username, email, password})
 
-    console.log(res)
-    if (res.ok) {
+    if (res.statusText) {
       dispatch(loginSucceeded(res.data.user));
     }
     return res;

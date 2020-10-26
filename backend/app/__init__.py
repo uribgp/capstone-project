@@ -10,6 +10,7 @@ from .api.category_routes import category_routes
 from .api.comment_routes import comment_routes
 from .api.profile_routes import profile_routes
 from .api.follower_routes import follow_routes
+from .api.payment_routes import payment_routes
 from .config import Config
 from flask_migrate import Migrate
 from flask_jwt_extended import JWTManager
@@ -25,6 +26,7 @@ app.register_blueprint(category_routes, url_prefix='/api/categories')
 app.register_blueprint(comment_routes, url_prefix='/api/comments')
 app.register_blueprint(profile_routes, url_prefix='/api/profile')
 app.register_blueprint(follow_routes, url_prefix='/api/followers')
+app.register_blueprint(payment_routes, url_prefix='/api/payments')
 db.init_app(app)
 migrate = Migrate(app, db)
 # jwt = JWTManager(app)

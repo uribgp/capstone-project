@@ -13,7 +13,6 @@ export default function VideoSection({videos, onViewMoreClick, sectionTitle}) {
       </div>
     <div className="video-section-view-more">
       <ButtonLongBorder text="View more" onClick={onViewMoreClick} />
-
     </div>
     </div>
   )

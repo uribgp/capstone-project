@@ -1,5 +1,5 @@
 from flask import Blueprint, jsonify, redirect, url_for, session, request
-from app.models import User, db, Video, Category, Comment, Video_category, Follower
+from app.models import User, db, Video, Category, Comment, Video_category, Follower, Payment
 from flask_jwt_extended import create_access_token, jwt_required
 from flask_login import current_user
 from werkzeug.utils import secure_filename
@@ -36,25 +36,29 @@ def user_profile():
       data = [video.to_dict() for video in noComments]
       data1 = [video.to_dict() for video in newComments]
       data2 = [video.to_dict() for video in oldComments]
-      print(user)
+      user = User.query.get(user["id"]).to_long_dict()
       if user["followers"]:
         user["followers"] = [fol.to_short_dict() for fol in user["followers"]]
       if user["following"]:
         user["following"] = [fol.to_short_dict() for fol in user["following"]]
       if user["payment_methods"]:
         user["payment_methods"] = [payment_method.to_dict() for payment_method in user["payment_methods"]]
+      if user["rewards"]:
+        user["rewards"] = [reward.to_dict() for reward in user["rewards"]]
       return {"profile": { "no_comments": data, "new_comments": data1, "oldComments": data2, "user" : user } }, 200
     else:
       user = User.query.get(profile_id)
       # followers_table = Follower.query.filter(Follower.creator_id==user.id).all()
       # following_table = Follower.query.filter(Follower.follower_by_id==user.id).all()
-      user = user.to_dict()
+      user = user.to_long_dict()
       if user["followers"]:
         user["followers"] = [fol.to_short_dict() for fol in user["followers"]]
       if user["following"]:
         user["following"] = [fol.to_short_dict() for fol in user["following"]]
       if user["payment_methods"]:
         user["payment_methods"] = [payment_method.to_dict() for payment_method in user["payment_methods"]]
+      if user["rewards"]:
+        user["rewards"] = [reward.to_dict() for reward in user["rewards"]]
       return {"profile": { "user" : user } }, 200
 
   elif(request.method == 'PATCH'):

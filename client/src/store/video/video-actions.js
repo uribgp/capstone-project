@@ -89,9 +89,9 @@ export const getVideos = () => {
   }
 }
 
-export const getRecentVideos = () => {
+export const getRecentVideos = (offset=0) => {
   return async dispatch => {
-    const res = await axios.get('/api/videos/by_recent')
+    const res = await axios.get(`/api/videos/by_recent?offset=${offset}`)
 
     if(res.statusText){
       dispatch(loadRecentVideos(res.data.videos))
