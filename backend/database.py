@@ -2,7 +2,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 from app import app, db
-from app.models import User, Video, Category, Comment, Video_category
+from app.models import User, Video, Category, Comment, Video_category, PaymentMethod, Follower
 
 with app.app_context():
   db.drop_all()
@@ -15,7 +15,7 @@ with app.app_context():
   angela = User(username = 'Angela', email = 'angela@aa.io', password = 'password')
   soonmi = User(username = 'Soon-Mi', email = 'soonmi@aa.io', password = 'password')
   alissa = User(username = 'Alissa', email = 'alissa@aa.io', password = 'password')
-  demo = User(id = 555, username = 'Demo', email = 'demo@demo.com', password = 'password')
+  demo = User(id = 555, username = 'Demo', email = 'demo@demo.com', password = 'password', avatar = "https://capstone-project-steven-2.s3-us-west-1.amazonaws.com/clarencedl.png", banner = "https://capstone-project-steven-2.s3-us-west-1.amazonaws.com/clarencedl.png", personal_video = 'thrallsquat.mp4', about_me = "fellow officer Gustavo Arlotta suggested he attend the Metroflex gym, owned by amateur bodybuilder Brian Dobson. Dobson offered Coleman a free lifetime membership if he allowed Dobson to train him for the upcoming Mr. Texas bodybuilding competition that year.[9] After training for Mr. Texas, Coleman won first place in both the heavyweight and overall categories. He also defeated Dobson himself. Coleman won his first competition as a professional, the Canada Pro Cup, in 1995. The following year, he won the contest again, then went on to win the 1997 Russian Grand Prix. He also participated in powerlifting competitions in the mid-1990s.[10]")
 
   
 
@@ -128,5 +128,25 @@ with app.app_context():
   db.session.add(jt4)
   db.session.add(jt5)
   db.session.add(jt6)
-  # db.session.add(jt7)
+
+  # Payment Methods
+  payment_method1 = PaymentMethod(title='Get Swole', cost=500, description='Gonna get you super swole bruh', user_id=1)
+  payment_method2 = PaymentMethod(title='Get Super Frickin Swole', cost=500, description='Gonna get you super frickin swole bruh', user_id=1)
+  
+  db.session.add(payment_method1)
+  db.session.add(payment_method2)
+
+  # Followers
+
+  follower1 = Follower(follower_by_id=555, creator_id=1, verified=True)
+  follower2 = Follower(follower_by_id=2, creator_id=1, verified=True)
+  follower3 = Follower(follower_by_id=1, creator_id=2, verified=True)
+  follower4 = Follower(follower_by_id=1, creator_id=3, verified=True)
+
+  db.session.add(follower1)
+  db.session.add(follower2)
+  db.session.add(follower3)
+  db.session.add(follower4)
+
+
   db.session.commit()

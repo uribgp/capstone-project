@@ -3,6 +3,7 @@ import UserProfile from '../Shared/UserProfile/UserProfile';
 import { useDispatch, useSelector } from 'react-redux';
 import { likeComment } from '../../store/comment/comment-actions';
 import './video-comment.style.scss';
+
 export default function VideoComment({ active, ref, comment, likes, dislikes, timestamp, formatted_timestamp, username, onClick, id}) {
   const dispatch = useDispatch();
   const handleUpVote = (e) => {

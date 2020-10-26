@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import {useDispatch, useSelector} from 'react-redux'
 import { getVideos, getPopularVideos, getRecentVideos, getNeedVideos } from '../../store/video/video-actions'
 import LoadingSpinner from '../Shared/LoadingSpinner/LoadingSpinner'
@@ -9,15 +9,13 @@ export default function HomepageGuestContainer() {
 
   const dispatch = useDispatch()
   const { videos } = useSelector(state => state)
+  const [loading, setLoading] = useState(false)
   // state.videos.popularVideos
   // state.videos.recentVideos
   // state.videos.needVideos
-  console.log(videos)
-  let loading = false
-  if (!videos.popularVideos || !videos.recentVideos || !videos.needVideos){
-    loading = true
-  } else {
-    loading = false
+
+  if (!videos){
+    setLoading(true)
   }
 
   useEffect(() => {
@@ -35,9 +33,9 @@ export default function HomepageGuestContainer() {
 
   return (
     <div>
-        <VideoSection key={"Popular Videos"} sectionTitle="Popular Videos" videos={videos.popularVideos} />
-        <VideoSection key={"Recent Videos"} sectionTitle="Recent videos" videos={videos.recentVideos} />
-        <VideoSection key={"Support these Videos"} sectionTitle="People that need your support" videos={videos.needVideos} />
+        {videos.popularVideos ? <VideoSection key={"Popular Videos"} sectionTitle="Popular Videos" videos={videos.popularVideos} /> : null}
+        {videos.recentVideos ? <VideoSection key={"Recent Videos"} sectionTitle="Recent videos" videos={videos.recentVideos} /> : null}
+        {videos.needVideos ? <VideoSection key={"Support these Videos"} sectionTitle="People that need your support" videos={videos.needVideos} /> : null}
     </div>
   )
 }

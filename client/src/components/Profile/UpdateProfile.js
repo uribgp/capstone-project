@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { postVideo } from '../../store/video/video-actions';
+import { updateProfile } from '../../store/video/video-actions';
 
 export default function CreateVideo() {
 const dispatch = useDispatch();
@@ -9,10 +9,11 @@ const [email, setEmail] = useState(null);
 const [avatar, setAvatar] = useState(null);
 const [banner, setBanner] = useState(null);
 const [aboutMe, setAboutMe] = useState(null);
+const [personalVideo, setPersonalVideo] = useState(null);
 const currentUserId = useSelector(state => state.auth.id);
 
 const handleUpdateProfile = () => {
-    dispatch(postVideo(title, description, thumbnail, currentUserId, video))
+    dispatch(updateProfile(username, email, description, avatar, banner, personalVideo))
 }
 
 
@@ -25,6 +26,12 @@ const handleAvatarChange = (e) => {
 
 const handleBannerChange = (e) => {
     setBanner({
+        raw: e.target.files[0]
+    });
+}
+
+const handlePersonalVideoChange = (e) => {
+    setPersonalVideo({
         raw: e.target.files[0]
     });
 }
@@ -64,6 +71,12 @@ return (
             <input 
             type="file"
                 onChange={handleBannerChange} />
+        </label>
+        <label>
+        File Upload
+            <input 
+            type="file"
+                onChange={handlePersonalVideoChange} />
         </label>
 <button onClick={handleUpdateProfile}>Update Profile</button>
 </form>

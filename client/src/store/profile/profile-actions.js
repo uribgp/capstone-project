@@ -33,9 +33,9 @@ export const setFollow = (follow) => {
   }
 }
 
-export const getProfile = () => {
+export const getProfile = (id) => {
     return async dispatch => {
-      const res = await axios.get('/api/profile')
+      const res = await axios.get(`/api/profile?id=${id}`)
   
       if(res.statusText){
         dispatch(loadProfile(res.data.profile))
@@ -43,19 +43,8 @@ export const getProfile = () => {
       return res;
     }
   } 
-  
-  export const getUserProfile = (id) => {
-    return async dispatch => {
-      const res = await axios.get(`/api/profile/user?id=${id}`)
-  
-      if(res.statusText){
-        dispatch(loadUserProfile(res.data.profile))
-      }
-      return res
-    }
-  }
 
-  export const updateProfile = (new_username, new_email, description, new_avatar, new_banner) => {
+  export const updateProfile = (new_username, new_email, description, new_avatar, new_banner, new_personal_video) => {
     let formData = new FormData()
     // new_username = request.json.get("username", None)
     // new_email = request.json.get("email", None)
@@ -67,6 +56,7 @@ export const getProfile = () => {
     formData.append("new_about_me", description)
     formData.append("new_avatar", new_avatar.raw)
     formData.append("new_banner", new_banner.raw)
+    formData.append("new_personal_video", new_personal_video.raw)
 
     let config = { headers: {
       'Content-Type': 'multipart/form-data'

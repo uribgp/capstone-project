@@ -15,6 +15,7 @@ import CreateVideoCommentContainer from './CreateVideoComment.container';
 import { format } from 'timeago.js';
 import LoadingSpinner from '../Shared/LoadingSpinner/LoadingSpinner';
 import { likeComment } from '../../store/comment/comment-actions';
+
 export default function VideoPlayerContainer() {
   const player = useRef(null);
   const [play, setPlay] = useState(false);
@@ -245,7 +246,8 @@ export default function VideoPlayerContainer() {
                  </div>
                 <div className="video-comment-general-text">{text}</div>
               <div className="video-comment-general-created-at">{format(created_at)}</div>
-              <div className="likes"><button id={id} onClick={handleUpVote}>Upvote</button>{likes} <button id={id} onClick={handleDownVote}>DownVote</button> {dislikes}</div>
+              <div className="likes"><button id={id} onClick={handleUpVote}>Upvote</button>{likes} <button id={id} onClick={handleDownVote}>DownVote</button> {dislikes}
+              </div>
                </div>
               )}
             })}

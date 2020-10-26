@@ -32,6 +32,7 @@ export default function VideoThumbnail({
           )}
         </div>
         <div className="video-thumbnail-text">{text}</div>
+
         <div className="video-thumbnail-user">By {user}
           <div>{views} views   |   {created_at}</div>
         </div>

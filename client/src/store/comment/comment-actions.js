@@ -43,10 +43,13 @@ export const getComments = (id) => {
 }
 
 export const postComment = (comment) => {
+
   return async dispatch => {
     const res = await axios.post(`/api/comments`, comment)
     if (res.statusText) {
       dispatch(addComment(res.data.comment));
+      // connect to socket here, emit a new message
+      // maybe close connection (fine tuning)
     }
     return res;
   }

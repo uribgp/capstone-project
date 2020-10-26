@@ -132,7 +132,8 @@ def get_popular():
 
 @video_routes.route('/by_recent')
 def get_recent():
-  videos = Video.query.order_by(desc(Video.created_at)).limit(4)
+  offset_value = request.args.get('offset', 2)
+  videos = Video.query.order_by(desc(Video.created_at)).offset(offset_value).limit(4)
   data = []
   for video in videos:
     user = User.query.get(video.owner_id)

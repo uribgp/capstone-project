@@ -1,5 +1,5 @@
 from flask import Blueprint, jsonify, redirect, url_for, session, request
-from app.models import User, db, Video, Category, Comment, Video_category
+from app.models import User, db, Video, Category, Comment, Video_category, Follower
 from flask_jwt_extended import create_access_token, jwt_required
 from flask_login import current_user
 from werkzeug.utils import secure_filename
@@ -25,16 +25,37 @@ aws_secret_access_key=ACCESS_KEY)
 
 @profile_routes.route('', methods=['GET', 'PATCH'])
 def user_profile():
+  if 'user' in session:
+    user = session['user']
   if(request.method == 'GET'):
-    if 'user' in session:
-      user = session['user']
+    profile_id = request.args.get("id", None)
+    if 'user' in session and user["id"] == int(profile_id):
       noComments = Video.query.filter(Video.owner_id == user["id"], Video.total_comments==0).limit(4)
       newComments = Video.query.filter(Video.owner_id == user["id"], Video.new_comment==True).limit(4)
       oldComments = Video.query.filter(Video.owner_id == user["id"], Video.total_comments>0).limit(4)
       data = [video.to_dict() for video in noComments]
       data1 = [video.to_dict() for video in newComments]
       data2 = [video.to_dict() for video in oldComments]
-      return {"profile": { "no_comments": data, "new_comments": data1, "oldComments": data2} }, 200
+      print(user)
+      if user["followers"]:
+        user["followers"] = [fol.to_short_dict() for fol in user["followers"]]
+      if user["following"]:
+        user["following"] = [fol.to_short_dict() for fol in user["following"]]
+      if user["payment_methods"]:
+        user["payment_methods"] = [payment_method.to_dict() for payment_method in user["payment_methods"]]
+      return {"profile": { "no_comments": data, "new_comments": data1, "oldComments": data2, "user" : user } }, 200
+    else:
+      user = User.query.get(profile_id)
+      # followers_table = Follower.query.filter(Follower.creator_id==user.id).all()
+      # following_table = Follower.query.filter(Follower.follower_by_id==user.id).all()
+      user = user.to_dict()
+      if user["followers"]:
+        user["followers"] = [fol.to_short_dict() for fol in user["followers"]]
+      if user["following"]:
+        user["following"] = [fol.to_short_dict() for fol in user["following"]]
+      if user["payment_methods"]:
+        user["payment_methods"] = [payment_method.to_dict() for payment_method in user["payment_methods"]]
+      return {"profile": { "user" : user } }, 200
 
   elif(request.method == 'PATCH'):
     user_session = session['user']
@@ -44,6 +65,7 @@ def user_profile():
     new_about_me = request.json.get("new_about_me", None)
     new_avatar_file = request.files["new_avatar"] or None
     new_banner_file = request.files["new_banner"] or None
+    new_personal_video_file = request.files["new_personal_video"] or None
 
     if new_username:
       user.username = new_username
@@ -75,6 +97,14 @@ def user_profile():
       s3.upload_fileobj(file, BUCKET_NAME, file_path, ExtraArgs={"ContentType": file.content_type, 'ACL': 'public-read' })
       external_link = f'{BUCKET_URL}/{folder}{file.filename}'
       user.banner = external_link
+
+    if new_personal_video_file:
+      new_personal_video_file.filename = secure_filename(new_personal_video_file.filename)
+      folder = f'{user_id}/files/'
+      file_path = folder + file.filename
+      s3.upload_fileobj(file, BUCKET_NAME, file_path, ExtraArgs={"ContentType": file.content_type, 'ACL': 'public-read' })
+      external_link = f'{BUCKET_URL}/{folder}{file.filename}'
+      user.personal_video = external_link
     
     db.session.add(user)
     db.session.commit()

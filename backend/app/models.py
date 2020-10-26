@@ -11,11 +11,11 @@ class Follower(db.Model):
   __tablename__ = 'followers'
 
   follower_by_id = Column(Integer, ForeignKey("users.id"), primary_key=True, nullable=False)
-  following_id = Column(Integer, ForeignKey("users.id"), primary_key=True, nullable=False)
+  creator_id = Column(Integer, ForeignKey("users.id"), primary_key=True, nullable=False)
   verified = Column(Boolean, nullable=False, default=False)
 
   follower = relationship("User", foreign_keys =[follower_by_id])
-  creator = relationship("User", foreign_keys =[following_id])
+  creator = relationship("User", foreign_keys =[creator_id])
   
   def to_dict(self):
     return {
@@ -24,6 +24,7 @@ class Follower(db.Model):
       "creator": self.creator.username,
       "creator_id": self.creator.id
     }
+
 
 class User(db.Model, UserMixin):
   __tablename__ = 'users'
@@ -35,6 +36,7 @@ class User(db.Model, UserMixin):
   avatar = Column(String)
   banner = Column(String)
   about_me = Column(String)
+  personal_video = Column(String)
   coach = Column(Boolean, default=False)
   hashed_password = Column(String(100), nullable=False)
   alert = Column(Boolean, default=False)
@@ -42,10 +44,9 @@ class User(db.Model, UserMixin):
   created_at = Column(DateTime, nullable=False, default=datetime.datetime.utcnow)
   updated_at = Column(DateTime, nullable=False, default=datetime.datetime.utcnow)
 
-  following = db.relationship('User', secondary='followers', foreign_keys='Follower.follower_by_id', primaryjoin=(Follower.follower_by_id == id))
-  followed_by = db.relationship('User', secondary='followers', foreign_keys='Follower.following_id', primaryjoin=(Follower.following_id == id))
-
-  # followers = relationship("Follower", backref='user')
+  following = db.relationship('User', secondary='followers', primaryjoin=(Follower.follower_by_id == id), secondaryjoin=(Follower.creator_id == id))
+  followed_by = db.relationship('User', secondary='followers', primaryjoin=(Follower.creator_id == id), secondaryjoin=(Follower.follower_by_id == id))
+  payment_methods = db.relationship('PaymentMethod', foreign_keys='PaymentMethod.user_id')
 
   @property
   def password(self):
@@ -61,7 +62,7 @@ class User(db.Model, UserMixin):
   def new_alert(self):
     self.alert = True
 
-  def to_dict(self):
+  def to_long_dict(self):
     return {
       "id": self.id,
       "username": self.username,
@@ -69,7 +70,35 @@ class User(db.Model, UserMixin):
       "alert": self.alert,
       "followers": self.followed_by,
       "following": self.following,
+      "avatar": self.avatar,
+      "about_me": self.about_me,
+      "banner": self.banner,
+      "personal_video": self.personal_video,
+      "coach": self.coach,
+      "payment_methods": self.payment_methods,
       "created_at": self.created_at.strftime("%B %Y")
+    }
+
+  def to_dict(self):
+    return {
+      "id": self.id,
+      "username": self.username,
+      "email": self.email,
+      "alert": self.alert,
+      "avatar": self.avatar,
+      "about_me": self.about_me,
+      "banner": self.banner,
+      "personal_video": self.personal_video,
+      "coach": self.coach,
+      "created_at": self.created_at.strftime("%B %Y")
+    }
+
+  def to_short_dict(self):
+    return {
+      "id": self.id,
+      "username": self.username,
+      "email": self.email,
+      "avatar": self.avatar
     }
 
 
@@ -261,4 +290,52 @@ class Likes_model(db.Model):
       "id": self.id,
       "liked": self.liked,
       "disliked": self.disliked
+    }
+
+
+class PaymentMethod(db.Model):
+  __tablename__ = 'payment methods'
+
+  id = db.Column(db.Integer, primary_key=True)
+  title = db.Column(db.String(50), nullable=False)
+  cost = db.Column(db.Integer, nullable=False)
+  picture = db.Column(db.String)
+  description = db.Column(db.Text, nullable=False)
+  user_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=False)
+  created_at = db.Column(db.DateTime, nullable=False, default=datetime.datetime.utcnow)
+  updated_at = db.Column(db.DateTime, nullable=False, default=datetime.datetime.utcnow)
+
+  owner = db.relationship("User", foreign_keys=[user_id])
+
+  def to_dict(self):
+    return {
+      "id": self.id,
+      "title": self.title,
+      "cost": self.cost,
+      "picture": self.picture,
+      "description": self.description
+    }
+
+class Payment(db.Model):
+  __tablename__ = 'payments'
+
+  id = db.Column(db.Integer, primary_key=True)
+  cost = db.Column(db.Integer, nullable=False)
+  payment_method_id = db.Column(db.Integer, db.ForeignKey("payment methods.id"))
+  trainee_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=False)
+  coach_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=False)
+  created_at = db.Column(db.DateTime, nullable=False, default=datetime.datetime.utcnow)
+  updated_at = db.Column(db.DateTime, nullable=False, default=datetime.datetime.utcnow)
+  
+  trainee = db.relationship("User", foreign_keys=[trainee_id])
+  coach = db.relationship("User", foreign_keys=[coach_id])
+  payment = db.relationship("PaymentMethod", foreign_keys=[payment_method_id])
+  
+  def to_dict():
+    return {
+      "id": self.id,
+      "cost": self.cost,
+      "coach": self.coach,
+      "trainee": self.trainee,
+      "payment": self.payment
     }
