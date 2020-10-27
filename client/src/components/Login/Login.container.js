@@ -10,19 +10,10 @@ import Login from './Login';
 function LoginContainer({ login, authenticated }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-
+  const {error} = useSelector(state => state.user)
   /*   const currentUserId = useSelector((state) => state.auth.id); */
   const history = useHistory();
 
-  useEffect(() => {
-    if (authenticated) {
-      handleOnAuthSuccess();
-    }
-  }, [authenticated]);
-
-  const handleOnAuthSuccess = () => {
-    // re-direct here.
-  };
 
   const handleOnEmailChange = (event) => {
     setEmail(event.target.value);
@@ -49,6 +40,7 @@ function LoginContainer({ login, authenticated }) {
           onDemoClick={() => handleOnDemoClick()}
           onLoginClick={() => handleOnLoginClick()}
           email={email}
+          error={error}
           password={password}
         />
       </div>

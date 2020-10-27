@@ -1,10 +1,13 @@
 .video-player-page {
   display: flex;
-  margin-top: 50px;
+  margin-top: 100px;
   height: calc(100vh - 120px);
   justify-content: space-between;
+
   .video-wrap {
-    width: 50%;
+    width: 100%;
+    height: 100%;
+    margin-left: 3%;
     video {
       display: block;
       margin-bottom: 24px;
@@ -17,6 +20,11 @@
     overflow: scroll;
     width: 45%;
     padding:32px 16px;
+    position: fixed;
+    right: 0;
+    top:120px; 
+    width: 450px;
+    max-width: 45%;
     .video-comment {
       margin-bottom: 32px;
     }
@@ -24,20 +32,7 @@
 
 }
 .categories {
-  display:flex;
-  :hover {
-    background-color: darken(#f2f2f2, 10%);
-  }
-  >p{
-    border:solid;
-    background-color: #f2f2f2;
-    margin: 5px;
-    padding: 2px, 2px;
-    border-radius:30px;
-    width: 100px;
-    text-align: center;
-    border-width:thin;
-  }
+  margin: 24px 0;
 }
 .video-info {
   position: relative;
@@ -49,7 +44,7 @@
   }
   &-upper {
     padding-bottom: 16px;
-    border-bottom: 1px solid var(--text-faded);
+    border-bottom: 1px solid #DADADA;
   }
   &-description {
     color: var(--text-faded);
@@ -61,8 +56,8 @@
   &-views, &-createdAt {
     font-size: 14px;
     color:var(--text-faded);
-    font-weight: 500;
-    margin-right: 16px;
+
+    margin-right: 10px;
   }
   .icon-button {
     position: absolute;
@@ -71,28 +66,99 @@
   }
 }
 
+.video-info-title {
+  font-weight: 500;
+  font-size: 18px;
+}
+
+.video-info-user-profile {
+  display: flex;
+align-items: center;
+.video-info-user {
+  font-size: 16px;
+}
+img {
+  margin-right: 8px;
+}
+}
+
+.video-info-description {
+  padding-left: 68px;
+  padding-bottom: 24px;
+  width: 100%;
+}
+
+.category {
+  margin-right: 14px;
+  background: var(--color-primary-2);
+  color:var(--color-primary-0);
+  font-weight: 500;
+  font-size: 14px;
+  border-radius: 50px;
+  padding:5px 5px;
+}
 
 .video-comment-general-list {
   margin: 100px 0px;
+
+&-numberOf {
+  margin-bottom: 50px;
+  border-bottom: 1px solid #DADADA;
+  padding-bottom: 8px;
+}
+&-create-comment {
+  display: flex;
+  width: 100%;
+  margin-bottom: 40px;
+}
+.input-wrap {
+  flex-grow: 1;
+}
+
 }
 .video-comment-general {
   position: relative;
   margin-bottom: 50px;
-  padding-bottom: 20px;
+  > a {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color:black;
+
+  }
   &-user {
-    font-size: 16px;
+
+    font-size: 14px;
+    margin-left: 8px;
     font-weight: 500;
-    margin-bottom:8px;
+  }
+  &-top {
+    margin-bottom: 8px;
   }
   &-text {
+    margin-left: 8px;
     color: var(--text-faded);
     max-width: 500px;
-
+    font-size: 14px;
   }
   &-created-at {
     font-size: 14px;
-    position: absolute;
-    bottom: 0;
-    right:0 ;
+
+  }
+}
+
+
+.video-player-general-comment-wrap {
+  display: flex;
+  > textarea {
+    flex-grow: 1;
+    background: #f4f4f4; 
+  }
+  
+}
+
+@media(min-width: 1920px) {
+  .video-player-page  {
+
   }
 }

@@ -23,9 +23,9 @@ function App({ authenticateUser, userLoading, userAuthenticated }) {
   })
 
 
-  if (userLoading) {
+/*   if (userLoading) {
     return <LoadingSpinner />;
-  }
+  } */
 
   return (
     <BrowserRouter>

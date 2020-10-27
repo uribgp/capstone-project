@@ -1,15 +1,15 @@
 from dotenv import load_dotenv
 load_dotenv()
-
+from datetime import date
 from app import app, db
-from app.models import User, Video, Category, Comment, Video_category, PaymentMethod, Follower
+from app.models import User, Video, Category, Comment, Video_category, PaymentMethod, Follower, Schedule
 
 with app.app_context():
   db.drop_all()
   db.create_all()
 
 # USERS
-  ian = User(username = 'Ian', email = 'ian@aa.io', password = 'password')
+  ian = User(username = 'Ian', email = 'ian@aa.io', password = 'password', avatar = "https://capstone-project-steven-2.s3-us-west-1.amazonaws.com/clarencedl.png", banner = "https://capstone-project-steven-2.s3-us-west-1.amazonaws.com/clarencedl.png", personal_video = 'thrallsquat.mp4', about_me = "fellow officer Gustavo Arlotta suggested he attend the Metroflex gym, owned by amateur bodybuilder Brian Dobson. Dobson offered Coleman a free lifetime membership if he allowed Dobson to train him for the upcoming Mr. Texas bodybuilding competition that year.[9] After training for Mr. Texas, Coleman won first place in both the heavyweight and overall categories. He also defeated Dobson himself. Coleman won his first competition as a professional, the Canada Pro Cup, in 1995. The following year, he won the contest again, then went on to win the 1997 Russian Grand Prix. He also participated in powerlifting competitions in the mid-1990s.[10]")
   javier = User(username = 'Javier', email = 'javier@aa.io', password = 'password')
   dean = User(username = 'Dean', email = 'dean@aa.io', password = 'password')
   angela = User(username = 'Angela', email = 'angela@aa.io', password = 'password')
@@ -58,16 +58,16 @@ with app.app_context():
   db.session.add(moreThan)
   # VIDEOS
 
-  video1 = Video(title = 'Third set of 5 squats', description = "This is my third set of five squats.  I felt good on my first four, but the almost bailed on the bar for the fifth.  It felt like my lowerback caved a bit and I had to shrug my shoulders to get the bar up the rest of the way.", link = 'thrallsquat.mp4', owner_id = 555, staff_pick = True, thumbnail = "https://capstone-project-steven-2.s3.us-west-1.amazonaws.com/thrallsquat.png", new_comment = True, total_comments = 3)
-  video2 = Video(title = 'Second set of 10 benchpress', description = "This is my second set of 10 for benchress.  I'm currently doing Greyskull linear, and taking this set to failure.  On the last few reps I felt my right hand take over some of the slack of my left, and felt like the bar was coming up unevenly.", link = 'thrallbench.mp4', owner_id = 1, staff_pick = True, thumbnail = "https://capstone-project-steven-2.s3-us-west-1.amazonaws.com/thrallbenchthumbnail.png")
-  video3 = Video(title = '5x5 squatjerk', description = "it's me", link = '555/videos/VID_20201008_212621996.mp4', thumbnail = "https://capstone-project-steven-2.s3-us-west-1.amazonaws.com/clarencedl.png", owner_id = 3, staff_pick = True)
-  video4 = Video(title = 'last set to failure bench', description = "it's me", link = '555/videos/VID_20201008_212621996.mp4', thumbnail = "https://capstone-project-steven-2.s3-us-west-1.amazonaws.com/clarencepress.png", owner_id = 2, staff_pick = True, total_comments = 1)
-  video5 = Video(title = 'Getting pitted max out', description = "asdfasdf", link = '555/videos/VID_20201008_212621996.mp4', owner_id = 3, thumbnail = "https://capstone-project-steven-2.s3-us-west-1.amazonaws.com/surferbro.png", new_comment = True)
-  video6 = Video(title = 'final set x 10 cleans', description = "'This is my third set of five squats.  I felt good on my first four, but the almost bailed on the bar for the fifth.  It felt like my lowerback caved a bit and I had to shrug my shoulders to get the bar up the rest of the way.'", link = '555/videos/VID_20201008_212621996.mp4', owner_id = 1, staff_pick = True, thumbnail = "https://capstone-project-steven-2.s3-us-west-1.amazonaws.com/lu2.png")
-  video7 = Video(title = 'first set x 5 benchpress', description = "it's me", link = '555/videos/VID_20201008_212621996.mp4', owner_id = 555, staff_pick = True, thumbnail = "https://capstone-project-steven-2.s3-us-west-1.amazonaws.com/olympicDL.png")
-  video8 = Video(title = '3 x 5 tex method bench', description = "it's me", link = '555/videos/VID_20201008_212621996.mp4', thumbnail = "https://capstone-project-steven-2.s3-us-west-1.amazonaws.com/squatball.png", owner_id = 3, staff_pick = True, new_comment = True)
-  video9 = Video(title = '2/3 set of 5 clean and press', description = "it's me", link = '555/videos/VID_20201008_212621996.mp4', thumbnail = "https://capstone-project-steven-2.s3-us-west-1.amazonaws.com/squatjerk.png", owner_id = 4, staff_pick = True)
-  video10 = Video(title = 'OHP max out to failure', description = "asdfasdf", link = '555/videos/VID_20201008_212621996.mp4', owner_id = 2, thumbnail = "https://capstone-project-steven-2.s3-us-west-1.amazonaws.com/clarencesquat.png")
+  video1 = Video(title = 'Third set of 5 squats', description = "This is my third set of five squats.  I felt good on my first four, but the almost bailed on the bar for the fifth.  It felt like my lowerback caved a bit and I had to shrug my shoulders to get the bar up the rest of the way.", link = 'thrallsquat.mp4', owner_id = 555, staff_pick = True, thumbnail = "https://capstone-project-steven-2.s3.us-west-1.amazonaws.com/thrallsquat.png", new_comment = True, total_comments = 3, main_lift = 1)
+  video2 = Video(title = 'Second set of 10 benchpress', description = "This is my second set of 10 for benchress.  I'm currently doing Greyskull linear, and taking this set to failure.  On the last few reps I felt my right hand take over some of the slack of my left, and felt like the bar was coming up unevenly.", link = 'thrallbench.mp4', owner_id = 1, staff_pick = True, thumbnail = "https://capstone-project-steven-2.s3-us-west-1.amazonaws.com/thrallbenchthumbnail.png", main_lift = 2)
+  video3 = Video(title = '5x5 squatjerk', description = "it's me", link = '555/videos/VID_20201008_212621996.mp4', thumbnail = "https://capstone-project-steven-2.s3-us-west-1.amazonaws.com/clarencedl.png", owner_id = 3, staff_pick = True, main_lift = 3)
+  video4 = Video(title = 'last set to failure bench', description = "it's me", link = '555/videos/VID_20201008_212621996.mp4', thumbnail = "https://capstone-project-steven-2.s3-us-west-1.amazonaws.com/clarencepress.png", owner_id = 2, staff_pick = True, total_comments = 1, main_lift = 4)
+  video5 = Video(title = 'Getting pitted max out', description = "asdfasdf", link = '555/videos/VID_20201008_212621996.mp4', owner_id = 3, thumbnail = "https://capstone-project-steven-2.s3-us-west-1.amazonaws.com/surferbro.png", new_comment = True, main_lift = 1)
+  video6 = Video(title = 'final set x 10 cleans', description = "'This is my third set of five squats.  I felt good on my first four, but the almost bailed on the bar for the fifth.  It felt like my lowerback caved a bit and I had to shrug my shoulders to get the bar up the rest of the way.'", link = '555/videos/VID_20201008_212621996.mp4', owner_id = 1, staff_pick = True, thumbnail = "https://capstone-project-steven-2.s3-us-west-1.amazonaws.com/lu2.png", main_lift = 2)
+  video7 = Video(title = 'first set x 5 benchpress', description = "it's me", link = '555/videos/VID_20201008_212621996.mp4', owner_id = 555, staff_pick = True, thumbnail = "https://capstone-project-steven-2.s3-us-west-1.amazonaws.com/olympicDL.png", main_lift = 3)
+  video8 = Video(title = '3 x 5 tex method bench', description = "it's me", link = '555/videos/VID_20201008_212621996.mp4', thumbnail = "https://capstone-project-steven-2.s3-us-west-1.amazonaws.com/squatball.png", owner_id = 3, staff_pick = True, new_comment = True, main_lift = 4)
+  video9 = Video(title = '2/3 set of 5 clean and press', description = "it's me", link = '555/videos/VID_20201008_212621996.mp4', thumbnail = "https://capstone-project-steven-2.s3-us-west-1.amazonaws.com/squatjerk.png", owner_id = 4, staff_pick = True, main_lift = 1)
+  video10 = Video(title = 'OHP max out to failure', description = "asdfasdf", link = '555/videos/VID_20201008_212621996.mp4', owner_id = 2, thumbnail = "https://capstone-project-steven-2.s3-us-west-1.amazonaws.com/clarencesquat.png", main_lift = 2)
   
   db.session.add(video1)
   db.session.add(video2)
@@ -148,5 +148,10 @@ with app.app_context():
   db.session.add(follower3)
   db.session.add(follower4)
 
+  # Schedules
+
+  schedule1 = Schedule(title='5x5 squat', description='Do some squats dawg', date=date.today().strftime('%Y-%m-%d'),coach_id=1, trainee_id=555,main_lift=1)
+
+  db.session.add(schedule1)
 
   db.session.commit()

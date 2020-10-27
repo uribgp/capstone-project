@@ -1,5 +1,5 @@
 from flask import Blueprint, jsonify, redirect, url_for, session, request
-from app.models import User, db, Video, Category, Comment, Video_category, Follower, Payment
+from app.models import User, db, Video, Category, Comment, Video_category, Follower, Payment, Schedule
 from flask_jwt_extended import create_access_token, jwt_required
 from flask_login import current_user
 from werkzeug.utils import secure_filename
@@ -11,6 +11,8 @@ import datetime
 from collections import Counter
 from sqlalchemy import desc
 from werkzeug.utils import secure_filename
+from datetime import date
+
 
 profile_routes = Blueprint('profile', __name__)
 
@@ -37,6 +39,13 @@ def user_profile():
       data1 = [video.to_dict() for video in newComments]
       data2 = [video.to_dict() for video in oldComments]
       user = User.query.get(user["id"]).to_long_dict()
+      today = date.today().strftime('%Y-%m-%d')
+      todays_schedule = Schedule.query.filter(Schedule.trainee_id==user["id"], Schedule.date==today).first()
+      if todays_schedule:
+        last_video = Video.query.filter(Video.owner_id==user["id"], Video.main_lift==todays_schedule.main_lift).order_by(desc(Video.created_at)).first()
+        if last_video:
+          todays_schedule.set_old_video(last_video.to_dict())
+        todays_schedule = todays_schedule.to_dict()
       if user["followers"]:
         user["followers"] = [fol.to_short_dict() for fol in user["followers"]]
       if user["following"]:
@@ -45,7 +54,7 @@ def user_profile():
         user["payment_methods"] = [payment_method.to_dict() for payment_method in user["payment_methods"]]
       if user["rewards"]:
         user["rewards"] = [reward.to_dict() for reward in user["rewards"]]
-      return {"profile": { "no_comments": data, "new_comments": data1, "oldComments": data2, "user" : user } }, 200
+      return {"profile": { "no_comments": data, "new_comments": data1, "oldComments": data2, "user" : user, "todays_schedule": todays_schedule } }, 200
     else:
       user = User.query.get(profile_id)
       # followers_table = Follower.query.filter(Follower.creator_id==user.id).all()

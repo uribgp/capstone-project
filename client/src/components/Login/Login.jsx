@@ -9,6 +9,7 @@ export default function Login({
   onPasswordChange,
   onLoginClick,
   onDemoClick,
+  error
 }) {
   return (
     <div className="login-modal">
@@ -26,6 +27,7 @@ export default function Login({
         <Button onClick={onLoginClick} text="Login" />
         <Button onClick={onDemoClick} text="Demo" />
       </div>
+      {error && <div>Could not sign in</div>}
     </div>
   );
 }

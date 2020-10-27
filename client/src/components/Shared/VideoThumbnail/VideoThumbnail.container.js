@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import VideoThumbnail from './VideoThumbnail'
-
+import './video-thumbnail.container.scss'
 
 export default function VideoThumbnailContainer({video: {thumbnail, title, link, id, user, created_at, total_views}}) {
   const [displayPlayButton, setDisplayPlayButton] = useState(false)

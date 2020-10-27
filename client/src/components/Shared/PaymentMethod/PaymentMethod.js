@@ -12,30 +12,24 @@ export default function PaymentMethod({cost, title, description, id, coachId}) {
     e.preventDefault();
     dispatch(sendPayment(cost, id, coachId))
   }
-  console.log(id)
-  console.log(coachId)
     return (
         <div className="payment_info">
-          <div className="payment_amount">
-            <span className='payment_amount-title'>
-            Cost: ${cost}
-            </span>
-          </div>
-          <div className="payment_title">
-              {title}
-          </div>
+        <div className="payment_title">
+            {title}
+        </div>
           <div className="payment_description">
+              <p>{description}</p>
+              <p>{description}</p>
               <p>{description}</p>
           </div>
           <div className="payment-button">
             <form >
-                <label htmlFor='payment' id='payment-amount'>Total cost</label>
-                <input min={cost} type="number" className='reward-pledge-input' name="payment" value={cost}required>
-                </input>
+                <label htmlFor='payment' id='payment-amount'>Total cost: $</label>
+                {cost}
                 <div id='payment-button'>
-                  <Button onClick={handleSubmit}>
+                  <div className="payment-button-button" onClick={handleSubmit}>
                   Make Payment
-                  </Button>
+                  </div>
                 </div>
             </form>
           </div>

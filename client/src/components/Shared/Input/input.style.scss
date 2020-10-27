@@ -12,8 +12,13 @@
     padding-left:44px;
     border:none;
     height: 50px;
-    font-weight: 500;
+    font-weight: 400;
     outline: none;
     width: 100%;
+    font-size: 14;
+    &-icon {
+      display: flex;
+      align-items: center;
+    }
   }
 }

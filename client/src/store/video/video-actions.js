@@ -113,8 +113,11 @@ export const getNeedVideos = () => {
 
 export const addView = (vidId) => {
   return async dispatch => {
-    const res = await axios.get(`/api/videos/add_view?id=${vidId}`)
-    return res
+    try {
+      const res = await axios.get(`/api/videos/add_view?id=${vidId}`)
+    } catch (error) {
+      
+    }
   }
 }
 

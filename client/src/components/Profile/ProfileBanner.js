@@ -14,6 +14,7 @@ export default function ProfileBanner({ banner, avatar, username }) {
                 <div className='banner_user_info'>
                     <div className='banner_user-avatar'>
                         <img src={avatar} />
+                    <br/>
                         <div className='banner_user-info'>
                             <div className='banner_user-info-name'>
                                 {username}
@@ -24,7 +25,7 @@ export default function ProfileBanner({ banner, avatar, username }) {
                         </div>
                     </div>
                     <div className='banner_user-subscribe-button'>
-                        <button>Subscribe now</button>
+                        <span>Subscribe Now</span>
                     </div>
 
                 </div>

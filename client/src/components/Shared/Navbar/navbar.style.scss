@@ -1,10 +1,21 @@
+.navbar-wrap {
+  z-index: 99999;
+  position: relative;
+  margin-bottom: 100px;
+}
+
 .navbar {
-  margin-top: 10px;
+  background:White;
+  position: fixed;
+  top: 0;
+  left: 0;
+
   z-index: 1000;
+
   width: 100%;
   margin-bottom: 100px;
-  background-color: var(--color-primary-0);
   box-shadow: 0 0 15px rgba(0,0,0,0.2);
+  height: 70px;
   > .container {
     display: flex;
     justify-content: space-between;

@@ -1,7 +1,7 @@
 from flask_sqlalchemy import SQLAlchemy
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import UserMixin
-from sqlalchemy import Column, Integer, String, Boolean, ForeignKey, DateTime
+from sqlalchemy import Column, Integer, String, Boolean, ForeignKey, DateTime, Text
 from sqlalchemy.orm import relationship, backref
 import datetime
 
@@ -29,17 +29,17 @@ class Follower(db.Model):
 class Payment(db.Model):
   __tablename__ = 'payments'
 
-  id = db.Column(db.Integer, primary_key=True)
-  cost = db.Column(db.Integer, nullable=False)
-  payment_method_id = db.Column(db.Integer, db.ForeignKey("payment methods.id"))
-  trainee_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=False)
-  coach_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=False)
-  created_at = db.Column(db.DateTime, nullable=False, default=datetime.datetime.utcnow)
-  updated_at = db.Column(db.DateTime, nullable=False, default=datetime.datetime.utcnow)
+  id = Column(Integer, primary_key=True)
+  cost = Column(Integer, nullable=False)
+  payment_method_id = Column(Integer, ForeignKey("payment methods.id"))
+  trainee_id = Column(Integer, ForeignKey("users.id"), nullable=False)
+  coach_id = Column(Integer, ForeignKey("users.id"), nullable=False)
+  created_at = Column(DateTime, nullable=False, default=datetime.datetime.utcnow)
+  updated_at = Column(DateTime, nullable=False, default=datetime.datetime.utcnow)
   
-  trainee = db.relationship("User", foreign_keys=[trainee_id])
-  coach = db.relationship("User", foreign_keys=[coach_id])
-  payment = db.relationship("PaymentMethod", foreign_keys=[payment_method_id])
+  trainee = relationship("User", foreign_keys=[trainee_id])
+  coach = relationship("User", foreign_keys=[coach_id])
+  payment = relationship("PaymentMethod", foreign_keys=[payment_method_id])
   
   def to_dict():
     return {
@@ -69,10 +69,10 @@ class User(db.Model, UserMixin):
   created_at = Column(DateTime, nullable=False, default=datetime.datetime.utcnow)
   updated_at = Column(DateTime, nullable=False, default=datetime.datetime.utcnow)
 
-  following = db.relationship('User', secondary='followers', primaryjoin=(Follower.follower_by_id == id), secondaryjoin=(Follower.creator_id == id))
-  followed_by = db.relationship('User', secondary='followers', primaryjoin=(Follower.creator_id == id), secondaryjoin=(Follower.follower_by_id == id))
-  payment_methods = db.relationship('PaymentMethod', foreign_keys='PaymentMethod.user_id')
-  rewards = db.relationship('PaymentMethod', secondary='payments', primaryjoin=(Payment.trainee_id == id), secondaryjoin=(Payment.payment_method_id == id))
+  following = relationship('User', secondary='followers', primaryjoin=(Follower.follower_by_id == id), secondaryjoin=(Follower.creator_id == id))
+  followed_by = relationship('User', secondary='followers', primaryjoin=(Follower.creator_id == id), secondaryjoin=(Follower.follower_by_id == id))
+  payment_methods = relationship('PaymentMethod', foreign_keys='PaymentMethod.user_id')
+  rewards = relationship('PaymentMethod', secondary='payments', primaryjoin=(Payment.trainee_id == id), secondaryjoin=(Payment.payment_method_id == id))
   
   @property
   def password(self):
@@ -161,12 +161,13 @@ class Video(db.Model):
   total_comments = Column(Integer,default=0)
   total_views = Column(Integer,default=0)
   new_comment = Column(Boolean, default=False)
+  main_lift = Column(Integer, ForeignKey('categories.id'), nullable=False)
   owner_id = Column(Integer, ForeignKey('users.id'), nullable=False)
   created_at = Column(DateTime, nullable=False, default=datetime.datetime.utcnow)
   updated_at = Column(DateTime, nullable=False, default=datetime.datetime.utcnow)
 
   owner = relationship("User", foreign_keys=[owner_id])
-
+  mainlift = relationship("Category", foreign_keys=[main_lift])
 
   def increment(self):
     self.total_comments += 1
@@ -190,7 +191,8 @@ class Video(db.Model):
       "created_at": self.created_at.strftime("%B %d, %Y"),
       "total_views": self.total_views,
       "total_comments": self.total_comments,
-      "new_comment": self.new_comment
+      "new_comment": self.new_comment,
+      "main_lift": self.mainlift.title
     }
 
 
@@ -323,16 +325,16 @@ class Likes_model(db.Model):
 class PaymentMethod(db.Model):
   __tablename__ = 'payment methods'
 
-  id = db.Column(db.Integer, primary_key=True)
-  title = db.Column(db.String(50), nullable=False)
-  cost = db.Column(db.Integer, nullable=False)
-  picture = db.Column(db.String)
-  description = db.Column(db.Text, nullable=False)
-  user_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=False)
-  created_at = db.Column(db.DateTime, nullable=False, default=datetime.datetime.utcnow)
-  updated_at = db.Column(db.DateTime, nullable=False, default=datetime.datetime.utcnow)
+  id = Column(Integer, primary_key=True)
+  title = Column(String(50), nullable=False)
+  cost = Column(Integer, nullable=False)
+  picture = Column(String)
+  description = Column(Text, nullable=False)
+  user_id = Column(Integer, ForeignKey("users.id"), nullable=False)
+  created_at = Column(DateTime, nullable=False, default=datetime.datetime.utcnow)
+  updated_at = Column(DateTime, nullable=False, default=datetime.datetime.utcnow)
 
-  owner = db.relationship("User", foreign_keys=[user_id])
+  owner = relationship("User", foreign_keys=[user_id])
 
   def to_dict(self):
     return {
@@ -342,4 +344,40 @@ class PaymentMethod(db.Model):
       "picture": self.picture,
       "description": self.description,
       "user_id": self.user_id
+    }
+
+class Schedule(db.Model):
+  __tablename__ = 'schedules'
+
+  id = Column(Integer, primary_key=True)
+  title = Column(String(50), nullable=False)
+  description = Column(Text, nullable=False)
+  date = Column(DateTime, nullable=False)
+  coach_id = Column(Integer, ForeignKey("users.id"), nullable=False)
+  trainee_id = Column(Integer, ForeignKey("users.id"), nullable=False)
+  main_lift = Column(Integer, ForeignKey("categories.id"), nullable=False)
+  new_video = Column(String)
+  last_video = Column(String)
+
+  main_lift = Column(Integer, ForeignKey('categories.id'), nullable=False)
+
+  mainlift = relationship("Category", foreign_keys=[main_lift])
+
+  def set_new_video(self, video):
+    self.new_video = video
+
+  def set_old_video(self, video):
+    self.old_video = video
+
+  def to_dict(self):
+    return {
+      "id": self.id,
+      "title": self.title,
+      "description": self.description,
+      "date": self.date,
+      "coach_id": self.coach_id,
+      "trainee_id": self.trainee_id,
+      "new_video": self.new_video,
+      "old_video": self.old_video,
+      "main_lift": self.mainlift.title
     }

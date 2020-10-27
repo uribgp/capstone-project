@@ -35,12 +35,12 @@ export default function CreateVideoComment({
             <ButtonIcon
               onClick={onTimestampedCommentClick}
               icon={<MdAvTimer />}
-              text="I want to make a specific comment"
+              text="Make a time specific comment"
             />
             <ButtonIcon
               onClick={onGeneralCommentClick}
               icon={<FiThumbsUp />}
-              text="I want to make a general comment"
+              text="Make a general comment"
             />
           </div>
         </div>
@@ -60,7 +60,7 @@ export default function CreateVideoComment({
           <ButtonIcon
             onClick={() =>onSelectTimestampClick(playerRef.current.getCurrentTime())}
             text="Next"
-            icon={<AiFillCaretRight />}
+            icon={<AiFillCaretRight color="black" />}
           />
 
           </div>
