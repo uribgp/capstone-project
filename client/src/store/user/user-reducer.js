@@ -29,6 +29,7 @@ export default (state = DEFAULT_STATE, action) => {
               error: false,
               authenticated: true,
               username: action.user.user.username,
+              avatar: action.user.user.avatar,
               id: action.user.user.id
           }
           default:

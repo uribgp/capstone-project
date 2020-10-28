@@ -4,7 +4,7 @@ import { getVideos, getPopularVideos, getRecentVideos, getNeedVideos } from '../
 import LoadingSpinner from '../Shared/LoadingSpinner/LoadingSpinner'
 import VideoSection from '../Shared/VideoSection/VideoSection'
 import VideoThumbnailContainer from '../Shared/VideoThumbnail/VideoThumbnail.container'
-
+import './Homepage.container.scss'
 export default function HomepageGuestContainer() {
 
   const dispatch = useDispatch()
@@ -33,7 +33,7 @@ export default function HomepageGuestContainer() {
 
 
   return (
-    <div>
+    <div className="homepage-guest">
         {videos.popularVideos ? <VideoSection key={"Popular Videos"} sectionTitle="Popular Videos" videos={videos.popularVideos} /> : null}
         {videos.recentVideos ? <VideoSection key={"Recent Videos"} sectionTitle="Recent videos" videos={videos.recentVideos} /> : null}
         {videos.needVideos ? <VideoSection key={"Support these Videos"} sectionTitle="People that need your support" videos={videos.needVideos} /> : null}

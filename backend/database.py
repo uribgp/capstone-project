@@ -29,10 +29,10 @@ with app.app_context():
 
 
   # CATEGORIES
-  squat = Category(title = 'Squat')
-  bench = Category(title = 'Bench')
-  deadlift = Category(title = 'Deadlift')
-  ohp = Category(title = 'Overhead Press')
+  squat = Category(title = 'Squat', main=True)
+  bench = Category(title = 'Bench', main=True)
+  deadlift = Category(title = 'Deadlift', main=True)
+  ohp = Category(title = 'Overhead Press', main=True)
 
   beginner = Category(title = 'Beginner')
   intermediate = Category(title = 'Intermediate')

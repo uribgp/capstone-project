@@ -28,9 +28,9 @@ aws_secret_access_key=ACCESS_KEY)
 @profile_routes.route('', methods=['GET', 'PATCH'])
 def user_profile():
   if 'user' in session:
+    profile_id = request.args.get("id", None)
     user = session['user']
   if(request.method == 'GET'):
-    profile_id = request.args.get("id", None)
     if 'user' in session and user["id"] == int(profile_id):
       noComments = Video.query.filter(Video.owner_id == user["id"], Video.total_comments==0).limit(4)
       newComments = Video.query.filter(Video.owner_id == user["id"], Video.new_comment==True).limit(4)
@@ -54,21 +54,24 @@ def user_profile():
         user["payment_methods"] = [payment_method.to_dict() for payment_method in user["payment_methods"]]
       if user["rewards"]:
         user["rewards"] = [reward.to_dict() for reward in user["rewards"]]
-      return {"profile": { "no_comments": data, "new_comments": data1, "oldComments": data2, "user" : user, "todays_schedule": todays_schedule } }, 200
+      return {"profile": { "no_comments": data, "new_comments": data1, "oldComments": data2, "user" : user, "todays_schedule": todays_schedule, "followingBool": None } }, 200
     else:
-      user = User.query.get(profile_id)
-      # followers_table = Follower.query.filter(Follower.creator_id==user.id).all()
-      # following_table = Follower.query.filter(Follower.follower_by_id==user.id).all()
-      user = user.to_long_dict()
-      if user["followers"]:
-        user["followers"] = [fol.to_short_dict() for fol in user["followers"]]
-      if user["following"]:
-        user["following"] = [fol.to_short_dict() for fol in user["following"]]
-      if user["payment_methods"]:
-        user["payment_methods"] = [payment_method.to_dict() for payment_method in user["payment_methods"]]
-      if user["rewards"]:
-        user["rewards"] = [reward.to_dict() for reward in user["rewards"]]
-      return {"profile": { "user" : user } }, 200
+      user_profile = User.query.get(profile_id)
+      following_value = False
+      if user:
+        user = User.query.get(user["id"])
+        if user.following_user(user_profile.id):
+          following_value = True
+      user_profile = user_profile.to_long_dict()
+      if user_profile["followers"]:
+        user_profile["followers"] = [fol.to_short_dict() for fol in user_profile["followers"]]
+      if user_profile["following"]:
+        user_profile["following"] = [fol.to_short_dict() for fol in user_profile["following"]]
+      if user_profile["payment_methods"]:
+        user_profile["payment_methods"] = [payment_method.to_dict() for payment_method in user_profile["payment_methods"]]
+      if user_profile["rewards"]:
+        user_profile["rewards"] = [reward.to_dict() for reward in user_profile["rewards"]]
+      return {"profile": { "user" : user_profile, "followingBool": following_value } }, 200
 
   elif(request.method == 'PATCH'):
     user_session = session['user']

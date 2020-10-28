@@ -26,11 +26,9 @@ export default function PaymentMethod({cost, title, description, id, coachId}) {
             <form >
                 <label htmlFor='payment' id='payment-amount'>Total cost: $</label>
                 {cost}
+                <Button text="Make payment" onClick={handleSubmit} />
                 <div id='payment-button'>
-                  <div className="payment-button-button" onClick={handleSubmit}>
-                  Make Payment
                   </div>
-                </div>
             </form>
           </div>
         </div>

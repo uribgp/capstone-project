@@ -106,7 +106,7 @@ export const addView = (vidId) => {
 }
 
 
-export const postVideo = (title, description, link, thumbnail, id, category_id, file) => {
+export const postVideo = (title, description, thumbnailFile, category_id, videoFile) => {
   let formData = new FormData()
   // how fast is it uploading larger files?
   // limit file size?
@@ -114,11 +114,9 @@ export const postVideo = (title, description, link, thumbnail, id, category_id, 
   // if a file is too big or s3 is getting full, protect myself.
   formData.append("title", title)
   formData.append("description", description)
-  formData.append("link", link)
-  formData.append("thumbnail", thumbnail)
-  formData.append("id", id)
+  formData.append("thumbnail_file", thumbnailFile.raw)
   formData.append("category_id", category_id)
-  formData.append("file", file.raw)
+  formData.append("video_file", videoFile.raw)
   let config = { headers: {
     'Content-Type': 'multipart/form-data'
   } }

@@ -136,14 +136,14 @@
     // border: solid;
     max-width: 24%;
     margin-bottom: 1%;
-    box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+    box-shadow: rgba(0, 0, 0, 0.15) 0px 0px 15px;
     &:hover {
       background-color: darken(white, 3%);
     }
   }
 
+
   .payment_title {
-    font-size: 24px;
     font-weight: bold;
     margin-bottom: 1%;
   }
@@ -158,6 +158,15 @@
     font-size: 20px;
 
   }
+
+  .payment_info {
+    padding: 32px 18px;
+    margin: 50px;
+    .button {
+      margin-top: 24px;
+    }
+  }
+
 
   .payment-button-button {
   width: 50%;

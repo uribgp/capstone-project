@@ -3,24 +3,26 @@ from app.models import User, db, Follower
 
 follow_routes = Blueprint('followers', __name__)
 
-@follow_routes.route('/', methods=['GET', 'POST', 'DELETE'])
+@follow_routes.route('/follow', methods=['GET', 'POST', 'DELETE'])
 def follows():
   current_user = session['user']
 
   if request.method == 'POST':
-    follow_id = request.json.get("follow")
-    follow = Follower (
-        follower_by_id=user["id"],
-        following_id=follow_id
+    follow_id = request.args.get("follow")
+    print(follow_id)
+    follow = Follower(
+        follower_by_id=current_user["id"],
+        creator_id=follow_id
     )
     db.session.add(follow)
     db.session.commit()
     follow = follow.to_dict()
+    print(follow)
     return {"follow" : follow}, 200
   
   elif request.method == 'DELETE':
-    unfollow = request.json.get("unfollow")
-    to_unfollow = Follower.query.get((user_session["id"],unfollow))
+    unfollow = request.args.get("unfollow")
+    to_unfollow = Follower.query.get((current_user["id"],unfollow))
     db.session.delete(to_unfollow)
     db.session.commit()
     return {"msg": "unfollowed"}, 200

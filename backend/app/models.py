@@ -88,6 +88,11 @@ class User(db.Model, UserMixin):
   def new_alert(self):
     self.alert = True
 
+  def following_user(self, id):
+    for coach in self.following:
+      if id == coach.id:
+        return True
+
   def to_long_dict(self):
     return {
       "id": self.id,
@@ -138,12 +143,14 @@ class Category(db.Model):
   id = Column(Integer, primary_key=True)
   title = Column(String(50), nullable=False)
   default_pic = Column(String(1000))
+  main = Column(Boolean, default=False)
 
   def to_dict(self):
     return {
       "id": self.id,
       "title": self.title,
-      "default_pic": self.default_pic
+      "default_pic": self.default_pic,
+      "main": self.main
     }
 
 

@@ -36,7 +36,7 @@ export const setFollow = (follow) => {
 export const getProfile = (id) => {
     return async dispatch => {
       const res = await axios.get(`/api/profile?id=${id}`)
-  
+
       if(res.statusText){
         dispatch(loadProfile(res.data.profile))
       }
@@ -77,10 +77,11 @@ export const getProfile = (id) => {
     }
 
   export const createFollow = (followId) => {
+    console.log(followId)
     return async dispatch => {
-      const res = await axios.post(`/api/follow?follow=${followId}`)
+      const res = await axios.post(`/api/followers/follow?follow=${followId}`)
       if (res.statusText) {
-        dispatch(setFollow(res.data.follow))
+        dispatch(loadFollows(res.data.follows))
       }
       return res;
     }
@@ -88,7 +89,7 @@ export const getProfile = (id) => {
 
   export const getFollows = (followId) => {
     return async dispatch => {
-      const res = await axios.get(`/api/follow?follow=${followId}`)
+      const res = await axios.get(`/api/followers/follow?follow=${followId}`)
       if (res.statusText) {
         dispatch(loadFollows(res.data.follows))
       }
@@ -98,8 +99,8 @@ export const getProfile = (id) => {
 
   export const deleteFollow = (followId) => {
     return async dispatch => {
-      const res = await axios.delete(`/api/follow?unfollow=${followId}`)
-      
+      const res = await axios.delete(`/api/followers/follow?unfollow=${followId}`)
+      dispatch(loadFollows(res.data.follows))
       return res;
     }
   }

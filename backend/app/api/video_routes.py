@@ -18,25 +18,26 @@ BUCKET_NAME = os.environ.get('BUCKET_NAME')
 ACCESS_ID = os.environ.get('AWS_ACCESS_KEY_ID')
 ACCESS_KEY = os.environ.get('AWS_SECRET_ACCESS_KEY')
 REGION_NAME = os.environ.get('AWS_REGION_NAME')
+BUCKET_NAME2 = os.environ.get('BUCKET_NAME_2')
+BUCKET_URL2 = os.environ.get('BUCKET_URL2')
 
-#  unprotected method of transferring to public bucket:
-# s3 = boto3.client('s3', region_name=REGION_NAME, aws_access_key_id=ACCESS_ID, 
-#                     aws_secret_access_key=ACCESS_KEY)
+
+s3pub = boto3.client('s3', region_name=REGION_NAME, aws_access_key_id=ACCESS_ID, 
+aws_secret_access_key=ACCESS_KEY)
 
 
 @video_routes.route('/', methods=['GET', 'POST'])
 def load_files():
   if request.method == 'POST':
-    owner_id = request.form.get('id', None)
+    owner_id = session['user']["id"]
     file = request.files["video_file"] or None
     if file == None:
-      return jsonify({"error" : "requires file"})
+      return jsonify({"error" : "requires video"})
     file.filename = secure_filename(file.filename)
     folder = f'{owner_id}/videos/{file.filename}'
-    # file_path = BUCKET_NAME + '.s3-us-west-1.amazonaws.com/' + folder
     s3 = AwsS3UploadClass(ACCESS_ID, ACCESS_KEY, BUCKET_NAME)
     key = file.filename
-    # file.save(key)
+    file.save(key)
     response = s3.create_presigned_post(folder)
     if response is None:
       return jsonify({"error" : "key cannot be None"})
@@ -44,15 +45,25 @@ def load_files():
     upload_response = requests.post(response['url'], data=response['fields'], files=files)
     if upload_response.status_code == 204:
         os.remove(key)
-    # unprotected file upload
-    # s3.upload_fileobj(file, BUCKET_NAME, file_path, ExtraArgs={'ACL': 'public-read', "ContentType": file.content_type})
+    thumbnail = request.files["thumbnail_file"] or None
+    if thumbnail == None:
+      return jsonify({"error" : "requires thumbnail"})
+    thumbnail.filename = secure_filename(thumbnail.filename)
+    thumbnail_folder = f'{owner_id}/files/'
+    thumbnail_file_path = thumbnail_folder + thumbnail.filename
+    s3pub.upload_fileobj(thumbnail, BUCKET_NAME2, thumbnail_file_path, ExtraArgs={"ContentType": thumbnail.content_type, 'ACL': 'public-read' })
+    thumbnail_external_link = f'{BUCKET_URL2}/{thumbnail_folder}{thumbnail.filename}'
+
     video = Video(
       title=request.form.get('title', None),
       description=request.form.get('description', None),
       link=folder,
-      thumbnail=request.form.get('thumbnail', None),
+      main_lift=request.form.get('category_id', None),
+      thumbnail=thumbnail_external_link,
+      # ,
       owner_id=owner_id,
     )
+
     db.session.add(video)
     db.session.commit()
     return {"response": response}

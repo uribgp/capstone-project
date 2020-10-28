@@ -1,12 +1,12 @@
 .pitch_container {
     display: flex;
-    flex-direction: row;
     // justify-content: center;
     // align-items: center;
-    background-color: lightgray;
+  align-items: center;
   }
 
   .pitch_container-about-me {
+    margin-left: 32px;
 
   }
   .pitch_container-video {

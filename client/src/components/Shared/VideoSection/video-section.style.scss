@@ -10,10 +10,13 @@
   }
   &-videos {
     display: flex;
-    justify-content: space-between;
+    
     .video-thumbnail {
-      width: 23%;
-      max-width: 350px;
+      margin-right: 4%;
+      width: 25%;
+    }
+    .video-thumbnail:last-child {
+      margin-right: 0;
     }
   }
 }
