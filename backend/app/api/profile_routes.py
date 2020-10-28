@@ -27,8 +27,8 @@ aws_secret_access_key=ACCESS_KEY)
 
 @profile_routes.route('', methods=['GET', 'PATCH'])
 def user_profile():
+  profile_id = request.args.get("id", None)
   if 'user' in session:
-    profile_id = request.args.get("id", None)
     user = session['user']
   if(request.method == 'GET'):
     if 'user' in session and user["id"] == int(profile_id):
@@ -58,19 +58,18 @@ def user_profile():
     else:
       user_profile = User.query.get(profile_id)
       following_value = False
-      if user:
+      if 'user' in session:
+        user = session['user']
         user = User.query.get(user["id"])
         if user.following_user(user_profile.id):
           following_value = True
-      user_profile = user_profile.to_long_dict()
+      user_profile = user_profile.to_med_dict()
       if user_profile["followers"]:
         user_profile["followers"] = [fol.to_short_dict() for fol in user_profile["followers"]]
       if user_profile["following"]:
         user_profile["following"] = [fol.to_short_dict() for fol in user_profile["following"]]
       if user_profile["payment_methods"]:
         user_profile["payment_methods"] = [payment_method.to_dict() for payment_method in user_profile["payment_methods"]]
-      if user_profile["rewards"]:
-        user_profile["rewards"] = [reward.to_dict() for reward in user_profile["rewards"]]
       return {"profile": { "user" : user_profile, "followingBool": following_value } }, 200
 
   elif(request.method == 'PATCH'):

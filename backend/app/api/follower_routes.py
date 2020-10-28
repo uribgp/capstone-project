@@ -17,7 +17,6 @@ def follows():
     db.session.add(follow)
     db.session.commit()
     follow = follow.to_dict()
-    print(follow)
     return {"follow" : follow}, 200
   
   elif request.method == 'DELETE':

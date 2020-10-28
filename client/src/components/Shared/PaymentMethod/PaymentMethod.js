@@ -19,8 +19,6 @@ export default function PaymentMethod({cost, title, description, id, coachId}) {
         </div>
           <div className="payment_description">
               <p>{description}</p>
-              <p>{description}</p>
-              <p>{description}</p>
           </div>
           <div className="payment-button">
             <form >

@@ -111,6 +111,23 @@ class User(db.Model, UserMixin):
       "rewards": self.rewards
     }
 
+  def to_med_dict(self):
+    return {
+      "id": self.id,
+      "username": self.username,
+      "email": self.email,
+      "alert": self.alert,
+      "followers": self.followed_by,
+      "following": self.following,
+      "avatar": self.avatar,
+      "about_me": self.about_me,
+      "banner": self.banner,
+      "personal_video": self.personal_video,
+      "coach": self.coach,
+      "payment_methods": self.payment_methods,
+      "created_at": self.created_at.strftime("%B %Y")
+    }
+
   def to_dict(self):
     return {
       "id": self.id,
@@ -350,7 +367,9 @@ class PaymentMethod(db.Model):
       "cost": self.cost,
       "picture": self.picture,
       "description": self.description,
-      "user_id": self.user_id
+      "user_id": self.user_id,
+      "owner_name": self.owner.username,
+      "owner_avatar": self.owner.avatar
     }
 
 class Schedule(db.Model):
@@ -363,6 +382,7 @@ class Schedule(db.Model):
   coach_id = Column(Integer, ForeignKey("users.id"), nullable=False)
   trainee_id = Column(Integer, ForeignKey("users.id"), nullable=False)
   main_lift = Column(Integer, ForeignKey("categories.id"), nullable=False)
+  notes =Column(String, nullable=False)
   new_video = Column(String)
   last_video = Column(String)
 
@@ -386,5 +406,6 @@ class Schedule(db.Model):
       "trainee_id": self.trainee_id,
       "new_video": self.new_video,
       "old_video": self.old_video,
-      "main_lift": self.mainlift.title
+      "main_lift": self.mainlift.title,
+      "notes": self.notes
     }

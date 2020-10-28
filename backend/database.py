@@ -150,7 +150,7 @@ with app.app_context():
 
   # Schedules
 
-  schedule1 = Schedule(title='5x5 squat', description='Do some squats dawg', date=date.today().strftime('%Y-%m-%d'),coach_id=1, trainee_id=555,main_lift=1)
+  schedule1 = Schedule(title='5x5 squat', description='Do some squats dawg', date=date.today().strftime('%Y-%m-%d'),coach_id=1, trainee_id=555,main_lift=1, notes="Remember to go below parallel, watch 12 seconds in on last video.")
 
   db.session.add(schedule1)
 
