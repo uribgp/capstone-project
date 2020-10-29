@@ -84,7 +84,6 @@ def vids_by_owner():
   user = session['user']
   videos = Video.query.filter(Video.owner_id == user["id"]).all()
   data = [video.to_dict() for video in videos]
-  print(data)
   return {"videos": data}, 200
 
 @video_routes.route('/single')

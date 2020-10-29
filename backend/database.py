@@ -9,7 +9,7 @@ with app.app_context():
   db.create_all()
 
 # USERS
-  ian = User(username = 'Ian', email = 'ian@aa.io', password = 'password', avatar = "https://capstone-project-steven-2.s3-us-west-1.amazonaws.com/clarencedl.png", banner = "https://capstone-project-steven-2.s3-us-west-1.amazonaws.com/clarencedl.png", personal_video = 'thrallsquat.mp4', about_me = "fellow officer Gustavo Arlotta suggested he attend the Metroflex gym, owned by amateur bodybuilder Brian Dobson. Dobson offered Coleman a free lifetime membership if he allowed Dobson to train him for the upcoming Mr. Texas bodybuilding competition that year.[9] After training for Mr. Texas, Coleman won first place in both the heavyweight and overall categories. He also defeated Dobson himself. Coleman won his first competition as a professional, the Canada Pro Cup, in 1995. The following year, he won the contest again, then went on to win the 1997 Russian Grand Prix. He also participated in powerlifting competitions in the mid-1990s.[10]")
+  ian = User(username = 'Ian', email = 'ian@aa.io', password = 'password', avatar = "https://capstone-project-steven-2.s3-us-west-1.amazonaws.com/clarencedl.png", banner = "https://capstone-project-steven-2.s3-us-west-1.amazonaws.com/clarencedl.png", personal_video = 'thrallsquat.mp4', about_me = "fellow officer Gustavo Arlotta suggested he attend the Metroflex gym, owned by amateur bodybuilder Brian Dobson. Dobson offered Coleman a free lifetime membership if he allowed Dobson to train him for the upcoming Mr. Texas bodybuilding competition that year.[9] After training for Mr. Texas, Coleman won first place in both the heavyweight and overall categories. He also defeated Dobson himself. Coleman won his first competition as a professional, the Canada Pro Cup, in 1995. The following year, he won the contest again, then went on to win the 1997 Russian Grand Prix. He also participated in powerlifting competitions in the mid-1990s.[10]", coach = True)
   javier = User(username = 'Javier', email = 'javier@aa.io', password = 'password')
   dean = User(username = 'Dean', email = 'dean@aa.io', password = 'password')
   angela = User(username = 'Angela', email = 'angela@aa.io', password = 'password')
@@ -68,6 +68,7 @@ with app.app_context():
   video8 = Video(title = '3 x 5 tex method bench', description = "it's me", link = '555/videos/VID_20201008_212621996.mp4', thumbnail = "https://capstone-project-steven-2.s3-us-west-1.amazonaws.com/squatball.png", owner_id = 3, staff_pick = True, new_comment = True, main_lift = 4)
   video9 = Video(title = '2/3 set of 5 clean and press', description = "it's me", link = '555/videos/VID_20201008_212621996.mp4', thumbnail = "https://capstone-project-steven-2.s3-us-west-1.amazonaws.com/squatjerk.png", owner_id = 4, staff_pick = True, main_lift = 1)
   video10 = Video(title = 'OHP max out to failure', description = "asdfasdf", link = '555/videos/VID_20201008_212621996.mp4', owner_id = 2, thumbnail = "https://capstone-project-steven-2.s3-us-west-1.amazonaws.com/clarencesquat.png", main_lift = 2)
+  video11 = Video(title = '3x5 Bench press', description = 'Week 3, d2', link = '555/videos/VID_20201008_212621996.mp4', thumbnail = "https://capstone-project-steven-2.s3-us-west-1.amazonaws.com/squatjerk.png", owner_id = 555, main_lift = 2 )
   
   db.session.add(video1)
   db.session.add(video2)
@@ -79,6 +80,7 @@ with app.app_context():
   db.session.add(video8)
   db.session.add(video9)
   db.session.add(video10)
+  db.session.add(video11)
 
   # COMMENTS
 
@@ -93,7 +95,12 @@ with app.app_context():
   comment9 = Comment(title = 'comment3', text = 'some text', timestamp = 3, video_id = 6, user_id = 3)
   comment10 = Comment(title = 'comment4', text = 'some text', timestamp = 2, video_id = 5, user_id = 2)
   comment11 = Comment(title = 'comment5', text = 'some text', timestamp = 2, video_id = 8, user_id = 2)
-  
+  comment12 = Comment(title = 'comment1', text = 'Are your hips beginning to rise while the barbell lags behind?  Will that result in unnecessary strain on your lower back because you end up doing a goodmorning instead of a proper squat?', timestamp = 13, video_id = 1, user_id = 1)
+  comment13 = Comment(title = 'comment1', text = 'Are your hips beginning to rise while the barbell lags behind?  Will that result in unnecessary strain on your lower back because you end up doing a goodmorning instead of a proper squat?', timestamp = 13, video_id = 1, user_id = 1)
+  comment14 = Comment(title = 'comment1', text = 'Are your hips beginning to rise while the barbell lags behind?  Will that result in unnecessary strain on your lower back because you end up doing a goodmorning instead of a proper squat?', timestamp = 13, video_id = 1, user_id = 1)
+  comment15 = Comment(title = 'comment1', text = 'Are your hips beginning to rise while the barbell lags behind?  Will that result in unnecessary strain on your lower back because you end up doing a goodmorning instead of a proper squat?', timestamp = 13, video_id = 1, user_id = 1)
+
+
   db.session.add(comment1)
   db.session.add(comment2)
   db.session.add(comment3)
@@ -105,6 +112,10 @@ with app.app_context():
   db.session.add(comment9)
   db.session.add(comment10)
   db.session.add(comment11)
+  db.session.add(comment12)
+  db.session.add(comment13)
+  db.session.add(comment14)
+  db.session.add(comment15)
 
   db.session.commit()
   # Video_category
@@ -150,8 +161,10 @@ with app.app_context():
 
   # Schedules
 
-  schedule1 = Schedule(title='5x5 squat', description='Do some squats dawg', date=date.today().strftime('%Y-%m-%d'),coach_id=1, trainee_id=555,main_lift=1, notes="Remember to go below parallel, watch 12 seconds in on last video.")
-
+  schedule1 = Schedule(title='5x5 Squat', description='Week 2, day 3 Squat', date=date.today().strftime('%Y-%m-%d'),coach_id=1, trainee_id=555,main_lift=1, notes="Remember to go below parallel, watch comment at 12 seconds in on last video.  Descend more slowly; don't follow to the bottom of the lift.  Explode up, but don't use any bounce for these.")
+  # schedule2 = Schedule(title='3x5 Bench', description='Week 2, day 3 Bench', date=date.today().strftime('%Y-%m-%d'),coach_id=1, trainee_id=555,main_lift=2, notes='Remember to slowly descend with the bar this time.  Take your time, and explode up.  Keep the bar path straight, do not let your right hand take over.')
+  
   db.session.add(schedule1)
+  # db.session.add(schedule2)
 
   db.session.commit()

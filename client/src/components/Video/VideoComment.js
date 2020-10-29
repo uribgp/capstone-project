@@ -3,9 +3,10 @@ import UserProfile from '../Shared/UserProfile/UserProfile';
 import { useDispatch, useSelector } from 'react-redux';
 import { likeComment } from '../../store/comment/comment-actions';
 import './video-comment.style.scss';
+import { Link, useParams } from 'react-router-dom';
 import { AiOutlineCaretUp, AiOutlineCaretDown } from 'react-icons/ai';
 import IconButton from '../Shared/IconButton/IconButton';
-
+import {FaCheckCircle} from 'react-icons/fa'
 export default function VideoComment({
   active,
   ref,
@@ -18,9 +19,12 @@ export default function VideoComment({
   onClick,
   id,
   onUpvoteClick,
+  userId,
   onDownvoteClick,
   disableLike,
   disableDislike,
+  comment_coach,
+  avatar
 }) {
   return (
     <div
@@ -49,27 +53,35 @@ export default function VideoComment({
           <IconButton
             disabled={disableLike}
             background={'white'}
-            color="black"
             sizeInPx={16}
             className="video-comment-likes-button"
             onClick={() => onUpvoteClick(id)}
-            icon={<AiOutlineCaretUp color="black" />}
+            icon={<AiOutlineCaretUp />}
           />
           <div className="video-comment-likes-score">{likes - dislikes}</div>
           <IconButton
-            disabled={disableDislike}
-            background={'White'}
-            color="black"
-            sizeInPx={16}
-            className="video-comment-likes-button"
-            onClick={() => onDownvoteClick(id)}
-            icon={<AiOutlineCaretDown color="black" />}
+          disabled={disableDislike}
+          background={'White'}
+          sizeInPx={16}
+          className="video-comment-likes-button"
+          onClick={() => onDownvoteClick(id)}
+          icon={<AiOutlineCaretDown />}
           />
-        </div>
-        <div>
+          </div>
+          <Link to={active && `/profile/${userId}`}>
+          <div>
+            <div className="video-comment-info-verified">
+              {comment_coach && <FaCheckCircle />}
+          <UserProfile profileImg={avatar}/>
+
+            </div>
+          <div style={{textAlign: "Center"}}>
           <div className="video-comment-username">{username}</div>
           <div className="video-comment-timestamp">{formatted_timestamp}</div>
+
+          </div>
         </div>
+        </Link>
         {active && <div className="video-comment-comment">{comment}</div>}
       </div>
     </div>

@@ -15,7 +15,6 @@ export default function CommentModal({
   return (
     <div className="comment-modal">
       <div className="comment-modal-user-text-wrap">
-        <UserProfile />
         <div className="textarea-wrap">
           <Textarea
             placeholder={placeholder}

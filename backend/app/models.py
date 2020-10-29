@@ -59,7 +59,7 @@ class User(db.Model, UserMixin):
   username = Column(String(30), nullable=False)
   email = Column(String(30), nullable=False, unique=True)
   avatar = Column(String)
-  banner = Column(String)
+  banner = Column(String, default='https://capstone-project-steven-2.s3-us-west-1.amazonaws.com/photo-1518611012118-696072aa579a.jpg')
   about_me = Column(String)
   personal_video = Column(String)
   coach = Column(Boolean, default=False)
@@ -73,7 +73,8 @@ class User(db.Model, UserMixin):
   followed_by = relationship('User', secondary='followers', primaryjoin=(Follower.creator_id == id), secondaryjoin=(Follower.follower_by_id == id))
   payment_methods = relationship('PaymentMethod', foreign_keys='PaymentMethod.user_id')
   rewards = relationship('PaymentMethod', secondary='payments', primaryjoin=(Payment.trainee_id == id), secondaryjoin=(Payment.payment_method_id == id))
-  
+  # commented_on_videos = relationship('Videos', secondary='comments', primaryjoin=(Comment.user_id == id), secondaryjoin=(Comment.video_id == id))
+
   @property
   def password(self):
     return self.hashed_password
@@ -216,7 +217,8 @@ class Video(db.Model):
       "total_views": self.total_views,
       "total_comments": self.total_comments,
       "new_comment": self.new_comment,
-      "main_lift": self.mainlift.title
+      "main_lift": self.mainlift.title,
+      "avatar": self.owner.avatar
     }
 
 
@@ -278,7 +280,9 @@ class Comment(db.Model):
       "created_at": self.created_at.strftime("%B %Y"),
       "comment_user": self.user.username,
       "likes": self.get_likes(),
-      "dislikes": self.get_dislikes()
+      "dislikes": self.get_dislikes(),
+      "comment_avatar" : self.user.avatar,
+      "user_id": self.user_id
     }
 
 
@@ -383,6 +387,7 @@ class Schedule(db.Model):
   trainee_id = Column(Integer, ForeignKey("users.id"), nullable=False)
   main_lift = Column(Integer, ForeignKey("categories.id"), nullable=False)
   notes =Column(String, nullable=False)
+  old_video = Column(String)
   new_video = Column(String)
   last_video = Column(String)
 

@@ -3,22 +3,7 @@ import { useDispatch } from 'react-redux';
 import { decrementCommentVote, incrementCommentVote, likeComment } from '../../store/comment/comment-actions';
 import VideoComment from './VideoComment';
 
-export default function VideoCommentContainer({
-  active,
-  ref,
-  comment,
-  likes,
-  dislikes,
-  timestamp,
-  formatted_timestamp,
-  username,
-  onClick,
-  id,
-  userId,
-  onUpvoteClick,
-  onDownvoteClick,
-  avatar
-}) {
+export default function GeneralCommentsContainer({comments}) {
 
   const [alreadyLiked, setAlreadyLiked] = useState(false);
   const [alreadyDisliked, setAlreadyDisliked] = useState(false);
@@ -43,25 +28,44 @@ export default function VideoCommentContainer({
     dispatch(likeComment(commentId, false, true))
   }
 
-  return (
-    <VideoComment
+function doNothing() {
+  return
+}
+return (
+    <>
+      {comments.map(
+    ({
+      text,
+      likes,
+      dislikes,
+      comment_user,
+      created_at,
+      timestamp,
+      id,
+      comment_avatar,
+      user_id
+    }) => {
+      if (timestamp === null) {
+        console.log(comments)
+    return <VideoComment
+      onClick={() => doNothing()}
       onDownvoteClick={handleOnDownvoteClick}
       onUpvoteClick={handleOnUpvoteClick}
       key={id}
       id={id}
+      userId={user_id}
       likes={likes}
       dislikes={dislikes}
-      active={active}
-      comment={comment}
-      userId={userId}
-      timestamp={timestamp}
-      formatted_timestamp={formatted_timestamp}
-      onClick={(comment) => onClick(comment)}
-      username={username}
-      avatar={avatar}
-      ref={ref}
+      active={true}
+      comment={text}
+      timestamp={null}
+      formatted_timestamp={null}
+      username={comment_user}
+      avatar={comment_avatar}
       disableDislike={alreadyDisliked}
       disableLike={alreadyLiked}
     />
+      }})}
+      </>
   );
 }

@@ -69,6 +69,7 @@ export default function CreateVideoComment({
       {formStage === 3 && (
         <CommentModal
           buttonText="Submit"
+          placeholder="Write your comment here."
           onCommentSubmit={onCommentSubmit}
           onCommentChange={(event) => onCommentChange(event)}
           commentValue={commentValue}

@@ -51,8 +51,8 @@ export const getProfile = (id) => {
     // new_about_me = request.json.get("about_me", None)
     // new_avatar_file = request.files["avatar"] or None
     // new_banner_file = request.files["banner"] or None.
-    formData.append("new_user_name", new_username)
-    formData.append("new_email", new_email)
+    formData.append("new_user_name", 'demo')
+    formData.append("new_email", 'demo')
     formData.append("new_about_me", description)
     formData.append("new_avatar", new_avatar.raw)
     formData.append("new_banner", new_banner.raw)

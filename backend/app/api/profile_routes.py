@@ -41,8 +41,11 @@ def user_profile():
       user = User.query.get(user["id"]).to_long_dict()
       today = date.today().strftime('%Y-%m-%d')
       todays_schedule = Schedule.query.filter(Schedule.trainee_id==user["id"], Schedule.date==today).first()
+      comments = []
       if todays_schedule:
         last_video = Video.query.filter(Video.owner_id==user["id"], Video.main_lift==todays_schedule.main_lift).order_by(desc(Video.created_at)).first()
+        comments = Comment.query.filter(Comment.video_id==last_video.id).all()
+        comments = [comment.to_dict() for comment in comments]
         if last_video:
           todays_schedule.set_old_video(last_video.to_dict())
         todays_schedule = todays_schedule.to_dict()
@@ -54,7 +57,7 @@ def user_profile():
         user["payment_methods"] = [payment_method.to_dict() for payment_method in user["payment_methods"]]
       if user["rewards"]:
         user["rewards"] = [reward.to_dict() for reward in user["rewards"]]
-      return {"profile": { "no_comments": data, "new_comments": data1, "oldComments": data2, "user" : user, "todays_schedule": todays_schedule, "followingBool": None } }, 200
+      return {"profile": {"comments": comments, "no_comments": data, "new_comments": data1, "oldComments": data2, "user" : user, "todays_schedule": todays_schedule, "followingBool": None } }, 200
     else:
       user_profile = User.query.get(profile_id)
       following_value = False

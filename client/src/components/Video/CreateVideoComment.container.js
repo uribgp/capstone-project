@@ -11,6 +11,7 @@ export default function CreateVideoCommentContainer({onOutsideClick, onCloseClic
   const [timestamp, setTimestamp] = useState(0);
   const { video, video: {id: videoId} } = useSelector((state) => state.videos);
   const {id: userId} = useSelector(state => state.user)
+  console.log(userId, "User id form redux")
 
   const dispatch = useDispatch();
   const handleOnGeneralCommentClick = () => {

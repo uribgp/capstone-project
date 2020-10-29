@@ -69,6 +69,7 @@ export const getComments = (id) => {
 export const postComment = (comment) => {
 
   return async dispatch => {
+    console.log(comment)
     const res = await axios.post(`/api/comments`, comment)
     if (res.statusText) {
       dispatch(addComment(res.data.comment));

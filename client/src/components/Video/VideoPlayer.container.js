@@ -28,6 +28,9 @@ import { likeComment } from '../../store/comment/comment-actions';
 import VideoCommentContainer from './VideoComment.container';
 import UserProfile from '../Shared/UserProfile/UserProfile';
 import Textarea from '../Shared/Textarea/Textarea';
+import GeneralCommentsContainer from './GeneralComments.container';
+import ButtonIcon from '../Shared/Button/ButtonIcon';
+
 export default function VideoPlayerContainer() {
   const player = useRef(null);
   const [play, setPlay] = useState(false);
@@ -54,6 +57,7 @@ export default function VideoPlayerContainer() {
       description,
       title,
       categories,
+      avatar
     },
     loading: videoLoading,
   } = useSelector((state) => state.video);
@@ -110,6 +114,7 @@ export default function VideoPlayerContainer() {
 
     setCommentsToDisplay(commentsWithSameTimestampAsVideotime);
   };
+  
 
   function handleOnProgress(event) {
     if (secondsPlayed === -1) {
@@ -193,7 +198,15 @@ export default function VideoPlayerContainer() {
     setGeneralComment(event.target.value);
   };
 
-  const handleOnGeneralCommentSubmit = () => {};
+  const handleOnGeneralCommentSubmit = () => {
+    const commentData = {
+      title: "Comment",
+      text: generalComment,
+      user_id: userId,
+      video_id: videoId,
+    }
+    dispatch(postComment(commentData))
+  };
 
   useEffect(() => {
     if(!firstMount.current) {
@@ -272,59 +285,32 @@ export default function VideoPlayerContainer() {
                 </div>
               </div>
               <div className="video-info-container">
-                <div className="categories"></div>
                 <div className="video-info-user-profile">
-                  <UserProfile profileImg="https://images.unsplash.com/photo-1553267751-1c148a7280a1?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=634&q=80" />
+                  <UserProfile profileImg={avatar} />
                   <div className="video-info-user">{user}</div>
                 </div>
                 <div className="video-info-description">{description}</div>
               </div>
               {!videoLoading && (
-                <IconButton
+                <ButtonIcon
                   onClick={handleOnCreateCommentClick}
                   icon={<AiOutlineComment />}
+                  text="Make comment"
+                  buttonType="outline"
                 />
               )}
             </div>
-            <div>{comments.length} Comments</div>
-            <div className="video-player-general-comment-wrap">
+            <div style={{margin: "20px 0px", fontSize: 20, fontWeight: 600}}>{comments.length} Comments</div>
+           {/*  <div className="video-player-general-comment-wrap">
               <Textarea
                 value={generalComment}
                 onChange={(e) => setGeneralComment(e.target.value)}
                 placeholder="Make a comment"
               />
-              <Button text="Post comment" />
-            </div>
+              <Button text="Post comment" onClick={handleOnGeneralCommentSubmit} />
+            </div> */}
             <div className="video-comment-general-list">
-              {comments.map(
-                ({
-                  text,
-                  timestamp,
-                  likes,
-                  dislikes,
-                  comment_user,
-                  created_at,
-                  id,
-                }) => {
-                  if (timestamp === null) {
-                    return (
-                      <div className="video-comment-general">
-                        <Link to={`/profile/${id}`}>
-                          <UserProfile profileImg="https://images.unsplash.com/photo-1553267751-1c148a7280a1?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=634&q=80" />
-                          <div>
-                            <div className="video-comment-general-user">
-                              {comment_user}
-                            </div>
-                            <div className="video-comment-general-text">
-                              {text}
-                            </div>
-                          </div>
-                        </Link>
-                      </div>
-                    );
-                  }
-                }
-              )}
+              <GeneralCommentsContainer comments={comments} />
             </div>
           </div>
         ) : (
@@ -343,6 +329,8 @@ export default function VideoPlayerContainer() {
               formatted_timestamp,
               likes,
               dislikes,
+              comment_avatar,
+              user_id
             }) => {
               if (timestamp !== null) {
                 return (
@@ -351,8 +339,10 @@ export default function VideoPlayerContainer() {
                     id={id}
                     likes={likes}
                     dislikes={dislikes}
+                    avatar={comment_avatar}
                     active={commentsToDisplay.includes(id)}
                     comment={text}
+                    userId={user_id}
                     timestamp={timestamp}
                     formatted_timestamp={formatted_timestamp}
                     username={comment_user}

@@ -4,9 +4,10 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  background: var(--color-primary-2);
   cursor: pointer;
   > svg {
     font-size:24px;
-    color: White;
+    color: var(--color-primary-0);
   }
 }

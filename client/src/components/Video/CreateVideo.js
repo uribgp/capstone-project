@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { postVideo } from '../../store/video/video-actions';
+import './CreateVideo.scss';
 
 export default function CreateVideo() {
 const dispatch = useDispatch();
@@ -29,7 +30,7 @@ const handleThumbnailChange = (e) => {
     }
 
 return (
-<>
+<div className='video-modal'>
 <form className='video-form'>
 <input
 required
@@ -59,6 +60,6 @@ onChange={handleThumbnailChange} />
 </label>
 <button onClick={handlePostVideo}>Upload Video</button>
 </form>
-</>
+</div>
 )
 }
