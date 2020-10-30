@@ -192,6 +192,11 @@ export default function VideoPlayerContainer() {
     }
   }, []);
 
+  useEffect(() => {
+    if(authenticated) {
+      setDisplayLoginModal(false)
+    }
+  }, [authenticated])
 
 
   const handleOnCloseCommentModalClick = () => {

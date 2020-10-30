@@ -61,7 +61,7 @@ class User(db.Model, UserMixin):
   avatar = Column(String, default='https://capstone-project-steven-2.s3-us-west-1.amazonaws.com/avatardefault.png')
   banner = Column(String, default='https://capstone-project-steven-2.s3-us-west-1.amazonaws.com/banner2.png')
   about_me = Column(String, default='"fellow officer Gustavo Arlotta suggested he attend the Metroflex gym, owned by amateur bodybuilder Brian Dobson. Dobson offered Coleman a free lifetime membership if he allowed Dobson to train him for the upcoming Mr. Texas bodybuilding competition that year.[9] After training for Mr. Texas, Coleman won first place in both the heavyweight and overall categories. He also defeated Dobson himself. Coleman won his first competition as a professional, the Canada Pro Cup, in 1995. The following year, he won the contest again, then went on to win the 1997 Russian Grand Prix. He also participated in powerlifting competitions in the mid-1990s.[10]"')
-  personal_video = Column(String, default='quickpitch.mp4')
+  personal_video = Column(String, default='defaultPitch.mp4')
   coach = Column(Boolean, default=False)
   hashed_password = Column(String(100), nullable=False)
   alert = Column(Boolean, default=False)
