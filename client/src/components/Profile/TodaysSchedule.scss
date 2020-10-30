@@ -1,0 +1,26 @@
+.todays-schedule {
+  display: flex;
+  flex-flow: row;
+  justify-content: center;
+  align-items: stretch;
+  margin: 0 auto;
+
+}
+
+.title {
+    font-size: 10px;
+}
+
+.schedule-text {
+  font-size: 10px;
+  width: 100%
+}
+
+.video-thumbnail.container {
+  width: 100%;
+}
+
+.title-notes {
+  font-size: 20px;
+  background-color:  white;
+}

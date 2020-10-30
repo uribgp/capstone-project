@@ -47,3 +47,29 @@
 
   }
 }
+.todays-schedule {
+  margin-bottom: 100px;
+  h1 {
+    font-size: 32px;
+  }
+  .desc {
+    font-weight: 400;
+    margin-top: 20px;
+    color:#898989;
+
+  }
+
+  .sched-wrap {
+    display: flex;
+    justify-content:center;
+    width: 100%;
+  }
+
+  .title {
+
+  }
+  .inner {
+    margin: 0 60px;
+    max-width: 400px;
+  }
+}

@@ -51,6 +51,7 @@ export default function UploadVideoModal() {
   };
 
   const handleUpload = () => {
+    if(!title || !description || !thumbnailFile || !categoryChoiceId || !file) return;
     dispatch(
       postVideo(title, description, thumbnailFile, categoryChoiceId, file)
     );

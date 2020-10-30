@@ -92,10 +92,6 @@ def load_video():
   video = Video.query.get(vidId)
   user = User.query.get(video.owner_id)
   s3 = AwsS3UploadClass(ACCESS_ID, ACCESS_KEY, BUCKET_NAME)
-  # user = session['user']
-  # if user["id"] == video.owner_id:
-  #   video.watch_comment()
-  # db.session.commit()
   url = s3.create_presigned_url(video.link)
   if url is not None:
     response = requests.get(url)
@@ -155,9 +151,10 @@ def get_recent():
 
 @video_routes.route('/by_need')
 def get_need():
-  offset_value = request.args.get('offset', 0)
+  # offset_value = request.args.get('offset', 0)
   timeframe = datetime.datetime.now() - datetime.timedelta(days=7)
-  videos = Video.query.order_by(desc(Video.created_at >= timeframe)).offset(offset_value).limit(4)
+  videos = Video.query.order_by(desc(Video.created_at >= timeframe))
+  # videos = Video.query.order_by(desc(Video.created_at)).offset(offset_value).limit(4)
   videosById = [video.id for video in videos]
   comments = Comment.query.filter(Comment.created_at >= timeframe).all()
   commentsByVid = [comment.video_id for comment in comments]
@@ -172,7 +169,7 @@ def get_need():
     video = video.to_dict()
     video.update({"user": user.username})
     data.append(video)
-  return {"videos" : data}
+  return {"videos" : data[:4]}
 
 @video_routes.route('/add_view')
 def add_view():

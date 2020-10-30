@@ -1,0 +1,17 @@
+.subscribe-button {
+    min-width: 100px;
+}
+
+.coach {
+    display: flex;
+    flex-flow: column;
+    justify-content: center;
+    align-items: center;
+    width: 10%;
+    height: 6%;
+    color: blue;
+    border: 2px blue solid;
+    padding: 8px 4px;
+    border-radius: 25px;
+    background-color: lighten(blue, 43%);
+}

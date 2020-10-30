@@ -1,6 +1,5 @@
 import React from 'react';
 import TodaysSchedule from './TodaysSchedule'
-import Reward from './Reward';
 import PaymentMethod from '../Shared/PaymentMethod/PaymentMethod';
 import './CoachingModal.scss';
 
@@ -21,8 +20,11 @@ export default function CoachingModal({ props }) {
             ))
         }
       */}
-        {props.todays_schedule &&  <TodaysSchedule props={props.todays_schedule} />}
-        <div>
+          <div>
+            {props.todays_schedule &&  <TodaysSchedule props={props.todays_schedule} />}
+
+            </div> 
+        <div className='payment-container'>
           {props.user.payment_methods && props.user.payment_methods.map((payment) => (
             <PaymentMethod
               title={payment.title}

@@ -58,10 +58,10 @@ class User(db.Model, UserMixin):
   
   username = Column(String(30), nullable=False)
   email = Column(String(30), nullable=False, unique=True)
-  avatar = Column(String)
-  banner = Column(String, default='https://capstone-project-steven-2.s3-us-west-1.amazonaws.com/photo-1518611012118-696072aa579a.jpg')
-  about_me = Column(String)
-  personal_video = Column(String)
+  avatar = Column(String, default='https://capstone-project-steven-2.s3-us-west-1.amazonaws.com/avatardefault.png')
+  banner = Column(String, default='https://capstone-project-steven-2.s3-us-west-1.amazonaws.com/banner2.png')
+  about_me = Column(String, default='"fellow officer Gustavo Arlotta suggested he attend the Metroflex gym, owned by amateur bodybuilder Brian Dobson. Dobson offered Coleman a free lifetime membership if he allowed Dobson to train him for the upcoming Mr. Texas bodybuilding competition that year.[9] After training for Mr. Texas, Coleman won first place in both the heavyweight and overall categories. He also defeated Dobson himself. Coleman won his first competition as a professional, the Canada Pro Cup, in 1995. The following year, he won the contest again, then went on to win the 1997 Russian Grand Prix. He also participated in powerlifting competitions in the mid-1990s.[10]"')
+  personal_video = Column(String, default='quickpitch.mp4')
   coach = Column(Boolean, default=False)
   hashed_password = Column(String(100), nullable=False)
   alert = Column(Boolean, default=False)
@@ -180,7 +180,7 @@ class Video(db.Model):
   id = Column(Integer, primary_key=True)
   title = Column(String(50), nullable=False)
   description = Column(String(1200), nullable=False)
-  link = Column(String(300), nullable=False)
+  link = Column(String(300), nullable=False, default='thrallsquat.mp4')
   thumbnail = Column(String(300), nullable=False)
   staff_pick = Column(Boolean, default=False)
   total_comments = Column(Integer,default=0)
@@ -282,7 +282,8 @@ class Comment(db.Model):
       "likes": self.get_likes(),
       "dislikes": self.get_dislikes(),
       "comment_avatar" : self.user.avatar,
-      "user_id": self.user_id
+      "user_id": self.user_id,
+      "coach": self.user.coach
     }
 
 

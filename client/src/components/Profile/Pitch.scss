@@ -3,13 +3,26 @@
     // justify-content: center;
     // align-items: center;
   align-items: center;
+  width: 100%;
+  justify-content: center;
+  height: 100%;
+  margin-bottom: 100px;
   }
 
   .pitch_container-about-me {
     margin-left: 32px;
-
+    max-width: 600px; 
+    .about-me {
+      line-height: 1.7;
+    }
+    > div {
+      margin-bottom: 35px;
+    }
   }
   .pitch_container-video {
-    min-width: 50%;
 
+    video {
+      width: 600px !important;
+      height: 500px !important;
+    }
   }

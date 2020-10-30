@@ -9,6 +9,7 @@ return (
           key={'Unseen comments'}
           sectionTitle="Unseen comments"
           videos={props.new_comments}
+          name={props.user.username}
         />
       ) : null}
       {props.no_comments ? (
@@ -16,6 +17,7 @@ return (
           key={'Not Commented On'}
           sectionTitle="Not Commented on"
           videos={props.no_comments}
+          name={props.user.username}
         />
       ) : null}
       {props.oldComments ? (
@@ -23,6 +25,7 @@ return (
           key={'Videos with Comments'}
           sectionTitle="Videos with comments"
           videos={props.oldComments}
+          name={props.user.username}
         />
       ) : null}
       </>

@@ -43,7 +43,8 @@ return (
       timestamp,
       id,
       comment_avatar,
-      user_id
+      user_id,
+      coach
     }) => {
       if (timestamp === null) {
         console.log(comments)
@@ -64,6 +65,7 @@ return (
       avatar={comment_avatar}
       disableDislike={alreadyDisliked}
       disableLike={alreadyLiked}
+      coach={coach}
     />
       }})}
       </>

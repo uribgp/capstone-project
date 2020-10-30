@@ -22,7 +22,6 @@ export const authenticate = () => {
       const response = await axios.get('/api/session/current')
       dispatch(loginSucceeded(response.data))
     } catch (error) {
-      dispatch(loginFailed())
     }
   }
 }
@@ -32,7 +31,6 @@ export const login = (email, password) => {
   return async dispatch => {
     dispatch(loginLoading())
     try {
-      console.log(email, password)
       const response = await axios.post('/api/session', {
         email,
         password
@@ -59,5 +57,11 @@ export const signupUser = (username, email, password) => {
     } catch (error) {
 
     }
+  }
+}
+
+export const logOut = () => {
+  return async dispatch => {
+    const res = await axios.delete('/api/session')
   }
 }

@@ -18,6 +18,7 @@ profile_routes = Blueprint('profile', __name__)
 
 BUCKET_URL = os.environ.get('BUCKET_URL')
 BUCKET_NAME = os.environ.get('BUCKET_NAME_2')
+BUCKET_NAME_PRIVATE = os.environ.get('BUCKET_NAME')
 ACCESS_ID = os.environ.get('AWS_ACCESS_KEY_ID')
 ACCESS_KEY = os.environ.get('AWS_SECRET_ACCESS_KEY')
 REGION_NAME = os.environ.get('AWS_REGION_NAME')
@@ -42,11 +43,16 @@ def user_profile():
       today = date.today().strftime('%Y-%m-%d')
       todays_schedule = Schedule.query.filter(Schedule.trainee_id==user["id"], Schedule.date==today).first()
       comments = []
+      s3 = AwsS3UploadClass(ACCESS_ID, ACCESS_KEY, BUCKET_NAME_PRIVATE)
+      url = s3.create_presigned_url(user['personal_video'])
+      if url is not None:
+        response = requests.get(url)
+        user['personal_video'] = url
       if todays_schedule:
         last_video = Video.query.filter(Video.owner_id==user["id"], Video.main_lift==todays_schedule.main_lift).order_by(desc(Video.created_at)).first()
-        comments = Comment.query.filter(Comment.video_id==last_video.id).all()
-        comments = [comment.to_dict() for comment in comments]
         if last_video:
+          comments = Comment.query.filter(Comment.video_id==last_video.id).limit(4)
+          comments = [comment.to_dict() for comment in comments]
           todays_schedule.set_old_video(last_video.to_dict())
         todays_schedule = todays_schedule.to_dict()
       if user["followers"]:
@@ -66,14 +72,25 @@ def user_profile():
         user = User.query.get(user["id"])
         if user.following_user(user_profile.id):
           following_value = True
+      noComments = Video.query.filter(Video.owner_id == user_profile.id, Video.total_comments==0).limit(4)
+      newComments = Video.query.filter(Video.owner_id == user_profile.id, Video.new_comment==True).limit(4)
+      oldComments = Video.query.filter(Video.owner_id == user_profile.id, Video.total_comments>0).limit(4)
       user_profile = user_profile.to_med_dict()
+      data = [video.to_dict() for video in noComments]
+      data1 = [video.to_dict() for video in newComments]
+      data2 = [video.to_dict() for video in oldComments]
+      s3 = AwsS3UploadClass(ACCESS_ID, ACCESS_KEY, BUCKET_NAME_PRIVATE)
+      url = s3.create_presigned_url(user_profile['personal_video'])
+      if url is not None:
+        response = requests.get(url)
+        user_profile['personal_video'] = url
       if user_profile["followers"]:
         user_profile["followers"] = [fol.to_short_dict() for fol in user_profile["followers"]]
       if user_profile["following"]:
         user_profile["following"] = [fol.to_short_dict() for fol in user_profile["following"]]
       if user_profile["payment_methods"]:
         user_profile["payment_methods"] = [payment_method.to_dict() for payment_method in user_profile["payment_methods"]]
-      return {"profile": { "user" : user_profile, "followingBool": following_value } }, 200
+      return {"profile": { "user" : user_profile, "no_comments": data, "new_comments": data1, "oldComments": data2, "followingBool": following_value } }, 200
 
   elif(request.method == 'PATCH'):
     user_session = session['user']

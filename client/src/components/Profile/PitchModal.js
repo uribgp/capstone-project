@@ -11,7 +11,6 @@ export default function Pitch({props}) {
           <ReactPlayer
             className='pitch_container-video'
             volume={0}
-            width={'70%'}
             muted={true}
             url={props.personal_video}
             controls={true}
@@ -20,7 +19,10 @@ export default function Pitch({props}) {
           />
           <div className='pitch_container-about-me'>
             <div style={{fontSize: 40, }}>About me</div>
+            <div className="about-me">
             {props.about_me}
+
+            </div>
           </div>
           </div>
     </>

@@ -114,6 +114,10 @@ export default function VideoPlayerContainer() {
 
     setCommentsToDisplay(commentsWithSameTimestampAsVideotime);
   };
+
+  const closeLoginModal = () => {
+    setDisplayLoginModal(false)
+  }
   
 
   function handleOnProgress(event) {
@@ -243,6 +247,8 @@ export default function VideoPlayerContainer() {
       )}
       {displayLoginModal && (
         <FullscreenModal
+        onCloseClick={closeLoginModal}
+        onOutsideClick={closeLoginModal}
         >
           <LoginContainer />
         </FullscreenModal>
@@ -330,7 +336,8 @@ export default function VideoPlayerContainer() {
               likes,
               dislikes,
               comment_avatar,
-              user_id
+              user_id,
+              coach
             }) => {
               if (timestamp !== null) {
                 return (
@@ -347,6 +354,7 @@ export default function VideoPlayerContainer() {
                     formatted_timestamp={formatted_timestamp}
                     username={comment_user}
                     onClick={(comment) => handleOnVideoCommentClick(comment)}
+                    coach={coach}
                   />
                 );
               }

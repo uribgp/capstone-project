@@ -17,7 +17,8 @@ export default function VideoCommentContainer({
   userId,
   onUpvoteClick,
   onDownvoteClick,
-  avatar
+  avatar,
+  coach
 }) {
 
   const [alreadyLiked, setAlreadyLiked] = useState(false);
@@ -62,6 +63,7 @@ export default function VideoCommentContainer({
       ref={ref}
       disableDislike={alreadyDisliked}
       disableLike={alreadyLiked}
+      coach={coach}
     />
   );
 }

@@ -6,7 +6,9 @@ import './video-comment.style.scss';
 import { Link, useParams } from 'react-router-dom';
 import { AiOutlineCaretUp, AiOutlineCaretDown } from 'react-icons/ai';
 import IconButton from '../Shared/IconButton/IconButton';
-import {FaCheckCircle} from 'react-icons/fa'
+import {FaCheckCircle} from 'react-icons/fa';
+
+
 export default function VideoComment({
   active,
   ref,
@@ -23,24 +25,25 @@ export default function VideoComment({
   onDownvoteClick,
   disableLike,
   disableDislike,
-  comment_coach,
-  avatar
+  avatar,
+  coach
 }) {
   return (
     <div
-      style={
-        active
+    style={
+      active
           ? {
-              boxShadow: '0 0 7px rgba(0,0,0,0.05)',
+            boxShadow: '0 0 7px rgba(0,0,0,0.05)',
               opacity: 1,
               transition: '0.15s opacity linear',
             }
-          : { opacity: 0.2, transition: '0.15s opacity linear' }
+            : { opacity: 0.2, transition: '0.15s opacity linear' }
       }
       className={`video-comment ${active && 'video-comment-active'}`}
       onClick={(e) => onClick({ id, timestamp })}
       id={id}
-    >
+      >
+      {coach && <FaCheckCircle size={20} style={{float: "right", color: "blue"}}/>}
       <div
         style={
           active
@@ -71,7 +74,6 @@ export default function VideoComment({
           <Link to={active && `/profile/${userId}`}>
           <div>
             <div className="video-comment-info-verified">
-              {comment_coach && <FaCheckCircle />}
           <UserProfile profileImg={avatar}/>
 
             </div>
