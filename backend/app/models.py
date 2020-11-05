@@ -45,8 +45,10 @@ class Payment(db.Model):
     return {
       "id": self.id,
       "cost": self.cost,
-      "coach": self.coach,
-      "trainee": self.trainee,
+      "coach_id": self.coach.id,
+      "coach_name": self.coach.username,
+      "trainee_id": self.trainee.id,
+      "trainee_username": self.trainee.username,
       "payment": self.payment
     }
 
@@ -128,7 +130,7 @@ class User(db.Model, UserMixin):
       "payment_methods": self.payment_methods,
       "created_at": self.created_at.strftime("%B %Y")
     }
-
+# replace and delete to_med
   def to_dict(self):
     return {
       "id": self.id,
@@ -140,6 +142,7 @@ class User(db.Model, UserMixin):
       "banner": self.banner,
       "personal_video": self.personal_video,
       "coach": self.coach,
+      "payment_methods": self.payment_methods,
       "created_at": self.created_at.strftime("%B %Y")
     }
 
