@@ -206,7 +206,8 @@ class Video(db.Model):
       "total_comments": self.total_comments,
       "new_comment": self.new_comment,
       "main_lift": self.mainlift.title,
-      "avatar": self.owner.avatar
+      "avatar": self.owner.avatar,
+      "user": self.owner.username
     }
 
 
@@ -273,34 +274,6 @@ class Comment(db.Model):
       "user_id": self.user_id,
       "coach": self.user.coach
     }
-
-
-
-
-
-
-class Comment_user(db.Model):
-  __tablename__ = 'comment_users'
-
-  id = Column(Integer, primary_key=True)
-  commenter_id = Column(Integer, ForeignKey("users.id"), nullable=False)
-  comment_id = Column(Integer, ForeignKey("comments.id"), nullable=False)
-  video_id = Column(Integer, ForeignKey("videos.id"), nullable=False)
-  created_at = Column(DateTime, nullable=False, default=datetime.datetime.utcnow)
-  updated_at = Column(DateTime, nullable=False, default=datetime.datetime.utcnow)
-  
-  commenter = relationship("User", foreign_keys=[commenter_id])
-  comment = relationship("Comment", foreign_keys =[comment_id])
-  video = relationship("Video", foreign_keys=[video_id])
-  
-  def to_dict(self):
-    return {
-      "id": self.id,
-      "commenter_id": self.commenter_id,
-      "video_id": self.video_id,
-      "created_at": self.created_at.strftime("%B %Y")
-    }
-
 
 class Video_category(db.Model):
   __tablename__ = "video_categories"

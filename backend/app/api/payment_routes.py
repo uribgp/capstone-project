@@ -6,9 +6,9 @@ payment_routes = Blueprint('payment', __name__)
 @payment_routes.route('/submit_payment', methods=['POST'])
 def submit_payment():
   user = session['user']
-  coach_id = int(request.json.get('coachId', None))
-  payment_id = int(request.json.get('paymentId', None))
-  cost = int(request.json.get('cost', None))
+  coach_id = request.json.get('coachId', None)
+  payment_id = request.json.get('paymentId', None)
+  cost = request.json.get('cost', None)
   try:
       payment = Payment(
           cost=cost,
@@ -20,5 +20,4 @@ def submit_payment():
       db.session.commit()
       return {"msg": 'payment successful'}, 200
   except:
-      # print(traceback.format_exc())
       return jsonify({"msg": "Bad data for payment."}), 400

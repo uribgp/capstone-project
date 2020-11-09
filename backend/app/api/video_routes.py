@@ -60,14 +60,12 @@ def load_files():
       link=folder,
       main_lift=request.form.get('category_id', None),
       thumbnail=thumbnail_external_link,
-      # ,
       owner_id=owner_id,
     )
 
     db.session.add(video)
     db.session.commit()
-    return {"response": response}
-    # return {"video": video.to_dict()}, 200
+    return {"response": response}, 200
   else:
     if 'user' in session:
       user = session['user']
@@ -96,6 +94,7 @@ def load_video():
   if url is not None:
     response = requests.get(url)
     video.link = url
+  # add relationship directly to video and get it that way.
   joinTable = Video_category.query.filter(Video_category.video_id==vidId).all()
   categories = []
   for jt in joinTable:
@@ -103,23 +102,24 @@ def load_video():
   categories = [category.to_dict() for category in categories]
   video = video.to_dict()
   video.update({"categories" : categories})
-  video.update({"user": user.username})
   return { "video": video, "categories": categories }, 200
 
-@video_routes.route('/search_by_featured')
-def get_featured_videos():
-  videos = Video.query.filter(Video.staff_pick == True).all()
-  data = [video.to_dict() for video in videos]
-  return {"videos": data}
+# not currently being used
+# @video_routes.route('/search_by_featured')
+# def get_featured_videos():
+#   videos = Video.query.filter(Video.staff_pick == True).all()
+#   data = [video.to_dict() for video in videos]
+#   return {"videos": data}
+# not current being used
+# @video_routes.route('/search_by_category')
+# def get_by_category():
+#   category = request.args.get('category', None)
+#   categoryId = category.id
+#   videos = Video.query.filter(Video.category_id==categoryId).all()
+#   data = [video.to_dict() for video in videos]
+#   return {"videos": data}
 
-@video_routes.route('/search_by_category')
-def get_by_category():
-  category = request.args.get('category', None)
-  categoryId = category.id
-  videos = Video.query.filter(Video.category_id==categoryId).all()
-  data = [video.to_dict() for video in videos]
-  return {"videos": data}
-
+# include pagination, proper way to search without iterating?
 @video_routes.route('/search_popular')
 def get_popular():
   offset_value = request.args.get('offset', 0)
@@ -131,24 +131,22 @@ def get_popular():
   for key in vidDict.keys():
     if len(data) < 4:
       video = Video.query.get(key)
-      user = User.query.get(video.owner_id)
       video = video.to_dict()
-      video.update({"user": user.username})
       data.append(video)
   return {"videos" : data}
 
+# pagination
 @video_routes.route('/by_recent')
 def get_recent():
   offset_value = request.args.get('offset', 0)
   videos = Video.query.order_by(desc(Video.created_at)).offset(offset_value).limit(4)
   data = []
   for video in videos:
-    user = User.query.get(video.owner_id)
     video = video.to_dict()
-    video.update({"user": user.username})
     data.append(video)
   return {"videos" : data}
 
+# pagination
 @video_routes.route('/by_need')
 def get_need():
   # offset_value = request.args.get('offset', 0)
@@ -165,9 +163,7 @@ def get_need():
   data = []
   for vidId in videosById:
     video = Video.query.get(vidId)
-    user = User.query.get(video.owner_id)
     video = video.to_dict()
-    video.update({"user": user.username})
     data.append(video)
   return {"videos" : data[:4]}
 

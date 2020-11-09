@@ -17,7 +17,7 @@ def signup_user():
     db.session.add(user)
     db.session.commit()
     email= user.email
-    session["user"]= user.to_dict()
-    return {"user": user.to_dict()}, 200
+    session["user"]= user.to_short_dict()
+    return {"user": user.to_short_dict()}, 200
   except:
     return jsonify({"msg": "Bad data for signup."}), 400

@@ -12,9 +12,9 @@ def login_user():
     password = request.json.get('password', None)
 
     user = User.query.filter(User.email==email).first()
-    user_data = user and user.to_dict()
+    user_data = user and user.to_short_dict()
     if(user and user.check_password(password)):
-      session['user']= user.to_dict()
+      session['user']= user.to_short_dict()
       return {"user": session['user']}, 200
     else:
       return jsonify({"msg": "Incorrect email or password."}), 200

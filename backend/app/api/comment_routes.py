@@ -10,7 +10,6 @@ def comment():
   if(request.method =='GET'):
     vidId = request.args.get('id', None)
     comments = Comment.query.filter(Comment.video_id==vidId).order_by("timestamp").all()
-    # commentsGeneral = Comment.query.filter(Comment.video_id==vidId, Comment.timestamp == None).all()
     data = []
     if comments:
       data = [comment.to_dict() for comment in comments]
@@ -43,7 +42,7 @@ def likes():
       comment_id = request.args.get('comment_id')
       like_comment = bool(request.json.get('like_comment', None))
       dislike_comment = bool(request.json.get('dislike_comment', None))
-      previous_like = Likes_model.query.get((user_session["id"],comment_id))
+      previous_like = Likes_model.query.get((user_session["id"], comment_id))
       if previous_like:
         if previous_like.liked and like_comment or previous_like.disliked and dislike_comment:
           previous_like.reset()
@@ -73,4 +72,3 @@ def likes():
 
 
 # if(request.method=='DELETE'):
-#     return False

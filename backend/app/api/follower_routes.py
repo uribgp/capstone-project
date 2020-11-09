@@ -9,7 +9,6 @@ def follows():
 
   if request.method == 'POST':
     follow_id = request.args.get("follow")
-    print(follow_id)
     follow = Follower(
         follower_by_id=current_user["id"],
         creator_id=follow_id
@@ -21,7 +20,7 @@ def follows():
   
   elif request.method == 'DELETE':
     unfollow = request.args.get("unfollow")
-    to_unfollow = Follower.query.get((current_user["id"],unfollow))
+    to_unfollow = Follower.query.get((current_user["id"], unfollow))
     db.session.delete(to_unfollow)
     db.session.commit()
     return {"msg": "unfollowed"}, 200
