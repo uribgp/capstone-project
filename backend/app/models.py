@@ -75,7 +75,6 @@ class User(db.Model, UserMixin):
   followed_by = relationship('User', secondary='followers', primaryjoin=(Follower.creator_id == id), secondaryjoin=(Follower.follower_by_id == id))
   payment_methods = relationship('PaymentMethod', foreign_keys='PaymentMethod.user_id')
   rewards = relationship('PaymentMethod', secondary='payments', primaryjoin=(Payment.trainee_id == id), secondaryjoin=(Payment.payment_method_id == id))
-  # commented_on_videos = relationship('Videos', secondary='comments', primaryjoin=(Comment.user_id == id), secondaryjoin=(Comment.video_id == id))
 
   @property
   def password(self):
@@ -160,6 +159,12 @@ class Category(db.Model):
     }
 
 
+class Video_category(db.Model):
+  __tablename__ = "video_categories"
+
+  id = Column(Integer, primary_key=True)
+  category_id = Column(Integer, ForeignKey("categories.id"), nullable=False)
+  video_id = Column(Integer, ForeignKey("videos.id"), nullable=False)
 
 
 class Video(db.Model):
@@ -181,7 +186,8 @@ class Video(db.Model):
 
   owner = relationship("User", foreign_keys=[owner_id])
   mainlift = relationship("Category", foreign_keys=[main_lift])
-
+  categories = relationship("Category", secondary='video_categories', primaryjoin=(Video_category.video_id==id))
+  
   def increment(self):
     self.total_comments += 1
 
@@ -207,7 +213,8 @@ class Video(db.Model):
       "new_comment": self.new_comment,
       "main_lift": self.mainlift.title,
       "avatar": self.owner.avatar,
-      "user": self.owner.username
+      "user": self.owner.username,
+      "categories": [category.title for category in self.categories]
     }
 
 
@@ -275,12 +282,6 @@ class Comment(db.Model):
       "coach": self.user.coach
     }
 
-class Video_category(db.Model):
-  __tablename__ = "video_categories"
-
-  id = Column(Integer, primary_key=True)
-  category_id = Column(Integer, ForeignKey("categories.id"), nullable=False)
-  video_id = Column(Integer, ForeignKey("videos.id"), nullable=False)
   
 
 class Likes_model(db.Model):

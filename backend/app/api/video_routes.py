@@ -94,15 +94,10 @@ def load_video():
   if url is not None:
     response = requests.get(url)
     video.link = url
-  # add relationship directly to video and get it that way.
-  joinTable = Video_category.query.filter(Video_category.video_id==vidId).all()
-  categories = []
-  for jt in joinTable:
-    categories.append(Category.query.get(jt.category_id))
-  categories = [category.to_dict() for category in categories]
   video = video.to_dict()
-  video.update({"categories" : categories})
-  return { "video": video, "categories": categories }, 200
+  print("~~~")
+  print(video["categories"])
+  return { "video": video }, 200
 
 # not currently being used
 # @video_routes.route('/search_by_featured')
@@ -110,6 +105,7 @@ def load_video():
 #   videos = Video.query.filter(Video.staff_pick == True).all()
 #   data = [video.to_dict() for video in videos]
 #   return {"videos": data}
+
 # not current being used
 # @video_routes.route('/search_by_category')
 # def get_by_category():
