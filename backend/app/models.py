@@ -114,23 +114,6 @@ class User(db.Model, UserMixin):
       "rewards": self.rewards
     }
 
-  def to_med_dict(self):
-    return {
-      "id": self.id,
-      "username": self.username,
-      "email": self.email,
-      "alert": self.alert,
-      "followers": self.followed_by,
-      "following": self.following,
-      "avatar": self.avatar,
-      "about_me": self.about_me,
-      "banner": self.banner,
-      "personal_video": self.personal_video,
-      "coach": self.coach,
-      "payment_methods": self.payment_methods,
-      "created_at": self.created_at.strftime("%B %Y")
-    }
-# replace and delete to_med
   def to_dict(self):
     return {
       "id": self.id,
@@ -143,7 +126,9 @@ class User(db.Model, UserMixin):
       "personal_video": self.personal_video,
       "coach": self.coach,
       "payment_methods": self.payment_methods,
-      "created_at": self.created_at.strftime("%B %Y")
+      "created_at": self.created_at.strftime("%B %Y"),
+      "followers": self.followed_by,
+      "following": self.following
     }
 
   def to_short_dict(self):

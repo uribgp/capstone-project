@@ -75,7 +75,7 @@ def user_profile():
       noComments = Video.query.filter(Video.owner_id == user_profile.id, Video.total_comments==0).limit(4)
       newComments = Video.query.filter(Video.owner_id == user_profile.id, Video.new_comment==True).limit(4)
       oldComments = Video.query.filter(Video.owner_id == user_profile.id, Video.total_comments>0).limit(4)
-      user_profile = user_profile.to_med_dict()
+      user_profile = user_profile.to_dict()
       data = [video.to_dict() for video in noComments]
       data1 = [video.to_dict() for video in newComments]
       data2 = [video.to_dict() for video in oldComments]
