@@ -95,8 +95,6 @@ def load_video():
     response = requests.get(url)
     video.link = url
   video = video.to_dict()
-  print("~~~")
-  print(video["categories"])
   return { "video": video }, 200
 
 # not currently being used
@@ -114,6 +112,7 @@ def load_video():
 #   videos = Video.query.filter(Video.category_id==categoryId).all()
 #   data = [video.to_dict() for video in videos]
 #   return {"videos": data}
+
 
 # include pagination, proper way to search without iterating?
 @video_routes.route('/search_popular')

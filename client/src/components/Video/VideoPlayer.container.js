@@ -57,7 +57,8 @@ export default function VideoPlayerContainer() {
       description,
       title,
       categories,
-      avatar
+      avatar,
+      main_lift
     },
     loading: videoLoading,
   } = useSelector((state) => state.video);
@@ -281,6 +282,7 @@ export default function VideoPlayerContainer() {
             />
             <div className="video-info">
               <div className="categories">
+              {main_lift}
                 {categories.map((category) => (
                   <span className="category">{category}</span>
                 ))}

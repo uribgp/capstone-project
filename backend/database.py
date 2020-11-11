@@ -161,16 +161,12 @@ with app.app_context():
   db.session.commit()
   # Video_category
 
-  jt1 = Video_category(category_id = 1, video_id = 555)
   jt2 = Video_category(category_id = 7, video_id = 555)
   jt3 = Video_category(category_id = 10, video_id = 555)
-  jt4 = Video_category(category_id = 2, video_id = 2)
   jt5 = Video_category(category_id = 6, video_id = 2)
   jt6 = Video_category(category_id = 11, video_id = 2)
-  jt7 = Video_category(category_id = 1, video_id = 333)
   jt8 = Video_category(category_id = 7, video_id = 333)
   jt9 = Video_category(category_id = 10, video_id = 333)
-  jt10 = Video_category(category_id = 2, video_id = 222)
   jt11 = Video_category(category_id = 7, video_id = 222)
   jt12 = Video_category(category_id = 11, video_id = 222)
   # jt7 = Video_category, video_id = 5)
@@ -180,16 +176,12 @@ with app.app_context():
   # jt11 = Video_category, video_id = 9)
   # jt12 = Video_category, video_id = 10)
 
-  db.session.add(jt1)
   db.session.add(jt2)
   db.session.add(jt3)
-  db.session.add(jt4)
   db.session.add(jt5)
   db.session.add(jt6)
-  db.session.add(jt7)
   db.session.add(jt8)
   db.session.add(jt9)
-  db.session.add(jt10)
   db.session.add(jt11)
   db.session.add(jt12)
   

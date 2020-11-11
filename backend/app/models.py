@@ -25,6 +25,51 @@ class Follower(db.Model):
       "creator_id": self.creator.id
     }
 
+class Comment(db.Model):
+  __tablename__ = 'comments'
+
+  id = Column(Integer, primary_key=True)
+  title = Column(String(30), nullable=False)
+  text = Column(String(1200), nullable=False)
+  timestamp = Column(Integer)
+  video_id = Column(Integer, ForeignKey("videos.id"), nullable=False)
+  user_id = Column(Integer, ForeignKey("users.id"), nullable=False)
+  created_at = Column(DateTime, nullable=False, default=datetime.datetime.utcnow)
+  updated_at = Column(DateTime, nullable=False, default=datetime.datetime.utcnow)
+
+  user = relationship("User", foreign_keys =[user_id])
+  video = relationship("Video", foreign_keys=[video_id])
+  likes = relationship("Likes_model", backref='comment')
+
+  def get_likes(self):
+    count = 0
+    for like in self.likes:
+      if like.liked == True:
+        count += 1
+    return count
+
+  def get_dislikes(self):
+    count = 0
+    for like in self.likes:
+      if like.disliked == True:
+        count += 1
+    return count
+
+  def to_dict(self):
+    return {
+      "id": self.id,
+      "title": self.title,
+      "text": self.text,
+      "timestamp": self.timestamp,
+      "formatted_timestamp": str(datetime.timedelta(seconds=self.timestamp))[2:] if self.timestamp else "0:00",
+      "created_at": self.created_at.strftime("%B %Y"),
+      "comment_user": self.user.username,
+      "likes": self.get_likes(),
+      "dislikes": self.get_dislikes(),
+      "comment_avatar" : self.user.avatar,
+      "user_id": self.user_id,
+      "coach": self.user.coach
+    }
 
 class Payment(db.Model):
   __tablename__ = 'payments'
@@ -236,51 +281,6 @@ class Video_user(db.Model):
 
 
 
-class Comment(db.Model):
-  __tablename__ = 'comments'
-
-  id = Column(Integer, primary_key=True)
-  title = Column(String(30), nullable=False)
-  text = Column(String(1200), nullable=False)
-  timestamp = Column(Integer)
-  video_id = Column(Integer, ForeignKey("videos.id"), nullable=False)
-  user_id = Column(Integer, ForeignKey("users.id"), nullable=False)
-  created_at = Column(DateTime, nullable=False, default=datetime.datetime.utcnow)
-  updated_at = Column(DateTime, nullable=False, default=datetime.datetime.utcnow)
-
-  user = relationship("User", foreign_keys =[user_id])
-  video = relationship("Video", foreign_keys=[video_id])
-  likes = relationship("Likes_model", backref='comment')
-
-  def get_likes(self):
-    count = 0
-    for like in self.likes:
-      if like.liked == True:
-        count += 1
-    return count
-
-  def get_dislikes(self):
-    count = 0
-    for like in self.likes:
-      if like.disliked == True:
-        count += 1
-    return count
-
-  def to_dict(self):
-    return {
-      "id": self.id,
-      "title": self.title,
-      "text": self.text,
-      "timestamp": self.timestamp,
-      "formatted_timestamp": str(datetime.timedelta(seconds=self.timestamp))[2:] if self.timestamp else "0:00",
-      "created_at": self.created_at.strftime("%B %Y"),
-      "comment_user": self.user.username,
-      "likes": self.get_likes(),
-      "dislikes": self.get_dislikes(),
-      "comment_avatar" : self.user.avatar,
-      "user_id": self.user_id,
-      "coach": self.user.coach
-    }
 
   
 
@@ -339,6 +339,8 @@ class PaymentMethod(db.Model):
       "owner_avatar": self.owner.avatar
     }
 
+
+
 class Schedule(db.Model):
   __tablename__ = 'schedules'
 
@@ -377,3 +379,4 @@ class Schedule(db.Model):
       "main_lift": self.mainlift.title,
       "notes": self.notes
     }
+
