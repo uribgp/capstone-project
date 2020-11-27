@@ -59,8 +59,9 @@ export const getComments = (id) => {
   return async dispatch => {
     dispatch(commentLoading())
     const res = await axios.get(`/api/comments?id=${id}`)
+    console.log(res.data)
     if (res.statusText) {
-      dispatch(loadComments(res.data.comments));
+      dispatch(loadComments(res.data));
     }
     return res;
   }

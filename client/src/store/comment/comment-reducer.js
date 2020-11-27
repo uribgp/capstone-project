@@ -16,7 +16,7 @@ export default function commentsReducer(state= DEFAULT_STATE, action) {
                 ...state, error: false, loading: true,
             }
         case SET_COMMENTS:
-            return {...state, loading: false,  comments: action.comments.sort((a, b) => a.timestamp - b.timestamp)};
+            return {...state, loading: false,  comments: action.comments.comments.sort((a, b) => a.timestamp - b.timestamp), timed_comments: action.comments.timed_comments.sort((a, b) => a.timestamp - b.timestamp), general_comments: action.comments.general_comments.sort((a, b) => a.timestamp - b.timestamp)};
 
         case ADD_COMMENT: 
             return {...state, comments: [action.comment, ...state.comments].sort((a,b) => (a.timestamp < b.timestamp) ? -1 : 1)}

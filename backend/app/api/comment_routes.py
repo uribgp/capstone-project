@@ -13,7 +13,9 @@ def comment():
     data = []
     if comments:
       data = [comment.to_dict() for comment in comments]
-    return {"comments": data}, 200
+      timed_comments = [comment.to_dict() for comment in comments if comment.timestamp is not None]
+      general_comments = [comment.to_dict() for comment in comments if comment.timestamp is None]
+    return {"comments": data, "timed_comments": timed_comments, "general_comments": general_comments}, 200
 
   if(request.method=='POST'):
     vidId = request.json.get('video_id', None)

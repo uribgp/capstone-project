@@ -282,7 +282,7 @@ export default function VideoPlayerContainer() {
             />
             <div className="video-info">
               <div className="categories">
-              {main_lift}
+              <span className="category">{main_lift}</span>
                 {categories.map((category) => (
                   <span className="category">{category}</span>
                 ))}
