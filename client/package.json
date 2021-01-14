@@ -1,38 +1,54 @@
 {
-  "name": "client",
+  "name": "client-typescript",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
     "@react-hook/window-size": "^3.0.7",
-    "@testing-library/jest-dom": "^4.2.4",
-    "@testing-library/react": "^9.3.2",
-    "@testing-library/user-event": "^7.1.2",
-    "axios": "^0.20.0",
-    "http-proxy-middleware": "^1.0.5",
+    "@stripe/react-stripe-js": "^1.1.2",
+    "@stripe/stripe-js": "^1.11.0",
+    "@testing-library/jest-dom": "^5.11.6",
+    "@testing-library/react": "^11.2.0",
+    "@testing-library/user-event": "^12.2.2",
+    "@types/enzyme": "^3.10.8",
+    "@types/jest": "^26.0.15",
+    "@types/node": "^12.19.5",
+    "@types/react": "^16.9.56",
+    "@types/react-dom": "^16.9.9",
+    "@types/react-redux": "^7.1.11",
+    "@types/react-router-dom": "^5.1.6",
+    "@types/redux-logger": "^3.0.8",
+    "axios": "^0.21.0",
+    "dayjs": "^1.9.6",
+    "formik": "^2.2.5",
     "node-sass": "^4.14.1",
-    "react": "^16.13.1",
-    "react-dom": "^16.13.1",
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1",
     "react-icons": "^3.11.0",
-    "react-player": "^2.6.2",
-    "react-prism": "^4.3.2",
-    "react-redux": "^7.2.1",
+    "react-player": "^2.7.0",
+    "react-redux": "^7.2.2",
     "react-router-dom": "^5.2.0",
-    "react-scripts": "3.4.3",
+    "react-scripts": "4.0.0",
     "redux": "^4.0.5",
     "redux-thunk": "^2.3.0",
-    "timeago": "^1.6.7",
-    "timeago.js": "^4.0.2",
-    "video-react": "^0.14.1"
+    "typescript": "^4.0.5",
+    "web-vitals": "^0.2.4"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "postbuild": "rm -rf ../backend/app/static && mv build ../backend/app/static",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
-    "extends": "react-app"
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "jest": {
+    "snapshotSerializers": [
+      "enzyme-to-json/serializer"
+    ]
   },
   "browserslist": {
     "production": [
@@ -48,6 +64,10 @@
   },
   "proxy": "http://localhost:5000",
   "devDependencies": {
+    "@types/enzyme-adapter-react-16": "^1.0.6",
+    "enzyme": "^3.11.0",
+    "enzyme-adapter-react-16": "^1.15.5",
+    "enzyme-to-json": "^3.6.1",
     "redux-logger": "^3.0.6"
   }
 }

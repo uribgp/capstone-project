@@ -1,0 +1,40 @@
+:root {
+
+  // COLORS 
+  --color-primary: #073b4c;
+  --color-primary-faded: #6A6A6A;
+  --color-secondary: white;
+
+
+  // COLOR UTILITY
+  --color-white: white; 
+  --color-white-faded: #dbdbdb;
+  --color-black-faded: #828282;
+  --color-accepted: green;
+  --color-declined: red;
+  // SHAPES
+  --border-radius: 10px;
+
+  //SPACING
+  --spacing-1: 0.5rem;
+  --spacing-2: 1rem; 
+  --spacing-3: 2rem;
+  --spacing-4: 3rem;
+  // FONT SIZES
+  --title-big-phone: 3rem; 
+  --title-big-tablet: 4rem; 
+  --title-big-desktop: 5rem; 
+
+  --title-medium-phone: 2rem;
+  --title-medium-tablet: 3rem;
+  --title-medium-desktop: 3.5rem;
+
+  --title-small-phone: 1.2rem;
+  --title-small-tablet: 1.4rem;
+  --title-small-desktop: 1.6rem;
+
+
+  // BOX SHADOW
+   --box-shadow: 0 0 7px rgba(0,0,0,0.15);
+
+}
