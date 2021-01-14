@@ -1,32 +1,46 @@
 from flask import Blueprint, jsonify, redirect, url_for, session, request
-from app.models import User, db
 from flask_jwt_extended import create_access_token, jwt_required
-from flask_login import current_user
+from flask_login import current_user, login_user, login_required, logout_user
+from app.models import User, db
+from app.helper import generate_token, verify_token
 
-session_routes = Blueprint('session', __name__)
-
-@session_routes.route('', methods=['POST', 'DELETE'])
-def login_user():
-  if(request.method=='POST'):
-    email = request.json.get('email', None)
-    password = request.json.get('password', None)
-
-    user = User.query.filter(User.email==email).first()
-    user_data = user and user.to_short_dict()
-    if(user and user.check_password(password)):
-      session['user']= user.to_short_dict()
-      return {"user": session['user']}, 200
-    else:
-      return jsonify({"msg": "Incorrect email or password."}), 200
-  elif(request.method=='DELETE'):
-    session.pop('user', None)
-    return {'msg': 'successfully logged out'}
+session_routes = Blueprint("session", __name__)
 
 
-@session_routes.route('/current', methods=['GET'])
+@session_routes.route("/login", methods=["POST"])
+def login():
+    if request.method == "POST":
+        email = request.json.get("email", None)
+        password = request.json.get("password", None)
+
+        user = User.query.filter(User.email == email).first()
+        if user and user.check_password(password):
+            login_user(user)
+            user_token = generate_token(user)
+            user = user.to_short_dict()
+            user["token"] = user_token
+            return {"user": user}, 200
+        else:
+            return jsonify({"msg": "Incorrect email or password."}), 200
+
+@session_routes.route("/logout")
+@login_required
+def logout():
+    logout_user()
+    session.pop("user", None)
+    return {"msg": "successfully logged out"}
+
+
+@session_routes.route("/current", methods=["GET"])
+@login_required
 def load_user():
-  if 'user' in session:
-    user = session['user']
-    return {"user": session['user']}, 200
-  else:
-    return {"msg": "user not loaded"}
+    if current_user:
+        # token=request.json.get("token")
+        # verify_token(token)
+        # user["token"] = token
+        user_token = generate_token(current_user)
+        user = current_user.to_short_dict()
+        user["token"] = user_token
+        return {"user": user}, 200
+    else:
+        return {"msg": "user not loaded"}, 401
