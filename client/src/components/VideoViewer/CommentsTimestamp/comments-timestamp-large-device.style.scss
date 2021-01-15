@@ -1,0 +1,9 @@
+.comments-timestamp-wrap {
+  height: calc(100vh - 70px);
+  .comment-timestamps-list {
+    height: 100%;
+    overflow-y: scroll;
+  }
+  .comments-timestamp-top {
+  }
+}

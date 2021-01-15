@@ -1,0 +1,26 @@
+
+
+.comments-timestamp-small-device-popup {
+ position: fixed;
+ bottom: 0;
+ left: 0;
+ width: 100%; 
+
+ background:white;
+ min-height: 50vh;
+&-nav {
+  display: flex;
+  align-items: center;
+}
+&-close-icon {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+}
+}
+
+@media(min-width:768px) {
+  .comments-timestamp-small-device-popup {
+    min-height: 300px;
+  } 
+}

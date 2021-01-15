@@ -1,0 +1,24 @@
+.comments-general-section {
+
+
+  .comment-general-card {
+    margin-bottom: var(--spacing-4)
+  }
+}
+
+.post-general-comment-section {
+
+  margin: var(--spacing-3) 0;
+  textarea {
+    width: 100%;
+    min-width: 250px;
+    max-width: 600px;
+    display: block;
+    min-height: 150px;
+  }
+  .button_baseButtonPrimary__38sjC {
+    margin-top: var(--spacing-2);
+  }
+}
+
+

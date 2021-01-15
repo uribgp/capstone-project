@@ -1,0 +1,41 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`expect to render card component. 1`] = `
+<div
+  className="comment-timestamp"
+  onClick={[Function]}
+  style={
+    Object {
+      "opacity": 0.2,
+    }
+  }
+>
+  <div
+    className="comment-timestamp-user-wrap"
+  >
+    <UserProfile
+      alt="user avatar"
+      src="hej.jpg"
+    />
+    <div
+      className="comment-timestamp-username-timestamp-wrap"
+    >
+      <TextSmall
+        className="comment-timestamp-username"
+        text="pontus"
+      />
+      <div
+        className="comment-timestamp-timestamp"
+      >
+        00:15
+      </div>
+      <UpvoteDownvote
+        onDownvoteClick={[Function]}
+        onUpvoteClick={[Function]}
+        score={0}
+        voteStatus="upvoted"
+      />
+    </div>
+  </div>
+</div>
+`;

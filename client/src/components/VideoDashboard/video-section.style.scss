@@ -1,0 +1,43 @@
+.video-section {
+  .title-medium {
+    margin-bottom: var(--spacing-3);
+  }
+
+  &-content {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    min-height: 250px;
+  }
+
+  .video-thumbnail {
+    margin-bottom: var(--spacing-4);
+  }
+}
+
+
+
+@media(min-width:1025px) {
+  .video-section {
+    &-content {
+      justify-content: space-between;
+    }
+
+    .video-thumbnail {
+      width: 31%;
+
+    }
+  }
+}
+
+@media(min-width:1300px) {
+  .video-section {
+    .video-thumbnail {
+      width: 33%;
+
+    }
+    &-content {
+
+    }
+  }
+}

@@ -1,0 +1,42 @@
+.video-information {
+  padding-top: var(--spacing-1);
+  &-user-wrap {
+    display: flex;
+    align-items: center;
+    padding:var(--spacing-2) 0; 
+    .user-profile {
+      margin-right: var(--spacing-2);
+    }
+  }
+  &-title-wrap {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  &-autoplay-wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    .text-small {
+      margin-bottom: var(--spacing-1);
+    }
+  }
+
+  &-user-description {
+    max-width: 600px;
+  }
+
+  &-username {
+    font-weight: 500;
+  }
+
+  &-video-description {
+    margin-left: calc(60px + var(--spacing-2));
+
+  }
+
+  &-user-and-description-wrap {
+    margin: var(--spacing-2) 0; 
+  }
+}

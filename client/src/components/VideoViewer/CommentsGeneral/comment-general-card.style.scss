@@ -1,0 +1,22 @@
+.comment-general-card {
+
+    max-width:600px;
+  &--profile-wrap {
+    display: flex;
+    align-items: center;
+    margin-bottom: var(--spacing-2);
+  }
+
+
+  .user-profile {
+    margin-right: var(--spacing-2);
+
+  }
+
+  &--username {
+    font-weight: 500;
+  }
+
+  &--comment {
+  }
+}

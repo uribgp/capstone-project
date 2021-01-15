@@ -1,0 +1,26 @@
+.video-player-page {
+  min-height: 100vh;
+}
+
+@media(min-width:1025px) {
+  .video-player-page {
+    display: flex;
+    width: 100%;
+    padding: 0 var(--spacing-2);
+    &-left-wrap {
+      width: 65%;
+    } 
+    &-right-wrap {
+      width: 35%;
+      margin-left: var(--spacing-2);
+    }
+  }
+}
+
+@media(min-width:1920px) {
+  .video-player-page {
+    padding: 0 var(--spacing-4);
+    max-width: 2000px;
+    margin: 0 auto;
+  }
+}

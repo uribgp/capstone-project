@@ -1,0 +1,25 @@
+.comment-timestamp {
+
+
+
+  &--user-info {
+    display: flex;
+    align-items: center;
+
+  }
+
+  &--info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  &--user-profile {
+    margin-right: var(--spacing-1);
+  }
+  
+  &-username {
+    font-weight: 500;
+  }
+
+}
