@@ -1,70 +1,46 @@
-# Running Flask in Development
+# Getting Started with Create React App
 
-1. `CD` into this directory
-2. Install dependencies (`pipenv install --python 3.8 $(cat requirements.txt)`)
-  pipenv install flask
-  pipenv install flask-sqlalchemy
-  pipenv install alembic
-  pipenv install flask-migrate
-  pipenv install python-dotenv
-  pipenv install psycopg2-binary
-  pipenv install sqlalchemy
-  pipenv install flask-login
-  pipenv install flask-migrate
-  
-3. Create your DB user and DB
-psql -c "CREATE USER capstone_user WITH PASSWORD 'password' CREATEDB"
-psql -c "CREATE DATABASE capstone_database WITH OWNER capstone_user"
+This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-4. Run migrations, if you have any.
-  pipenv run flask db init
-  pipenv run flask db migrate
-  pipenv run flask db upgrade
+## Available Scripts
 
-5. To seed the database, run:
-  * `pipenv run python database.py`
-6. To run the backend:
-   * `pipenv run flask run`
+In the project directory, you can run:
 
-### Navigation
-* [Back to root README](../README.md)
+### `npm start`
 
+Runs the app in the development mode.\
+Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
-# Flask React Project
+The page will reload if you make edits.\
+You will also see any lint errors in the console.
 
-## Getting started
+### `npm test`
 
-1. Clone this repository
-2. Create a **.env** file based on the example with proper settings for your development environment
-3. Follow instructions in the [`starter_app/README.md`](./starter_app/README.md) to setup your development Back-End.
-4. Follow instructions in the [`client/README.md`](./client/README.md) to set up your development Front-End.
+Launches the test runner in the interactive watch mode.\
+See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
-  ## Deploying to Heroku
+### `npm run build`
 
-  ### Prepping Your Heroku Project
+Builds the app for production to the `build` folder.\
+It correctly bundles React in production mode and optimizes the build for the best performance.
 
-5. Create a new project on your Heroku Dashboard.
-6. Under Resources click "Find more add-ons" and add the add on called "Heroku Postgres".
-7. Install the [Heroku CLI](https://devcenter.heroku.com/articles/heroku-command-line) if you haven't already.
-8. Add any Config Vars to your heroku app, either on the Heroku CLI, or on the heroku-app dashboard's Settings tab.
+The build is minified and the filenames include the hashes.\
+Your app is ready to be deployed!
 
-  ### Prepping Your React App:
+See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
-9. Run `npm run build` in your React app root folder.
+### `npm run eject`
 
-  - This will build the static files for your React app.
-  - The `postbuild` script from your `package.json` will _automatically_ move them into the `/static` directory in your flask files.
+**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
 
-    ### Prepping your Flask App:
+If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
 
-10. Enter your pipenv: `pipenv shell`
-11. Update your requirements.txt with all of the packages installed in the environemt: `pip freeze > requirements.txt`
+Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
 
-  ### Pushing your container
+You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
 
-12. Login to heroku: `$ heroku login`
-13. Login to the heroku container registry: `$ heroku container:login`
-14. CD into `starter_app` and push your `Dockerfile` to heroku (this will build the Flask Dockerfile, and push): `$ heroku container:push web -a {NAME_OF_HEROKU_APP}`
-15. Release your docker container to heroku: `$ heroku container:release web -a {NAME_OF_HEROKU_APP}`
-16. Set up your database: `heroku run -a {NAME_OF_HEROKU_APP} {your_migration_script_here}`
-17. Profit.
+## Learn More
+
+You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+
+To learn React, check out the [React documentation](https://reactjs.org/).

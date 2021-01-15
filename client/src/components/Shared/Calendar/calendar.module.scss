@@ -1,0 +1,47 @@
+.calendar {
+  width: 280px;
+&-days {
+    display: grid;
+    grid-template-columns: 30px 30px 30px 30px 30px 30px 30px;
+    grid-template-rows: 1fr;
+    gap: 0px 0px;
+
+}
+&-day {
+  height:40px;
+  width:40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  &-selected {
+    background: var(--color-primary);
+    color:white;
+    cursor: pointer;
+  }
+}
+
+&-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+}
+
+
+@media(min-width:400px) {
+  .calendar {
+    &-days {
+      grid-template-columns: 40px 40px 40px 40px 40px 40px 40px;
+
+    }
+  }
+}
+
+
+.calendar-days {
+
+
+
+}
+
