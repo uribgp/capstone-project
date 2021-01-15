@@ -1,0 +1,10 @@
+.navbar {
+  display: flex;
+  height: 70px;
+  align-items: center;
+  justify-content: space-between;
+  :global
+  .button_baseButtonPrimary__38sjC {
+    margin-right: var(--spacing-2);
+  }
+}

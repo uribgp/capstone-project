@@ -53,6 +53,7 @@ export const videoReducer:Reducer<VideoState, VideoActionTypes> = (state = DEFAU
         error: true,
       };
     case FETCH_VIDEO_SUCCESS:
+      console.log(action.video);
       return {
         ...state,
         loading: false,

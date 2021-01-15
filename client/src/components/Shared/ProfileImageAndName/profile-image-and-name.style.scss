@@ -1,0 +1,7 @@
+.profile-image-and-name {
+  display: flex;
+  align-items: center;
+  &-username {
+    margin-left: var(--spacing-2);
+  }
+}

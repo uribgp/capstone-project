@@ -1,24 +1,15 @@
-.input-wrap {
-  display: flex;
-  box-shadow: 0 0 7px rgba(0,0,0,0.1);
-  align-items: center;
-  cursor: pointer;
-  .input-icon {
-    font-size: 24px;
-    padding:0  10px;
-    position: absolute;
-  }
-  .input {
-    padding-left:44px;
-    border:none;
-    height: 50px;
-    font-weight: 400;
-    outline: none;
-    width: 100%;
-    font-size: 14;
-    &-icon {
-      display: flex;
-      align-items: center;
-    }
-  }
+.input {
+  height: 60px;
+  border:None;
+  background:None;
+  font-size: 1rem;
+  padding: 0 0 0 var(--spacing-1); 
+  width: 100%;
+  border-radius: var(--border-radius);
+  border:1px solid #dadada;
+}
+
+.input-error {
+  padding: var(--spacing-1) var(--spacing-2);
+  border-radius: var(--border-radius)
 }

@@ -1,0 +1,61 @@
+.title-big, .title-medium {
+  font-weight: 600;
+}
+
+.title-big {
+font-size: var(--title-big-phone);
+}
+
+.title-medium {
+  font-size: var(--title-medium-phone);
+}
+
+.text-small {
+  font-size: 1rem;
+}
+
+
+.title-small {
+  font-size: var(--title-small-phone);
+}
+
+
+@media(min-width:768px) {
+  .title-big {
+    font-size: var(--title-big-tablet);
+  }
+
+  .title-medium {
+    font-size: var(--title-medium-tablet);
+  }
+
+  .title-small {
+    font-size: var(--title-small-tablet);
+
+  }
+}
+
+@media(min-width:1025px) {
+  .title-big {
+    font-size: var(--title-big-desktop);
+  }
+  .title-medium {
+    font-size: var(--title-medium-desktop);
+  }
+
+
+  .title-small {
+    font-size: var(--title-small-desktop);
+
+  }
+}
+
+
+
+.faded {
+  color: var(--color-black-faded);
+}
+
+.bold {
+  font-weight: 600;
+}

@@ -1,0 +1,16 @@
+.validate-condition {
+display: flex;
+align-items: center;
+  &-icon {
+    margin-right: var(--spacing-1);
+  }
+
+  &-icon-validated  {
+    font-size: 32px;
+    color: var(--color-accepted);
+  }
+
+  &-icon-not-validated {
+    color:var(--color-declined);
+  }
+}

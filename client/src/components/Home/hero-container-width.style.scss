@@ -1,0 +1,18 @@
+.hero-container-width {
+  min-height: 400px;
+  height: 400px;
+  &--background {
+    border-radius: var(--border-radius);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding-left: var(--spacing-3);
+  height: 100%;
+}
+&--text-content {
+  max-width: 600px;
+  color:White;
+}
+
+}
+

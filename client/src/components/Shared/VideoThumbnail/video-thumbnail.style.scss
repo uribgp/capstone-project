@@ -1,60 +1,69 @@
+.video-thumbnail-skeleton {
+  height: 300px;
+  min-width: 250px;
+  width: 100%;
+  max-width: 350px;
+  background-repeat: no-repeat;
+  background-image: 
+    /* layer 2: avatar */
+    /* white circle with 16px radius */
+    radial-gradient(circle 16px, white 99%, transparent 0),
+    /* layer 1: title */
+    /* white rectangle with 40px height */
+    linear-gradient(black 200px, transparent 0),
+    /* layer 0: card bg */
+    /* gray rectangle that covers whole element */
+    linear-gradient(#f4f4f4 100%, transparent 0),
+  linear-gradient(red 70px, transparent 0);
+    background-size:
+    32px 32px,  /* avatar */
+    100% 100%, /* title */
+    100% 100%,  /* card bg */
+    50px 100px;
+    background-position:
+    5% 80%,  /* avatar */
+    0% 0%, /* title */
+    0px 0px,       /* card bg */
+    90% 90%;
+}
+
+
 .video-thumbnail {
-  max-width: 400px;
-  cursor: pointer;
-  position: relative;
-  
+  width: 100%;
+  max-width: 350px;
+
   > a {
-    height: 100%;
-    width: 100%;
     text-decoration: none;
+    color: inherit;
   }
-  &:hover {
-    transform: translateY(-3px);
-    transition: 0.3s transform linear;
-  }
-  &-img-wrap {
-    position: relative;
-  }
-  &-img {
-    height: 200px;
-    box-shadow: 0 0 15px rgba(0,0,0,0.2);
+  &-image {
     object-fit: cover;
+    height: 200px;
     width: 100%;
-
   }
-  &-text {
-
-    color:black;
-    text-decoration: none;
+  .user-profile {
+    margin-right: var(--spacing-1);
+    
+  }
+  &-info-user {
+    font-weight: 500;
+  }
+  &-title {
+    font-size: 1rem;
     font-weight: 600;
-    background-color: var(color-secondary-1-1);
   }
-  &-user {
-    margin-top: 8px;
-    font-size: 14px;
-    color:var(--text-faded);
-  }
-  &-user {
-    margin-top: 8px;
-    font-size: 14px;
-    color:var(--text-faded);
-  }
-  &-popup-play {
-    color:White;
- 
-    position: absolute;
-    top:50%;
-    left:50%;
-    transform: translate(-50%, -50%);
-    z-index: 100;
-    &-icon {
-      font-size: 40px;
+  &--information {
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    margin-top: var(--spacing-1);
+    &-date {
+      margin-right: var(--spacing-2);
     }
-    &-title {
-      font-weight: 700;
-      font-size: 18px;
-    }
-
-
+  }
+  &--information-date-views {
+    display: flex;
+    color:var(--color-black-faded);
+    font-size: 0.9rem;
   }
 }

@@ -1,0 +1,11 @@
+footer {
+  background: var(--color-primary);
+  min-height: 300px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 50px;
+  .footer-title {
+    color:white;
+  }
+}
