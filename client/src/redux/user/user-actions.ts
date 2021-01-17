@@ -1,4 +1,4 @@
- import axios from "axios";
+import axios from "axios";
 import { ThunkDispatch } from "redux-thunk";
 import { User } from "../../types/user";
 import {
@@ -43,6 +43,7 @@ export const userLogin = (email: string, password: string) => {
         password,
       });
       dispatch(userLoginSuccess(response.data.user));
+      localStorage.setItem("token", response.data.user.token)
     } catch (error) {
       dispatch(userLoginError("Could not sign in"))
     }
@@ -54,6 +55,7 @@ export const UserLogout = () => {
     dispatch: ThunkDispatch<any, any, UserActionTypes>,
     getState: any
   ) => {
+    localStorage.clear()
     dispatch(userLoginLoading)
     try {
       await axios.get('/api/session/logout')
@@ -80,6 +82,7 @@ export const userSignup = (user: UserSignup) => {
     try {
       const response = await axios.post("/api/users/signup", user);
       dispatch(userLoginSuccess(response.data.user));
+      localStorage.setItem("token", response.data.user.token)
     } catch (error) {
       // display error messages
       dispatch(userLoginError("Could not sign up"))
@@ -93,7 +96,8 @@ export const userValidate = () => {
     getState: any
   ) => {
     try {
-      const response = await axios.get("/api/session/current")
+      const token: string | null = localStorage.getItem("token") || null
+      const response = await axios.post("/api/session/current", token)
       dispatch(userLoginSuccess(response.data.user));
     } catch (error) {
       dispatch(userLoginError("error authenticating"))

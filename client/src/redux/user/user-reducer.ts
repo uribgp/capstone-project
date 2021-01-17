@@ -8,7 +8,6 @@ const DEFAULT_STATE: UserState = {
   avatar: "",
   loading: true,
   errorMessage: "",
-  token: ""
 }
 
 interface UserState {
@@ -18,7 +17,6 @@ interface UserState {
   avatar: string, 
   loading: boolean;
   errorMessage: string;
-  token: string;
 }
 
 
@@ -37,7 +35,6 @@ export const userReducer:Reducer<UserState, UserActionTypes>  = (state = DEFAULT
       authenticated: true,
       avatar: action.user.avatar,
       errorMessage: "",
-      token: action.user.token
     }
     case USER_LOGIN_ERROR: 
     return {
