@@ -31,16 +31,14 @@ def logout():
     return {"msg": "successfully logged out"}
 
 
-@session_routes.route("/current", methods=["GET"])
+@session_routes.route("/current", methods=["POST"])
 @login_required
 def load_user():
-    if current_user:
-        # token=request.json.get("token")
-        # verify_token(token)
-        # user["token"] = token
-        user_token = generate_token(current_user)
-        user = current_user.to_short_dict()
-        user["token"] = user_token
-        return {"user": user}, 200
-    else:
+    try:
+        token=request.json.get("token")
+        if verify_token(token):
+            user = current_user.to_short_dict()
+            user["token"] = user_token
+            return {"user": user}, 200
+    except:
         return {"msg": "user not loaded"}, 401
